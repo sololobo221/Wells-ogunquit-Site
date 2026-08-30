@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local screenshot output
+.shots/
+
+# agent skill installs, restored with: npx skills add (see skills-lock.json)
+/.agents/
+/.claude/skills

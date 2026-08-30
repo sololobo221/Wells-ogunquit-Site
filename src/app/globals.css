@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Light, warm monochrome. Brand colours sampled from the sign:
+   black #010101, gold #c6b871, lobster red #b13828, navy #133562.
+   Navy is the single accent. Gold and red belong to the logo.
+   ============================================================ */
+@theme {
+  /* Canvas and surfaces */
+  --color-canvas: #f7f6f3;
+  --color-surface: #ffffff;
+  --color-surface-2: #f9f9f8;
+  --color-line: #e7e5e0;
+  --color-line-soft: #efedE8;
+
+  /* Ink */
+  --color-ink: #111111;
+  --color-ink-2: #2f3437;
+  --color-muted: #787774;
+  --color-faint: #9b9894;
+
+  /* Brand */
+  --color-navy: #133562;
+  --color-navy-deep: #0d2545;
+  --color-gold: #c6b871;
+  --color-gold-deep: #9a8c48;
+  --color-lobster: #b13828;
+
+  --font-display: var(--font-playfair), "Lyon Text", Georgia, serif;
+  --font-sans: var(--font-geist), "SF Pro Display", "Helvetica Neue", sans-serif;
+
+  /* Practically invisible shadows */
+  --shadow-soft: 0 1px 2px rgba(17, 17, 17, 0.03);
+  --shadow-hover: 0 2px 10px rgba(17, 17, 17, 0.05);
+
+  /* Crisp radii. No pills on large containers. */
+  --radius-card: 12px;
+  --radius-media: 10px;
+  --radius-control: 6px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base element styles live in @layer base so Tailwind utilities
+   (text-white over photography, for example) can still override them. */
+@layer base {
+  html {
+    background: var(--color-canvas);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 45%, transparent);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Small uppercase section label, used sparingly */
+.label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+/* Wash for text sitting over photography */
+.wash {
+  background: linear-gradient(
+    to top,
+    rgba(12, 14, 16, 0.66) 0%,
+    rgba(12, 14, 16, 0.3) 42%,
+    rgba(12, 14, 16, 0) 78%
+  );
+}
+
+.wash-soft {
+  background: linear-gradient(
+    to top,
+    rgba(12, 14, 16, 0.88) 0%,
+    rgba(12, 14, 16, 0.55) 30%,
+    rgba(12, 14, 16, 0.12) 60%,
+    rgba(12, 14, 16, 0) 100%
+  );
+}
+
+/* Warm grain. A pre-rendered tile costs the GPU far less than a live
+   feTurbulence filter, and it is skipped on coarse pointers and when the
+   viewer prefers reduced motion. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("/images/noise.png");
+  background-repeat: repeat;
+  background-size: 96px 96px;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .grain::after {
+    display: none;
+  }
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
