@@ -87,7 +87,7 @@ export default function Home() {
               </p>
               <p>
                 Outside there are gas grills and a full outdoor kitchen. Borrow the lobster pots,
-                the plates, the utensils. We'll do the washing up.
+                the plates and the utensils, and cook whatever you like.
               </p>
             </Reveal>
             <Reveal delay={0.16} className="mt-8">

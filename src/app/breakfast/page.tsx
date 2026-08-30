@@ -84,8 +84,8 @@ export default function BreakfastPage() {
             </h2>
             <p className="mt-5 leading-[1.7] text-white/80">
               The barbecue area is set up for proper cooking, not just burgers. Gas grills, a big
-              outside stove, lobster pots, plates and utensils. Bring the food. We'll handle the
-              clean up.
+              outside stove, lobster pots, plates and utensils. You bring the food, we have
+              everything else.
             </p>
           </Reveal>
         </div>

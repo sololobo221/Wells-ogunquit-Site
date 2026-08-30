@@ -108,8 +108,8 @@ export default function AmenitiesPage() {
           </div>
           <div className="lg:col-span-5">
             <SectionHeading
-              title="Cook out, and leave the dishes to us"
-              intro="Bring whatever you want to cook. We've got the grills, the lobster pots, the plates and the utensils, and we'll clean up after."
+              title="A kitchen outside, and everything to cook with"
+              intro="Bring whatever you want to cook. The grills, the lobster pots, the plates and the utensils are all here to use. Washing up afterwards is down to you."
             />
           </div>
         </div>
