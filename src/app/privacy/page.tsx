@@ -33,13 +33,13 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-5 pb-24 pt-36 lg:px-10 lg:pt-44">
+    <section className="mx-auto max-w-3xl px-6 pb-24 pt-36 lg:px-10 lg:pt-44">
       <Reveal>
-        <p className="label">Privacy</p>
-        <h1 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-[3.4rem]">
+        <span className="eyebrow">Privacy</span>
+        <h1 className="mt-5 text-h1">
           How we handle your information
         </h1>
-        <p className="mt-5 text-[1rem] leading-[1.7] text-muted">
+        <p className="mt-5 text-body text-muted">
           A short, plain summary of what this website does with what you send it.
         </p>
       </Reveal>
@@ -48,15 +48,15 @@ export default function PrivacyPage() {
         {sections.map((s, i) => (
           <Reveal key={s.t} delay={i * 0.06}>
             <div className="border-b border-line py-6">
-              <dt className="font-display text-[1.3rem] leading-tight">{s.t}</dt>
-              <dd className="mt-2.5 text-[0.92rem] leading-[1.7] text-muted">{s.d}</dd>
+              <dt className="font-display text-h4 leading-tight">{s.t}</dt>
+              <dd className="mt-2.5 text-small text-muted">{s.d}</dd>
             </div>
           </Reveal>
         ))}
       </dl>
 
       <Reveal delay={0.1} className="mt-10">
-        <p className="text-[0.82rem] leading-[1.7] text-faint">
+        <p className="text-micro text-faint">
           {site.name}, {site.address.full}.
         </p>
       </Reveal>

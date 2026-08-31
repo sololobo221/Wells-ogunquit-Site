@@ -35,13 +35,13 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <>
-      <div className="columns-2 gap-3 sm:columns-3 lg:columns-4 [&>*]:mb-3">
+      <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 [&>*]:mb-4">
         {images.map((img, idx) => (
           <button
             key={img.src + idx}
             type="button"
             onClick={() => setActive(idx)}
-            className="group relative block w-full overflow-hidden rounded-[var(--radius-media)] border border-line bg-surface"
+            className="group relative block w-full overflow-hidden rounded-[var(--radius-media)] bg-sand"
           >
             <Image
               src={img.src}
@@ -49,7 +49,7 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
               width={800}
               height={600}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="h-auto w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+              className="h-auto w-full object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.05]"
             />
           </button>
         ))}
@@ -88,7 +88,7 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
               height={1350}
               className="mx-auto max-h-[80dvh] w-auto rounded-[var(--radius-media)] object-contain"
             />
-            <figcaption className="mt-4 text-center text-[0.82rem] text-white/60">
+            <figcaption className="mt-4 text-center text-micro text-white/60">
               {images[active].alt}
             </figcaption>
           </figure>

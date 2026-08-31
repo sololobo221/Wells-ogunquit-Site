@@ -23,56 +23,56 @@ export default function ContactPage() {
         intro="Call, write, or send a note below. We answer the phone ourselves."
       />
 
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
             <SectionHeading label="Get in touch" title="However you'd rather reach us" />
 
             <Reveal delay={0.08} className="mt-10">
               <dl className="space-y-6">
                 <div>
-                  <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">
+                  <dt className="text-micro uppercase text-faint">
                     Toll free
                   </dt>
                   <dd className="mt-1.5">
                     <a
                       href={site.phones.tollFreeHref}
-                      className="font-display text-[1.5rem] tabular-nums text-ink transition-colors duration-300 hover:text-navy"
+                      className="font-display text-h3 tabular-nums text-ink transition-colors duration-300 hover:text-navy"
                     >
                       {site.phones.tollFree}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">Local</dt>
+                  <dt className="text-micro uppercase text-faint">Local</dt>
                   <dd className="mt-1.5">
                     <a
                       href={site.phones.localHref}
-                      className="font-display text-[1.5rem] tabular-nums text-ink transition-colors duration-300 hover:text-navy"
+                      className="font-display text-h3 tabular-nums text-ink transition-colors duration-300 hover:text-navy"
                     >
                       {site.phones.local}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">Email</dt>
+                  <dt className="text-micro uppercase text-faint">Email</dt>
                   <dd className="mt-1.5">
                     <a
                       href={`mailto:${site.email}`}
-                      className="text-[1rem] text-ink transition-colors duration-300 hover:text-navy"
+                      className="text-body text-ink transition-colors duration-300 hover:text-navy"
                     >
                       {site.email}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">Address</dt>
+                  <dt className="text-micro uppercase text-faint">Address</dt>
                   <dd className="mt-1.5">
                     <a
                       href={`https://maps.google.com/?q=${encodeURIComponent(site.address.full)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[1rem] leading-[1.6] text-ink transition-colors duration-300 hover:text-navy"
+                      className="text-body text-ink transition-colors duration-300 hover:text-navy"
                     >
                       {site.address.street}
                       <br />
@@ -81,8 +81,8 @@ export default function ContactPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">Social</dt>
-                  <dd className="mt-1.5 flex gap-6 text-[0.95rem]">
+                  <dt className="text-micro uppercase text-faint">Social</dt>
+                  <dd className="mt-1.5 flex gap-6 text-small">
                     <a
                       href={site.social.facebook}
                       target="_blank"
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 </div>
               </dl>
 
-              <p className="mt-9 text-[0.85rem] leading-[1.7] text-faint">
+              <p className="mt-9 text-small text-faint">
                 {site.season} {site.breakfastHours}
               </p>
             </Reveal>
@@ -116,8 +116,8 @@ export default function ContactPage() {
       </section>
 
       {/* Map and distances */}
-      <section className="border-t border-line bg-surface py-24 lg:py-32">
-        <div className="mx-auto max-w-[1400px] px-5 lg:px-10">
+      <section className="bg-sand section">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
           <SectionHeading
             title="On Route 1 in Wells"
             intro="Handy for the beaches, the coast road, and the drive north to Portland."
@@ -137,8 +137,8 @@ export default function ContactPage() {
             {distances.map((d, i) => (
               <Reveal key={d.place} delay={(i % 2) * 0.05}>
                 <div className="flex items-baseline justify-between gap-6 border-b border-line py-3.5">
-                  <span className="text-[0.9rem] text-muted">{d.place}</span>
-                  <span className="shrink-0 font-display text-[1.1rem] tabular-nums text-navy">
+                  <span className="text-small text-muted">{d.place}</span>
+                  <span className="shrink-0 font-display text-lead tabular-nums text-navy">
                     {d.value}
                   </span>
                 </div>

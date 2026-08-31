@@ -56,7 +56,7 @@ export default function AttractionsPage() {
       />
 
       {/* Three feature cards with real photography */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
           label="Close by"
           title="Where people go first"
@@ -75,16 +75,16 @@ export default function AttractionsPage() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="mt-5 font-display text-[1.4rem] leading-tight">{n.name}</h3>
-              <p className="mt-2 text-[0.89rem] leading-[1.65] text-muted">{n.detail}</p>
+              <h3 className="mt-5 font-display text-h4 leading-tight">{n.name}</h3>
+              <p className="mt-2 text-small text-muted">{n.detail}</p>
             </Reveal>
           ))}
         </div>
       </section>
 
       {/* More, in two grouped columns */}
-      <section className="border-y border-line bg-surface py-24 lg:py-32">
-        <div className="mx-auto grid max-w-[1400px] gap-14 px-5 lg:grid-cols-12 lg:gap-20 lg:px-10">
+      <section className="bg-sand section">
+        <div className="mx-auto grid max-w-[1400px] gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
           <div className="lg:col-span-4">
             <SectionHeading title="Worth the drive" />
           </div>
@@ -92,8 +92,8 @@ export default function AttractionsPage() {
             <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2">
               {more.map(([t, d], i) => (
                 <Reveal key={t} delay={(i % 2) * 0.06}>
-                  <h3 className="font-display text-[1.2rem] leading-tight text-navy">{t}</h3>
-                  <p className="mt-2 text-[0.86rem] leading-[1.6] text-muted">{d}</p>
+                  <h3 className="font-display text-lead leading-tight text-navy">{t}</h3>
+                  <p className="mt-2 text-small text-muted">{d}</p>
                 </Reveal>
               ))}
             </div>
@@ -102,7 +102,7 @@ export default function AttractionsPage() {
       </section>
 
       {/* Distances */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
           title="Driving times from the door"
           intro="We're on Route 1 in Wells. Portland is 40 minutes north, Boston an hour and a half south."
@@ -111,8 +111,8 @@ export default function AttractionsPage() {
           {distances.map((d, i) => (
             <Reveal key={d.place} delay={(i % 2) * 0.05}>
               <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                <span className="text-[0.93rem] text-muted">{d.place}</span>
-                <span className="shrink-0 font-display text-[1.15rem] tabular-nums text-navy">
+                <span className="text-small text-muted">{d.place}</span>
+                <span className="shrink-0 font-display text-lead tabular-nums text-navy">
                   {d.value}
                 </span>
               </div>

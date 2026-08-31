@@ -51,15 +51,15 @@ export default function ContactForm() {
   };
 
   const field =
-    "w-full rounded-[var(--radius-control)] border border-line bg-surface px-4 py-3 text-[0.92rem] text-ink outline-none transition-colors duration-200 placeholder:text-faint focus:border-navy";
-  const lbl = "mb-2 block text-[0.78rem] uppercase tracking-[0.14em] text-faint";
-  const err = "mt-2 text-[0.8rem] text-lobster";
+    "w-full w-full rounded-[var(--radius-control)] border border-line bg-canvas px-4 py-3 text-small text-ink outline-none transition-colors duration-200 placeholder:text-faint hover:border-ink/25 focus:border-accent";
+  const lbl = "mb-2 block text-eyebrow uppercase tracking-[0.16em] text-faint";
+  const err = "mt-2 text-micro text-accent";
 
   if (sent) {
     return (
-      <div className="rounded-[var(--radius-card)] border border-line bg-surface p-8">
-        <h3 className="font-display text-[1.5rem] leading-tight">Your email is ready to send</h3>
-        <p className="mt-3 text-[0.92rem] leading-[1.65] text-muted">
+      <div className="rounded-[var(--radius-card)] bg-surface p-8 shadow-card">
+        <h3 className="font-display text-h3">Your email is ready to send</h3>
+        <p className="mt-3 text-small text-muted">
           We've opened a pre-filled message in your email app. If nothing happened, write to us
           directly at{" "}
           <a
@@ -73,7 +73,7 @@ export default function ContactForm() {
         <button
           type="button"
           onClick={() => setSent(false)}
-          className="mt-6 text-[0.88rem] text-navy transition-colors duration-200 hover:text-ink"
+          className="mt-6 text-small text-navy transition-colors duration-200 hover:text-ink"
         >
           Write another message
         </button>
@@ -82,7 +82,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-8">
+    <form onSubmit={submit} noValidate className="rounded-[var(--radius-card)] bg-surface p-6 shadow-card sm:p-8">
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={lbl}>
@@ -162,7 +162,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="group mt-8 inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-ink px-6 py-3 text-[0.9rem] font-medium text-white transition-all duration-200 hover:bg-ink-2 active:scale-[0.98]"
+        className="group mt-8 inline-flex items-center gap-2 rounded-[var(--radius-control)] bg-accent px-6 py-3 text-small font-medium text-white transition-[background-color,transform] duration-200 hover:bg-accent-deep active:translate-y-px"
       >
         Send message
         <ArrowUpRight
@@ -172,7 +172,7 @@ export default function ContactForm() {
         />
       </button>
 
-      <p className="mt-4 text-[0.8rem] leading-[1.6] text-faint">
+      <p className="mt-4 text-micro text-faint">
         This opens a message in your own email app. If you need an answer today, calling is quicker.
       </p>
     </form>

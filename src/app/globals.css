@@ -1,46 +1,95 @@
 @import "tailwindcss";
 
-/* ============================================================
-   Light, warm monochrome. Brand colours sampled from the sign:
-   black #010101, gold #c6b871, lobster red #b13828, navy #133562.
-   Navy is the single accent. Gold and red belong to the logo.
-   ============================================================ */
+/* ============================================================================
+   Wells-Ogunquit Resort Motel design tokens
+
+   Display face is Young Serif, which ships a single weight. Hierarchy is
+   therefore carried by SIZE and space, never by font-weight. The steps below
+   are deliberately wide apart for that reason.
+   ========================================================================= */
+
 @theme {
-  /* Canvas and surfaces */
-  --color-canvas: #f7f6f3;
-  --color-surface: #ffffff;
-  --color-surface-2: #f9f9f8;
-  --color-line: #e7e5e0;
-  --color-line-soft: #efedE8;
+  /* ---- Surfaces. Warm, never pure white. ---- */
+  --color-canvas: #f7f6f3; /* page */
+  --color-sand: #efe9df; /* alternating sections, separated by tone not rules */
+  --color-surface: #ffffff; /* cards sitting on either of the above */
+  --color-line: #e3ded4; /* hairlines, used sparingly now tone does the work */
 
-  /* Ink */
-  --color-ink: #111111;
-  --color-ink-2: #2f3437;
-  --color-muted: #787774;
-  --color-faint: #9b9894;
+  /* ---- Ink. All four pass WCAG AA on canvas and on sand. ---- */
+  --color-ink: #111111; /* 17.5 : 1 on canvas */
+  --color-muted: #585754; /* 6.69 on canvas, 5.98 on sand */
+  --color-faint: #666561; /* 5.40 on canvas, 4.83 on sand */
 
-  /* Brand */
+  /* ---- Accent. Lobster red, taken from the sign. ----
+     Booking CTAs and small marks only. Never body text, never links.
+     6.06 : 1 white-on-red, 5.61 on canvas, 5.02 on sand. */
+  --color-accent: #b13828;
+  --color-accent-deep: #92291b; /* hover / active */
+
+  /* ---- Supporting. Links and eyebrow labels. Not a second accent. ---- */
   --color-navy: #133562;
-  --color-navy-deep: #0d2545;
-  --color-gold: #c6b871;
-  --color-gold-deep: #9a8c48;
-  --color-lobster: #b13828;
 
-  --font-display: var(--font-playfair), "Lyon Text", Georgia, serif;
-  --font-sans: var(--font-geist), "SF Pro Display", "Helvetica Neue", sans-serif;
+  /* ---- Type ---- */
+  --font-display: var(--font-young-serif), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 
-  /* Practically invisible shadows */
-  --shadow-soft: 0 1px 2px rgba(17, 17, 17, 0.03);
-  --shadow-hover: 0 2px 10px rgba(17, 17, 17, 0.05);
+  /* Fluid scale. Wide gaps between display steps so a single weight still reads
+     as a clear hierarchy. */
+  --text-h1: clamp(2.75rem, 1.6rem + 5.1vw, 5rem); /* 44 → 80 */
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.022em;
 
-  /* Crisp radii. No pills on large containers. */
-  --radius-card: 12px;
+  --text-h2: clamp(2rem, 1.4rem + 2.7vw, 3.25rem); /* 32 → 52 */
+  --text-h2--line-height: 1.06;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h3: clamp(1.5rem, 1.3rem + 0.9vw, 2rem); /* 24 → 32 */
+  --text-h3--line-height: 1.12;
+  --text-h3--letter-spacing: -0.015em;
+
+  --text-h4: 1.375rem; /* 22, card titles */
+  --text-h4--line-height: 1.2;
+  --text-h4--letter-spacing: -0.01em;
+
+  --text-lead: 1.1875rem; /* 19, section intros */
+  --text-lead--line-height: 1.6;
+
+  --text-body: 1.0625rem; /* 17 */
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.9375rem; /* 15 */
+  --text-small--line-height: 1.55;
+
+  --text-micro: 0.8125rem; /* 13, meta and captions */
+  --text-micro--line-height: 1.5;
+
+  --text-eyebrow: 0.6875rem; /* 11 */
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* ---- Space. Strict 8px scale. ---- */
+  --spacing: 8px;
+
+  /* ---- Radii ---- */
+  --radius-card: 14px;
   --radius-media: 10px;
-  --radius-control: 6px;
+  --radius-control: 8px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation. Tinted warm, never neutral black. ---- */
+  --shadow-card: 0 1px 2px rgba(40, 32, 24, 0.04);
+  --shadow-lift: 0 12px 32px -12px rgba(40, 32, 24, 0.14);
+  --shadow-nav: 0 1px 0 rgba(40, 32, 24, 0.06), 0 8px 24px -16px rgba(40, 32, 24, 0.18);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Base element styles live in @layer base so Tailwind utilities
-   (text-white over photography, for example) can still override them. */
+/* Section rhythm. One value, used everywhere. */
+@theme {
+  --section-y: clamp(80px, 10vw, 160px);
+  --measure: 65ch;
+}
+
 @layer base {
   html {
     background: var(--color-canvas);
@@ -50,18 +99,19 @@
     background: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    line-height: 1.6;
+    font-size: var(--text-body);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
+    font-weight: 400; /* Young Serif has one weight. Never synthesise. */
+    font-synthesis-weight: none;
     color: var(--color-ink);
     text-wrap: balance;
   }
@@ -69,11 +119,63 @@
   p {
     text-wrap: pretty;
   }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    color: var(--color-ink);
+  }
 }
 
-::selection {
-  background: color-mix(in srgb, var(--color-gold) 45%, transparent);
-  color: var(--color-ink);
+@layer components {
+  /* Section vertical rhythm */
+  .section {
+    padding-block: var(--section-y);
+  }
+
+  /* Prose measure */
+  .measure {
+    max-width: var(--measure);
+  }
+
+  /* Eyebrow: letterspaced, muted, with real clear space beneath */
+  .eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-navy);
+    margin-bottom: calc(var(--spacing) * 3);
+  }
+
+  .eyebrow-invert {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* Warm gradient over hero photography. Lighter than a flat scrim, and warm
+     rather than grey so it sits with the sand palette. */
+  .hero-wash {
+    background:
+      linear-gradient(
+        to top,
+        rgba(28, 20, 14, 0.72) 0%,
+        rgba(28, 20, 14, 0.42) 34%,
+        rgba(28, 20, 14, 0.12) 62%,
+        rgba(28, 20, 14, 0) 100%
+      ),
+      linear-gradient(to right, rgba(28, 20, 14, 0.34) 0%, rgba(28, 20, 14, 0) 62%);
+  }
+
+  .media-wash {
+    background: linear-gradient(
+      to top,
+      rgba(28, 20, 14, 0.84) 0%,
+      rgba(28, 20, 14, 0.44) 32%,
+      rgba(28, 20, 14, 0) 72%
+    );
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -82,46 +184,14 @@
   }
 }
 
-/* Small uppercase section label, used sparingly */
-.label {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-navy);
-}
-
-/* Wash for text sitting over photography */
-.wash {
-  background: linear-gradient(
-    to top,
-    rgba(12, 14, 16, 0.66) 0%,
-    rgba(12, 14, 16, 0.3) 42%,
-    rgba(12, 14, 16, 0) 78%
-  );
-}
-
-.wash-soft {
-  background: linear-gradient(
-    to top,
-    rgba(12, 14, 16, 0.88) 0%,
-    rgba(12, 14, 16, 0.55) 30%,
-    rgba(12, 14, 16, 0.12) 60%,
-    rgba(12, 14, 16, 0) 100%
-  );
-}
-
-/* Warm grain. A pre-rendered tile costs the GPU far less than a live
-   feTurbulence filter, and it is skipped on coarse pointers and when the
-   viewer prefers reduced motion. */
+/* Fixed, inert grain. Skipped on touch and under reduced motion. */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.02;
+  opacity: 0.018;
   background-image: url("/images/noise.png");
   background-repeat: repeat;
   background-size: 96px 96px;
@@ -134,7 +204,7 @@
 }
 
 :where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid var(--color-navy);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
   border-radius: 3px;
 }

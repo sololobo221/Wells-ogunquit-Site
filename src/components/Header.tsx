@@ -15,21 +15,25 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 20));
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
+
+  // Transparent over the hero on the home page only; interior pages have
+  // shorter heroes and read better with the bar present from the start.
+  const overHero = pathname === "/" && !scrolled && !open;
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
-          scrolled || open ? "border-line bg-canvas" : "border-transparent bg-canvas"
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ease-[var(--ease-out)] ${
+          overHero ? "bg-transparent" : "bg-canvas/95 shadow-nav backdrop-blur-[2px]"
         }`}
       >
-        <div className="mx-auto flex h-[78px] max-w-[1400px] items-center justify-between gap-8 px-5 lg:px-10">
+        <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between gap-8 px-6 lg:px-10">
           <Link href="/" aria-label={site.name} className="shrink-0">
-            <Logo width={132} priority />
+            <Logo width={124} priority />
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-9 lg:flex">
             {nav.map((item) => {
               const active = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
@@ -37,8 +41,12 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`text-[0.86rem] transition-colors duration-200 ${
-                    active ? "text-navy" : "text-muted hover:text-ink"
+                  className={`text-small transition-colors duration-200 ${
+                    overHero
+                      ? "text-white/85 hover:text-white"
+                      : active
+                        ? "text-navy"
+                        : "text-muted hover:text-ink"
                   }`}
                 >
                   {item.label}
@@ -50,56 +58,61 @@ export default function Header() {
           <div className="flex shrink-0 items-center gap-4">
             <a
               href={site.phones.tollFreeHref}
-              className="hidden text-[0.86rem] tabular-nums text-muted transition-colors duration-200 hover:text-ink xl:block"
+              className={`hidden text-small tabular-nums transition-colors duration-200 xl:block ${
+                overHero ? "text-white/85 hover:text-white" : "text-muted hover:text-ink"
+              }`}
             >
               {site.phones.tollFree}
             </a>
-            <BookNow size="sm" className="hidden sm:inline-flex" />
+            <span className="hidden sm:block">
+              <BookNow size="sm" />
+            </span>
             <button
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="grid h-9 w-9 place-items-center rounded-[var(--radius-control)] text-ink transition-colors duration-200 hover:bg-ink/5 lg:hidden"
+              className={`grid h-11 w-11 place-items-center rounded-[var(--radius-control)] transition-colors duration-200 lg:hidden ${
+                overHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-ink/5"
+              }`}
             >
-              {open ? <X size={20} weight="bold" /> : <List size={20} weight="bold" />}
+              {open ? <X size={22} weight="bold" /> : <List size={22} weight="bold" />}
             </button>
           </div>
         </div>
       </header>
 
+      {/* Full-screen mobile menu. Large tap targets, booking CTA always visible. */}
       <motion.div
         initial={false}
         animate={open ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
-        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed inset-0 z-40 bg-canvas lg:hidden"
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-0 z-40 flex flex-col bg-canvas lg:hidden"
       >
-        <nav className="flex h-full flex-col justify-center gap-1 px-8">
+        <nav className="flex flex-1 flex-col justify-center px-6 pt-20">
           {nav.map((item, i) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}
-              className={`border-b border-line py-4 font-display text-[1.9rem] transition-all duration-400 ${
+              style={{ transitionDelay: open ? `${60 + i * 35}ms` : "0ms" }}
+              className={`border-b border-line py-5 font-display text-h3 transition-[opacity,transform] duration-300 ease-[var(--ease-out)] ${
                 pathname === item.href ? "text-navy" : "text-ink"
-              } ${open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+              } ${open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
             >
               {item.label}
             </Link>
           ))}
-          <div
-            style={{ transitionDelay: open ? `${80 + nav.length * 45}ms` : "0ms" }}
-            className={`mt-9 flex flex-col items-start gap-4 transition-all duration-400 ${
-              open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <BookNow size="lg" />
-            <a href={site.phones.tollFreeHref} className="text-[0.9rem] tabular-nums text-muted">
-              {site.phones.tollFree}
-            </a>
-          </div>
         </nav>
+        <div className="flex flex-col gap-4 border-t border-line px-6 pb-10 pt-6">
+          <BookNow size="lg" className="w-full" />
+          <a
+            href={site.phones.tollFreeHref}
+            className="py-2 text-center text-small tabular-nums text-muted"
+          >
+            {site.phones.tollFree}
+          </a>
+        </div>
       </motion.div>
     </>
   );

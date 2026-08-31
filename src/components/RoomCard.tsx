@@ -3,39 +3,54 @@ import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import type { Room } from "@/lib/rooms";
 
+/**
+ * Reads as a listing: image, then name, then sleeping configuration as its own
+ * distinct tier, then description. The step-free tag is a real pill badge.
+ */
 export default function RoomCard({ room, priority = false }: { room: Room; priority?: boolean }) {
   const stepFree = room.stairs.toLowerCase().startsWith("no stairs");
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface transition-shadow duration-200 hover:shadow-hover">
-      <Link href={`/rooms/${room.slug}`} className="relative block aspect-[4/3] overflow-hidden bg-canvas">
+    <article className="group flex h-full flex-col">
+      <Link
+        href={`/rooms/${room.slug}`}
+        className="relative block aspect-[3/2] overflow-hidden rounded-[var(--radius-card)] bg-sand"
+      >
         <Image
           src={room.images[0].src}
           alt={room.images[0].alt}
           fill
           priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 31vw"
+          className="object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.03]"
         />
         {stepFree && (
-          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] uppercase tracking-[0.08em] text-ink">
+          <span className="absolute left-4 top-4 inline-flex items-center rounded-[var(--radius-pill)] bg-white/95 px-3 py-1 text-eyebrow uppercase tracking-[0.14em] text-ink shadow-card">
             Step free
           </span>
         )}
       </Link>
 
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-[1.35rem] leading-[1.15]">{room.name}</h3>
-        <p className="mt-2 text-[0.82rem] leading-[1.55] text-faint">
+      <div className="flex flex-1 flex-col pt-6">
+        <h3 className="text-h4">{room.name}</h3>
+
+        {/* Sleeping configuration as its own tier, not buried in prose */}
+        <p className="mt-3 border-t border-line pt-3 text-micro text-faint">
           {room.beds}. {room.sleeps}.
         </p>
-        <p className="mt-3 line-clamp-2 text-[0.88rem] leading-[1.6] text-muted">{room.blurb}</p>
+
+        <p className="mt-4 line-clamp-2 text-small text-muted">{room.blurb}</p>
+
         <Link
           href={`/rooms/${room.slug}`}
-          className="mt-auto inline-flex w-fit items-center gap-1.5 pt-5 text-[0.85rem] text-navy transition-colors duration-200 hover:text-ink"
+          className="mt-auto inline-flex w-fit items-center gap-1.5 pt-6 text-small text-navy underline decoration-navy/30 decoration-1 underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-ink/60"
         >
           View room
-          <ArrowUpRight size={14} weight="bold" className="transition-transform duration-200 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
+          <ArrowUpRight
+            size={14}
+            weight="bold"
+            className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
         </Link>
       </div>
     </article>

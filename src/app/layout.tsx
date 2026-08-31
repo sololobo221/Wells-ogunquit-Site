@@ -1,21 +1,28 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Geist } from "next/font/google";
+import { Young_Serif, Geist } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileBookBar from "@/components/MobileBookBar";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+// Display face. One weight by design, so hierarchy comes from size.
+// adjustFontFallback matches the fallback metrics so the swap does not reflow.
+const youngSerif = Young_Serif({
+  variable: "--font-young-serif",
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
+  adjustFontFallback: true,
+  fallback: ["Iowan Old Style", "Georgia", "serif"],
 });
 
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
   display: "swap",
+  adjustFontFallback: true,
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -64,7 +71,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${playfair.variable} ${geist.variable} h-full antialiased`}>
+    <html lang="en" className={`${youngSerif.variable} ${geist.variable} h-full antialiased`}>
       <body className="grain flex min-h-full flex-col bg-canvas text-ink">
         <script
           type="application/ld+json"
@@ -72,7 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[var(--radius-control)] focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[var(--radius-control)] focus:bg-accent focus:px-6 focus:py-3 focus:text-small focus:text-white"
         >
           Skip to content
         </a>

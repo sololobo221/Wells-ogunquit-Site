@@ -10,7 +10,7 @@ type Props = {
   as?: "div" | "section" | "li" | "article" | "figure";
 };
 
-/** Calm fade-up on entry. transform + opacity only. */
+/** Fade and rise on entry. 350ms, ease-out, 16px, once. Nothing else. */
 export default function Reveal({ children, delay = 0, className, as = "div" }: Props) {
   const reduce = useReducedMotion();
   const Tag = motion[as];
@@ -18,10 +18,10 @@ export default function Reveal({ children, delay = 0, className, as = "div" }: P
   return (
     <Tag
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 22 }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.35, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </Tag>

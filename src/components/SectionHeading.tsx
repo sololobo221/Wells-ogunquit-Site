@@ -4,18 +4,26 @@ export default function SectionHeading({
   label,
   title,
   intro,
+  invert = false,
   className = "",
 }: {
   label?: string;
   title: string;
   intro?: string;
+  invert?: boolean;
   className?: string;
 }) {
   return (
-    <Reveal className={`max-w-2xl ${className}`}>
-      {label && <p className="label mb-4">{label}</p>}
-      <h2 className="text-[1.95rem] leading-[1.1] sm:text-[2.5rem] lg:text-[2.9rem]">{title}</h2>
-      {intro && <p className="mt-5 max-w-[62ch] text-[1rem] leading-[1.65] text-muted">{intro}</p>}
+    <Reveal className={className}>
+      {label && <span className={`eyebrow ${invert ? "eyebrow-invert" : ""}`}>{label}</span>}
+      <h2 className={`text-h2 max-w-[18ch] ${invert ? "!text-white" : ""}`}>{title}</h2>
+      {intro && (
+        <p
+          className={`measure mt-6 text-lead ${invert ? "text-white/80" : "text-muted"}`}
+        >
+          {intro}
+        </p>
+      )}
     </Reveal>
   );
 }

@@ -34,12 +34,12 @@ export default function SpecialsPage() {
       />
 
       {/* Current status. No invented offers. */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-28">
-        <Reveal className="rounded-[var(--radius-card)] border border-line bg-surface p-8 sm:p-12">
-          <h2 className="max-w-[24ch] font-display text-[1.8rem] leading-[1.12] sm:text-[2.3rem]">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
+        <Reveal className="rounded-[var(--radius-card)] bg-surface shadow-card p-8 sm:p-12">
+          <h2 className="max-w-[24ch] font-display text-h2">
             No discounts are running at the moment
           </h2>
-          <p className="mt-5 max-w-[58ch] leading-[1.7] text-muted">
+          <p className="mt-5 max-w-[58ch] text-muted">
             Worth a look before you book. In the meantime, live availability and current rates for
             every room type are on our booking page.
           </p>
@@ -47,7 +47,7 @@ export default function SpecialsPage() {
             <BookNow size="lg" label="See live availability" />
             <a
               href={site.phones.tollFreeHref}
-              className="text-[0.93rem] tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
+              className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
             >
               or call {site.phones.tollFree}
             </a>
@@ -56,8 +56,8 @@ export default function SpecialsPage() {
       </section>
 
       {/* Always included */}
-      <section className="border-y border-line bg-surface py-24 lg:py-32">
-        <div className="mx-auto grid max-w-[1400px] gap-14 px-5 lg:grid-cols-12 lg:gap-20 lg:px-10">
+      <section className="bg-sand section">
+        <div className="mx-auto grid max-w-[1400px] gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
           <div className="lg:col-span-5">
             <SectionHeading
               label="Every stay"
@@ -69,8 +69,8 @@ export default function SpecialsPage() {
             <div className="grid gap-x-12 gap-y-7 sm:grid-cols-2">
               {included.map(([t, d], i) => (
                 <Reveal key={t} delay={(i % 2) * 0.06}>
-                  <h3 className="font-display text-[1.15rem] leading-tight text-navy">{t}</h3>
-                  <p className="mt-2 text-[0.86rem] leading-[1.6] text-muted">{d}</p>
+                  <h3 className="font-display text-lead leading-tight text-navy">{t}</h3>
+                  <p className="mt-2 text-small text-muted">{d}</p>
                 </Reveal>
               ))}
             </div>
@@ -79,18 +79,18 @@ export default function SpecialsPage() {
       </section>
 
       {/* Groups */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10">
-        <Reveal className="flex flex-col justify-between gap-6 rounded-[var(--radius-card)] border border-line bg-surface p-8 sm:flex-row sm:items-center lg:p-10">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
+        <Reveal className="flex flex-col justify-between gap-6 rounded-[var(--radius-card)] bg-surface shadow-card p-8 sm:flex-row sm:items-center lg:p-10">
           <div>
-            <h2 className="font-display text-[1.5rem] leading-tight">Groups, buses and families</h2>
-            <p className="mt-2 max-w-[58ch] text-[0.9rem] leading-[1.6] text-muted">
+            <h2 className="font-display text-h3 leading-tight">Groups, buses and families</h2>
+            <p className="mt-2 max-w-[58ch] text-small text-muted">
               Travelling as a group, or booking several rooms at once? Give us a call and we'll
               work it out with you. It's easier than doing it online.
             </p>
           </div>
           <Link
             href="/contact"
-            className="group inline-flex shrink-0 items-center gap-1.5 text-[0.9rem] text-navy transition-colors duration-200 hover:text-ink"
+            className="group inline-flex shrink-0 items-center gap-1.5 text-small text-navy transition-colors duration-200 hover:text-ink"
           >
             Get in touch
             <ArrowUpRight

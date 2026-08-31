@@ -4,20 +4,23 @@ import BookNow from "./BookNow";
 import Logo from "./Logo";
 
 export default function Footer() {
+  const linkCls =
+    "text-small text-muted transition-colors duration-200 hover:text-ink";
+
   return (
-    <footer className="mt-auto border-t border-line bg-surface">
-      <div className="mx-auto max-w-[1400px] px-5 py-16 lg:px-10 lg:py-20">
-        <div className="flex flex-col justify-between gap-10 border-b border-line pb-14 lg:flex-row lg:items-end">
-          <p className="max-w-lg font-display text-[1.7rem] leading-[1.15] sm:text-[2.2rem]">
+    <footer className="mt-auto bg-sand">
+      <div className="mx-auto max-w-[1400px] px-6 py-20 lg:px-10 lg:py-24">
+        <div className="flex flex-col justify-between gap-10 border-b border-ink/12 pb-16 lg:flex-row lg:items-end">
+          <p className="max-w-[18ch] font-display text-h2">
             Come and stay a while on the Southern Maine coast.
           </p>
           <BookNow size="lg" className="w-fit shrink-0" />
         </div>
 
-        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <div className="lg:col-span-2">
-            <Logo width={210} />
-            <address className="mt-6 space-y-1.5 text-[0.87rem] not-italic leading-[1.7] text-muted">
+            <Logo width={196} />
+            <address className="mt-8 space-y-2 text-small not-italic text-muted">
               <a
                 href={`https://maps.google.com/?q=${encodeURIComponent(site.address.full)}`}
                 target="_blank"
@@ -49,48 +52,34 @@ export default function Footer() {
             </address>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-col gap-3 text-[0.87rem]">
+          <nav aria-label="Footer" className="flex flex-col items-start gap-3">
             {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-muted transition-colors duration-200 hover:text-ink"
-              >
+              <Link key={item.href} href={item.href} className={linkCls}>
                 {item.label}
               </Link>
             ))}
-            <Link href="/specials" className="text-muted transition-colors duration-200 hover:text-ink">
+            <Link href="/specials" className={linkCls}>
               Specials
             </Link>
           </nav>
 
-          <div className="flex flex-col gap-3 text-[0.87rem]">
-            <a
-              href={site.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted transition-colors duration-200 hover:text-ink"
-            >
+          <div className="flex flex-col items-start gap-3">
+            <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className={linkCls}>
               Facebook
             </a>
-            <a
-              href={site.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted transition-colors duration-200 hover:text-ink"
-            >
+            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className={linkCls}>
               Instagram
             </a>
-            <Link href="/policies" className="text-muted transition-colors duration-200 hover:text-ink">
+            <Link href="/policies" className={linkCls}>
               Policies
             </Link>
-            <Link href="/privacy" className="text-muted transition-colors duration-200 hover:text-ink">
+            <Link href="/privacy" className={linkCls}>
               Privacy
             </Link>
           </div>
         </div>
 
-        <p className="border-t border-line pt-8 text-[0.78rem] text-faint">
+        <p className="border-t border-ink/12 pt-8 text-micro text-faint">
           {new Date().getFullYear()} {site.name}. {site.season}
         </p>
       </div>

@@ -44,11 +44,11 @@ const policies = [
 export default function PoliciesPage() {
   return (
     <>
-      <section className="mx-auto max-w-3xl px-5 pb-20 pt-36 lg:px-10 lg:pt-44">
+      <section className="mx-auto max-w-3xl px-6 pb-20 pt-36 lg:px-10 lg:pt-44">
         <Reveal>
-          <p className="label">Good to know</p>
-          <h1 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-[3.4rem]">Policies</h1>
-          <p className="mt-5 text-[1rem] leading-[1.7] text-muted">
+          <span className="eyebrow">Good to know</span>
+          <h1 className="mt-5 text-h1">Policies</h1>
+          <p className="mt-5 text-body text-muted">
             The practical details, in plain terms. If anything here affects your plans, call us on{" "}
             <a
               href={site.phones.tollFreeHref}
@@ -64,8 +64,8 @@ export default function PoliciesPage() {
           {policies.map((p, i) => (
             <Reveal key={p.t} delay={i * 0.05}>
               <div className="border-b border-line py-6">
-                <dt className="font-display text-[1.3rem] leading-tight">{p.t}</dt>
-                <dd className="mt-2.5 text-[0.92rem] leading-[1.7] text-muted">{p.d}</dd>
+                <dt className="font-display text-h4 leading-tight">{p.t}</dt>
+                <dd className="mt-2.5 text-small text-muted">{p.d}</dd>
               </div>
             </Reveal>
           ))}

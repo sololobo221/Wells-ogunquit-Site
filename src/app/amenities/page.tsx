@@ -61,7 +61,7 @@ export default function AmenitiesPage() {
       />
 
       {/* Clustered amenity groups */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
           label="On the property"
           title="Everything on this page is included"
@@ -71,12 +71,12 @@ export default function AmenitiesPage() {
         <div className="mt-16 grid gap-x-16 gap-y-14 md:grid-cols-2">
           {groups.map((g, gi) => (
             <Reveal key={g.heading} delay={gi * 0.06}>
-              <h3 className="font-display text-[1.4rem] leading-tight text-navy">{g.heading}</h3>
+              <h3 className="font-display text-h4 leading-tight text-navy">{g.heading}</h3>
               <dl className="mt-5 space-y-4">
                 {g.items.map(([t, d]) => (
                   <div key={t}>
-                    <dt className="text-[0.95rem] text-ink">{t}</dt>
-                    <dd className="mt-1 text-[0.86rem] leading-[1.6] text-muted">{d}</dd>
+                    <dt className="text-small text-ink">{t}</dt>
+                    <dd className="mt-1 text-small text-muted">{d}</dd>
                   </div>
                 ))}
               </dl>
@@ -84,7 +84,7 @@ export default function AmenitiesPage() {
           ))}
         </div>
 
-        <Reveal delay={0.1} className="mt-14 text-[0.85rem] leading-[1.7] text-faint">
+        <Reveal delay={0.1} className="mt-14 text-small text-faint">
           <p>
             {site.policies.join(". ")}. The pool is solar heated from the middle of September until
             we close.
@@ -93,8 +93,8 @@ export default function AmenitiesPage() {
       </section>
 
       {/* Barbecue feature */}
-      <section className="border-y border-line bg-surface py-24 lg:py-32">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-5 lg:grid-cols-12 lg:gap-20 lg:px-10">
+      <section className="bg-sand section">
+        <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
           <div className="lg:col-span-7">
             <Reveal className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-card)] bg-canvas">
               <Image
@@ -116,7 +116,7 @@ export default function AmenitiesPage() {
       </section>
 
       {/* Gallery */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
           label="Photographs"
           title="Around the grounds"

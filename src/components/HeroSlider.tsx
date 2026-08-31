@@ -61,7 +61,7 @@ export default function HeroSlider() {
             />
           </div>
         ))}
-        <div className="wash absolute inset-0" />
+        <div className="hero-wash absolute inset-0" />
       </div>
 
       {loadRest && (

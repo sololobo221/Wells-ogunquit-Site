@@ -40,11 +40,11 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
 
   return (
     <>
-      <article className="mx-auto max-w-[1400px] px-5 pt-32 lg:px-10 lg:pt-40">
+      <article className="mx-auto max-w-[1400px] px-6 pt-32 lg:px-10 lg:pt-40">
         <Reveal>
           <Link
             href="/rooms"
-            className="group inline-flex items-center gap-2 text-[0.85rem] text-muted transition-colors duration-300 hover:text-ink"
+            className="group inline-flex items-center gap-2 text-small text-muted transition-colors duration-300 hover:text-ink"
           >
             <ArrowLeft
               size={15}
@@ -56,10 +56,10 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
 
         <header className="mt-8 grid gap-10 lg:grid-cols-12 lg:items-end">
           <Reveal className="lg:col-span-7">
-            <h1 className="text-[2.4rem] leading-[1.03] sm:text-[3.2rem]">{room.name}</h1>
+            <h1 className="text-h2">{room.name}</h1>
           </Reveal>
           <Reveal delay={0.08} className="lg:col-span-5 lg:pb-2">
-            <p className="max-w-[46ch] leading-[1.7] text-muted">{room.blurb}</p>
+            <p className="max-w-[46ch] text-muted">{room.blurb}</p>
             <div className="mt-7">
               <BookNow size="md" label="Check rates and dates" />
             </div>
@@ -94,36 +94,36 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
         </div>
 
         {/* Facts and amenities */}
-        <div className="mt-20 grid gap-14 lg:grid-cols-12 lg:gap-20">
+        <div className="mt-20 grid gap-14 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
-            <h2 className="font-display text-[1.6rem] leading-tight">The details</h2>
+            <h2 className="font-display text-h3 leading-tight">The details</h2>
             <dl className="mt-6">
               {facts.map(([k, v], i) => (
                 <Reveal key={k} delay={i * 0.05}>
                   <div className="grid grid-cols-[6.5rem_1fr] gap-5 border-b border-line py-4">
-                    <dt className="text-[0.76rem] uppercase tracking-[0.14em] text-faint">{k}</dt>
-                    <dd className="text-[0.92rem] leading-[1.6] text-muted">{v}</dd>
+                    <dt className="text-micro uppercase text-faint">{k}</dt>
+                    <dd className="text-small text-muted">{v}</dd>
                   </div>
                 </Reveal>
               ))}
             </dl>
-            <p className="mt-6 text-[0.85rem] leading-[1.7] text-faint">
+            <p className="mt-6 text-small text-faint">
               {site.cancellation} {site.policies.join(". ")}.
             </p>
           </div>
 
           <div className="lg:col-span-7">
-            <h2 className="font-display text-[1.6rem] leading-tight">In this room</h2>
+            <h2 className="font-display text-h3 leading-tight">In this room</h2>
             <ul className="mt-6 grid grid-cols-1 gap-x-12 sm:grid-cols-2">
               {inRoomAmenities.map((a, i) => (
                 <Reveal as="li" key={a} delay={i * 0.03}>
-                  <span className="block border-b border-line py-4 text-[0.92rem] text-muted">
+                  <span className="block border-b border-line py-4 text-small text-muted">
                     {a}
                   </span>
                 </Reveal>
               ))}
             </ul>
-            <p className="mt-6 text-[0.85rem] leading-[1.7] text-faint">
+            <p className="mt-6 text-small text-faint">
               Plus the shared grounds: the heated saltwater pool, gas grills with all the dining
               supplies, gazebos, picnic tables, the playground and the sand play area.
             </p>
@@ -132,12 +132,12 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
       </article>
 
       {/* Other rooms */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <div className="flex items-end justify-between gap-6">
-          <h2 className="font-display text-[1.8rem] leading-tight sm:text-[2.3rem]">Other rooms</h2>
+          <h2 className="font-display text-h2 leading-tight">Other rooms</h2>
           <Link
             href="/rooms"
-            className="group inline-flex shrink-0 items-center gap-1.5 text-[0.9rem] text-navy transition-colors duration-300 hover:text-ink"
+            className="group inline-flex shrink-0 items-center gap-1.5 text-small text-navy transition-colors duration-300 hover:text-ink"
           >
             See all six
             <ArrowUpRight
