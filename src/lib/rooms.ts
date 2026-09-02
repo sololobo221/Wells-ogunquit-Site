@@ -8,6 +8,9 @@ export type Room = {
   blurb: string;
   images: { src: string; alt: string }[];
   featured?: boolean;
+  // Cloudbeds room type id, from the property's dashboard. Set this to let the
+  // room be booked through the direct Pay-by-Link form at /booking.
+  cloudbedsRoomTypeID?: string;
 };
 
 export const inRoomAmenities = [

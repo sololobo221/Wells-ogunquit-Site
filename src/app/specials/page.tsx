@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const included = [
   ["Best available rate", "No third party in the middle, and no markup on top."],
   ["Free changes", site.cancellation],
-  ["Breakfast for everyone", "Fresh coffee and something made that morning, 7 to 10 daily."],
+  ["Breakfast for everyone", "Fresh coffee and something made that morning, 7 to 9:30 daily."],
   ["The pool and the grills", "Heated saltwater pool, gas grills and all the dining supplies."],
   ["Wi-Fi throughout", "On the whole property, at no charge."],
   ["We answer the phone", "Call and speak to the family who run the place."],
@@ -44,7 +44,7 @@ export default function SpecialsPage() {
             every room type are on our booking page.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <BookNow size="lg" label="See live availability" />
+            <BookNow size="lg" label="See live availability" href={site.bookingUrl} external />
             <a
               href={site.phones.tollFreeHref}
               className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
@@ -84,8 +84,8 @@ export default function SpecialsPage() {
           <div>
             <h2 className="font-display text-h3 leading-tight">Groups, buses and families</h2>
             <p className="mt-2 max-w-[58ch] text-small text-muted">
-              Travelling as a group, or booking several rooms at once? Give us a call and we'll
-              work it out with you. It's easier than doing it online.
+              Travelling as a group, or booking several rooms at once? Give us a call and we&apos;ll
+              work it out with you. It&apos;s easier than doing it online.
             </p>
           </div>
           <Link

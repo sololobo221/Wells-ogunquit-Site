@@ -14,9 +14,7 @@ export default function MobileBookBar() {
         Call us
       </a>
       <Link
-        href={site.bookingUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/booking"
         className="flex h-12 items-center justify-center rounded-[var(--radius-control)] bg-accent text-small font-medium text-white transition-[background-color,transform] duration-200 active:translate-y-px"
       >
         Book a room

@@ -137,8 +137,8 @@ export default function Home() {
             >
               <div className="relative mb-7 aspect-[16/10] overflow-hidden rounded-[var(--radius-media)]">
                 <Image
-                  src="/images/breakfast-muffins.jpg"
-                  alt="Muffins and pastries set out for the morning"
+                  src="/images/breakfast-muffins-pan.jpg"
+                  alt="Muffins fresh from the oven in the pan"
                   fill
                   sizes="(max-width: 768px) 92vw, 30vw"
                   className="object-cover"
@@ -147,8 +147,8 @@ export default function Home() {
               <div>
                 <h3 className="text-h4">Breakfast, on us</h3>
                 <p className="mt-3 text-small text-muted">
-                  Coffee and something baked that morning, 7 to 10. Eat it in the garden or take it
-                  down to the beach.
+                  Coffee and something baked that morning, served 7 to 9:30 in the sunny breakfast
+                  room.
                 </p>
               </div>
             </Reveal>
@@ -251,12 +251,12 @@ export default function Home() {
           <div className="lg:col-span-5">
             <SectionHeading
               title="Coffee is on by seven"
-              intro="Stop by the office, say good morning, and help yourself to coffee, tea or hot chocolate and something fresh out of the oven. It's free, every morning of your stay."
+              intro="Come down to the breakfast room, say good morning, and help yourself to coffee, tea or hot chocolate and something fresh out of the oven. It's free, every morning of your stay."
             />
             <Reveal delay={0.05} className="measure mt-8 text-muted">
               <p>
-                Muffins, pastries, yogurt. Eat at the picnic tables in the garden, or wrap it up and
-                take it down to the sand. {site.breakfastHours}
+                Muffins baked that morning, bagels, fresh fruit and yogurt, set out in the sunny
+                breakfast room overlooking the garden. {site.breakfastHours}
               </p>
             </Reveal>
             <Reveal delay={0.1} className="mt-10">
@@ -266,8 +266,8 @@ export default function Home() {
           <div className="lg:col-span-7">
             <Reveal className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-card)] bg-canvas">
               <Image
-                src="/images/breakfast-mugs.jpg"
-                alt="Mugs of coffee and pastry laid out in the morning"
+                src="/images/breakfast-room.jpg"
+                alt="The sunny breakfast room set out for the morning, with garden views"
                 fill
                 sizes="(max-width: 1024px) 92vw, 54vw"
                 className="object-cover"

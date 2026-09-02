@@ -61,7 +61,7 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
           <Reveal delay={0.08} className="lg:col-span-5 lg:pb-2">
             <p className="max-w-[46ch] text-muted">{room.blurb}</p>
             <div className="mt-7">
-              <BookNow size="md" label="Check rates and dates" />
+              <BookNow size="md" label="Check rates and dates" href={site.bookingUrl} external />
             </div>
           </Reveal>
         </header>

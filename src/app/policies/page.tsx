@@ -29,7 +29,7 @@ const policies = [
   },
   {
     t: "Breakfast",
-    d: "Grab 'n' go breakfast is served daily from 7:00 to 10:00 AM in the office, free to all motel studio and suite guests.",
+    d: "A fresh continental breakfast is served daily from 7:00 to 9:30 AM in the breakfast room, free to all motel studio and suite guests.",
   },
   {
     t: "Pool",

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
-import { site } from "@/lib/site";
 
 /**
  * Two variants only.
@@ -38,8 +37,8 @@ export default function BookNow({
   size = "md",
   className = "",
   label = "Book a room",
-  href = site.bookingUrl,
-  external = true,
+  href = "/booking",
+  external = false,
 }: {
   variant?: Variant;
   size?: Size;

@@ -26,7 +26,7 @@ export const site = {
     instagramHandle: "@wellsogunquitmotel",
   },
   season: "We're open from spring through late October, foliage season included.",
-  breakfastHours: "Breakfast runs from 7 to 10 every morning.",
+  breakfastHours: "Breakfast runs from 7 to 9:30 every morning.",
   cancellation: "Cancel or move your dates free, up to 48 hours before you arrive.",
   policies: ["Every room is non-smoking", "Sorry, no pets", "We don't have ADA rooms"],
 } as const;
