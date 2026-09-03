@@ -33,7 +33,7 @@ const policies = [
   },
   {
     t: "Pool",
-    d: "The heated saltwater pool is solar-heated late in the season, and the pool area stays open for sunbathing until the motel closes for the year.",
+    d: site.poolSeason,
   },
   {
     t: "Season",

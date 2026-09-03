@@ -19,14 +19,14 @@ const groups = [
   {
     heading: "Water and sun",
     items: [
-      ["Heated saltwater pool", "Gentle on skin, no harsh chemicals, warm into the autumn."],
+      ["Heated saltwater pool", "Gentle on skin, and no harsh chemicals. Open from mid-May."],
       ["Pool deck and loungers", "Open for sunbathing right up to the day we close for the year."],
     ],
   },
   {
     heading: "The garden kitchen",
     items: [
-      ["Gas grills, smokers and an outside stove", "A full outdoor kitchen area beside the picnic tables."],
+      ["Gas grills, smokers and an outside stove", `A full outdoor kitchen beside the picnic tables. ${site.grillHours}`],
       ["Dining supplies lent", "Lobster pots, plates, utensils, even the tablecloth."],
       ["Gazebos and picnic tables", "Shaded seats scattered through the garden."],
     ],
@@ -86,8 +86,7 @@ export default function AmenitiesPage() {
 
         <Reveal delay={0.1} className="mt-14 text-small text-faint">
           <p>
-            {site.policies.join(". ")}. The pool is solar heated from the middle of September until
-            we close.
+            {site.policies.join(". ")}. {site.poolSeason}
           </p>
         </Reveal>
       </section>

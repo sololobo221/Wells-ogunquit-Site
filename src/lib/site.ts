@@ -27,6 +27,9 @@ export const site = {
   },
   season: "We're open from spring through late October, foliage season included.",
   breakfastHours: "Breakfast runs from 7 to 9:30 every morning.",
+  poolSeason:
+    "The heated saltwater pool opens in mid-May. The heat stays on until the third week of September, and the pool area stays open for sunbathing until we close for the year.",
+  grillHours: "The grills are open from 11am to 8pm.",
   cancellation: "Cancel or move your dates free, up to 48 hours before you arrive.",
   policies: ["Every room is non-smoking", "Sorry, no pets", "We don't have ADA rooms"],
 } as const;
