@@ -320,8 +320,8 @@ export default function BookingForm({
       </button>
 
       <p className="mt-4 text-micro text-faint">
-        You will be taken to a secure Cloudbeds payment page to confirm. Free to change or cancel up
-        to 48 hours before you arrive.
+        Next you&apos;ll pay on a secure Cloudbeds page to confirm the room. Free to change or cancel
+        up to 48 hours before you arrive.
       </p>
     </form>
   );

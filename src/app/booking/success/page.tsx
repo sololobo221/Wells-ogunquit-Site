@@ -5,7 +5,7 @@ import TextLink from "@/components/TextLink";
 export const metadata: Metadata = {
   title: "Booking confirmed",
   description:
-    "Your reservation with Wells-Ogunquit Resort has been received. We look forward to welcoming you to the Southern Maine coast.",
+    "Your reservation with Wells-Ogunquit Resort has been received. Your confirmation is on its way by email.",
 };
 
 export default async function BookingSuccessPage({
@@ -27,8 +27,8 @@ export default async function BookingSuccessPage({
         </h1>
         <p className="mt-6 text-lead text-muted">
           {confirmed
-            ? `Thank you for booking with ${site.shortName}. A confirmation is on its way to your inbox, and we look forward to welcoming you to the coast.`
-            : `Thank you for booking with ${site.shortName}. We're finalizing the details now and will email your confirmation shortly.`}
+            ? `Thanks for booking with ${site.shortName}. Your confirmation is on its way by email, and we'll see you on the coast.`
+            : `Thanks for booking with ${site.shortName}. We're confirming the details now, and your confirmation will follow by email.`}
         </p>
 
         {resId ? (

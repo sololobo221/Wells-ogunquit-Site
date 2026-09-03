@@ -26,7 +26,7 @@ const groups = [
   {
     heading: "The garden kitchen",
     items: [
-      ["Gas grills and outside stove", "A full outdoor kitchen area beside the picnic tables."],
+      ["Gas grills, smokers and an outside stove", "A full outdoor kitchen area beside the picnic tables."],
       ["Dining supplies lent", "Lobster pots, plates, utensils, even the tablecloth."],
       ["Gazebos and picnic tables", "Shaded seats scattered through the garden."],
     ],
@@ -98,8 +98,8 @@ export default function AmenitiesPage() {
           <div className="lg:col-span-7">
             <Reveal className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-card)] bg-canvas">
               <Image
-                src="/images/garden-view.jpg"
-                alt="The garden and lawn where the grills and picnic tables sit"
+                src="/images/grill-smokers.jpg"
+                alt="The grills and smokers by the picnic tables in the garden"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover"
@@ -109,7 +109,7 @@ export default function AmenitiesPage() {
           <div className="lg:col-span-5">
             <SectionHeading
               title="A kitchen outside, and everything to cook with"
-              intro="Bring whatever you want to cook. The grills, the lobster pots, the plates and the utensils are all here to use. Washing up afterwards is down to you."
+              intro="Bring whatever you want to cook. The grills and smokers, the lobster pots, the plates and the utensils are all here to use. Washing up afterwards is down to you."
             />
           </div>
         </div>

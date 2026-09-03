@@ -147,8 +147,7 @@ export default function Home() {
               <div>
                 <h3 className="text-h4">Breakfast, on us</h3>
                 <p className="mt-3 text-small text-muted">
-                  Coffee and something baked that morning, served 7 to 9:30 in the sunny breakfast
-                  room.
+                  Coffee and something baked that morning, served 7 to 9:30 in the breakfast room.
                 </p>
               </div>
             </Reveal>

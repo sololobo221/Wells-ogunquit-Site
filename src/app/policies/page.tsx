@@ -29,7 +29,7 @@ const policies = [
   },
   {
     t: "Breakfast",
-    d: "A fresh continental breakfast is served daily from 7:00 to 9:30 AM in the breakfast room, free to all motel studio and suite guests.",
+    d: "Breakfast is served every morning from 7:00 to 9:30 in the breakfast room, free to all motel studio and suite guests.",
   },
   {
     t: "Pool",

@@ -87,8 +87,8 @@ export default function BreakfastPage() {
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
           <SectionHeading
             label="Every morning"
-            title="A proper spread, laid out in the room"
-            intro="Baked goods, bagels and toast, fresh fruit, juice and hot drinks, set out in the bright breakfast room for you to help yourself and sit down."
+            title="Help yourself, and find a table"
+            intro="It's all set out and ready in the bright breakfast room by seven."
           />
           <div className="mt-14 grid gap-3 sm:grid-cols-3">
             {spread.map((img, i) => (
