@@ -46,7 +46,7 @@ export default async function BookingPage({
   if (sp.children) fallbackUrl.searchParams.set("kids", sp.children);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 pb-28 pt-36 lg:px-10 lg:pb-24 lg:pt-44">
+    <section className="mx-auto max-w-[1400px] px-6 pb-28 pt-28 lg:px-10 lg:pb-24 lg:pt-40">
       <div className="max-w-[46ch]">
         <span className="eyebrow">Reserve your stay</span>
         <h1 className="text-h2">Book direct with us</h1>
