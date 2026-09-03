@@ -44,7 +44,7 @@ const policies = [
 export default function PoliciesPage() {
   return (
     <>
-      <section className="mx-auto max-w-3xl px-6 pb-20 pt-36 lg:px-10 lg:pt-44">
+      <section className="mx-auto max-w-3xl px-6 pb-20 pt-28 lg:px-10 lg:pt-40">
         <Reveal>
           <span className="eyebrow">Good to know</span>
           <h1 className="mt-5 text-h1">Policies</h1>

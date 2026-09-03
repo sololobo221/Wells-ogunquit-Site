@@ -40,7 +40,7 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
 
   return (
     <>
-      <article className="mx-auto max-w-[1400px] px-6 pt-32 lg:px-10 lg:pt-40">
+      <article className="mx-auto max-w-[1400px] px-6 pt-28 lg:px-10 lg:pt-40">
         <Reveal>
           <Link
             href="/rooms"

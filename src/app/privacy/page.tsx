@@ -33,7 +33,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 pb-24 pt-36 lg:px-10 lg:pt-44">
+    <section className="mx-auto max-w-3xl px-6 pb-24 pt-28 lg:px-10 lg:pt-40">
       <Reveal>
         <span className="eyebrow">Privacy</span>
         <h1 className="mt-5 text-h1">

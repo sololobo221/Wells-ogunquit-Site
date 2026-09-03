@@ -93,6 +93,8 @@
 @layer base {
   html {
     background: var(--color-canvas);
+    /* Keep in-page anchor targets clear of the fixed header. */
+    scroll-padding-top: 6rem;
   }
 
   body {

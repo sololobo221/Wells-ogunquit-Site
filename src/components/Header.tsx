@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
@@ -12,10 +12,25 @@ import Logo from "./Logo";
 export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
+  const last = useRef(0);
 
-  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
+  useMotionValueEvent(scrollY, "change", (v) => {
+    setScrolled(v > 24);
+    const prev = last.current;
+    last.current = v;
+    // Near the top, or with the menu open, keep the bar in place.
+    if (v < 80 || open) {
+      setHidden(false);
+      return;
+    }
+    // Slide it away while scrolling down, bring it back the instant the user
+    // scrolls up. The small threshold avoids flicker from momentum jitter.
+    if (v > prev + 4) setHidden(true);
+    else if (v < prev - 4) setHidden(false);
+  });
 
   // Transparent over the hero on the home page only; interior pages have
   // shorter heroes and read better with the bar present from the start.
@@ -24,11 +39,13 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ease-[var(--ease-out)] ${
+        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow] duration-300 ease-[var(--ease-out)] ${
+          hidden && !open ? "-translate-y-full" : "translate-y-0"
+        } ${
           overHero ? "bg-transparent" : "bg-canvas/95 shadow-nav backdrop-blur-[2px]"
         }`}
       >
-        <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between gap-8 px-6 lg:px-10">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-8 px-6 lg:h-20 lg:px-10">
           <Link href="/" aria-label={site.name} className="shrink-0">
             <Logo width={124} priority />
           </Link>
@@ -87,7 +104,7 @@ export default function Header() {
         initial={false}
         animate={open ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed inset-0 z-40 flex flex-col bg-canvas lg:hidden"
+        className="fixed inset-0 z-[45] flex flex-col bg-canvas lg:hidden"
       >
         <nav className="flex flex-1 flex-col justify-center px-6 pt-20">
           {nav.map((item, i) => (

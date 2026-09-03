@@ -17,7 +17,7 @@ export default async function BookingSuccessPage({
   const confirmed = status === "confirmed";
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 pb-24 pt-36 lg:px-10 lg:pt-44">
+    <section className="mx-auto max-w-[1400px] px-6 pb-24 pt-28 lg:px-10 lg:pt-40">
       <div className="measure">
         <span className="eyebrow">
           {confirmed ? "Reservation confirmed" : "Reservation received"}

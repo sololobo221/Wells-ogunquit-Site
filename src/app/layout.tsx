@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Young_Serif, Geist } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
@@ -41,6 +41,16 @@ export const metadata: Metadata = {
   },
 };
 
+// viewport-fit=cover lets the fixed bars read env(safe-area-inset-*) so they
+// clear the iPhone home indicator. themeColor tints the mobile browser chrome
+// to match the canvas.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f7f6f3",
+};
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Motel",
@@ -72,7 +82,9 @@ const jsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${youngSerif.variable} ${geist.variable} h-full antialiased`}>
-      <body className="grain flex min-h-full flex-col bg-canvas text-ink">
+      {/* Bottom padding reserves room for the fixed MobileBookBar so the footer
+          is never hidden behind it. Removed at lg, where the bar is gone. */}
+      <body className="grain flex min-h-full flex-col bg-canvas text-ink pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
