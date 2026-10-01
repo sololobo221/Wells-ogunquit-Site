@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { rooms, inRoomAmenities } from "@/lib/rooms";
+import { CalendarCheck, Stairs, Tag } from "@phosphor-icons/react/dist/ssr";
+import { rooms } from "@/lib/rooms";
 import { site } from "@/lib/site";
 import PageHero from "@/components/PageHero";
 import RoomCard from "@/components/RoomCard";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
+import AmenityGrid from "@/components/AmenityGrid";
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
@@ -15,11 +17,13 @@ export const metadata: Metadata = {
 
 const notes = [
   {
+    icon: Tag,
     t: "Best rate here",
     d: "Booking direct on our own page is always the best deal.",
   },
-  { t: "Free changes", d: site.cancellation },
+  { icon: CalendarCheck, t: "Free changes", d: site.cancellation },
   {
+    icon: Stairs,
     t: "Stairs and access",
     d: "We're all on one floor, but a few buildings have three to six steps up to the door. Ask for a step-free room when you book and we'll sort it.",
   },
@@ -31,61 +35,64 @@ export default function RoomsPage() {
       <PageHero
         image="/images/hero-room.jpg"
         imageAlt="A freshly updated guest room with new furniture"
-        title="Freshly updated rooms by the water"
+        title={
+          <>
+            Freshly updated rooms <em>by the water</em>
+          </>
+        }
         intro="Every room got new furniture and lighting. Open any of them for the details, then check live rates on our booking page."
       />
 
-      {/* Practical notes. No invented prices anywhere on this site. */}
-      <section className="border-b border-line bg-surface">
-        <div className="mx-auto grid max-w-[1400px] gap-10 px-6 section sm:grid-cols-3 lg:px-10">
-          {notes.map((c, i) => (
-            <Reveal key={c.t} delay={i * 0.07}>
-              <h2 className="font-display text-lead leading-tight text-navy">{c.t}</h2>
-              <p className="mt-3 text-small text-muted">{c.d}</p>
-            </Reveal>
-          ))}
-        </div>
+      {/* Practical notes, docked over the hero's lower edge. No invented prices
+          anywhere on this site. */}
+      <section className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10">
+        <Reveal y={24} className="bezel bezel-solid -mt-10 lg:-mt-14">
+          <div className="bezel-core grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            {notes.map(({ icon: Glyph, t, d }) => (
+              <div key={t} className="p-7 lg:p-9">
+                <Glyph size={24} weight="light" className="text-navy" aria-hidden />
+                <h2 className="mt-5 text-h4">{t}</h2>
+                <p className="mt-2 text-small text-muted">{d}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* Room grid, staggered so it does not read as three equal columns */}
       <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {rooms.map((room, i) => (
-            <Reveal key={room.slug} delay={(i % 3) * 0.08} className={i % 3 === 1 ? "lg:pt-16" : ""}>
-              <RoomCard room={room} priority={i < 3} />
+            <Reveal
+              key={room.slug}
+              delay={(i % 3) * 0.08}
+              y={36}
+              className={i % 3 === 1 ? "lg:mt-20" : i % 3 === 2 ? "lg:mt-10" : ""}
+            >
+              <RoomCard room={room} eager={i < 3} />
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* In every room, grouped into two columns rather than one long list */}
-      <section className="bg-sand section">
-        <div className="mx-auto grid max-w-[1400px] gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
-          <div className="lg:col-span-5">
-            <SectionHeading
-              label="In every room"
-              title="What comes with every room"
-              intro="Whichever layout you pick, this is all included."
-            />
-            <Reveal delay={0.12} className="mt-8 text-small text-faint">
-              <p>
-                {site.policies.join(". ")}. Every stay also includes the barbecue grills and dining
-                supplies, breakfast, the heated saltwater pool and Wi-Fi.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-7">
-            <ul className="grid grid-cols-1 gap-x-12 sm:grid-cols-2">
-              {inRoomAmenities.map((a, i) => (
-                <Reveal as="li" key={a} delay={i * 0.03}>
-                  <span className="block border-b border-line py-4 text-small text-muted">
-                    {a}
-                  </span>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
+      {/* In every room */}
+      <section className="bg-mist section">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+          <SectionHeading
+            title={
+              <>
+                What comes with <em>every room</em>
+              </>
+            }
+            intro="Whichever layout you pick, this is all included."
+          />
+          <AmenityGrid className="mt-14" />
+          <Reveal delay={0.1} className="measure mt-10 text-small text-faint">
+            <p>
+              {site.policies.join(". ")}. Every stay also includes the barbecue grills and dining
+              supplies, breakfast, the heated saltwater pool and Wi-Fi.
+            </p>
+          </Reveal>
         </div>
       </section>
 

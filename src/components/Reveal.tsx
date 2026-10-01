@@ -1,28 +1,30 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ElementType, ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
   delay?: number;
   className?: string;
-  as?: "div" | "section" | "li" | "article" | "figure";
+  as?: "div" | "section" | "li" | "article" | "figure" | "p" | "span";
+  /** Distance to rise, in px. Media can travel further than text. */
+  y?: number;
 };
 
-/** Fade and rise on entry. 350ms, ease-out, 16px, once. Nothing else. */
-export default function Reveal({ children, delay = 0, className, as = "div" }: Props) {
-  const reduce = useReducedMotion();
-  const Tag = motion[as];
+/**
+ * A heavy fade-and-rise as content scrolls into view, once. It sequences
+ * content as it arrives, which is the only job it has.
+ *
+ * A server component: it only marks the element. RevealObserver (one small
+ * client script for the whole site) does the watching, and CSS does the
+ * motion. Content that is already on screen when the page loads is never
+ * hidden, so nothing above the fold waits on JavaScript, and the page reads
+ * normally with scripts off or under reduced motion.
+ */
+export default function Reveal({ children, delay = 0, className, as = "div", y = 28 }: Props) {
+  const Tag = as as ElementType;
+  const style = { "--reveal-delay": `${delay}s`, "--reveal-y": `${y}px` } as CSSProperties;
 
   return (
-    <Tag
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.35, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <Tag data-reveal="" className={className} style={style}>
       {children}
     </Tag>
   );

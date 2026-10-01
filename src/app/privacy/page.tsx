@@ -33,24 +33,24 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 pb-24 pt-28 lg:px-10 lg:pt-40">
+    <section className="mx-auto max-w-[1100px] px-6 pb-[var(--section-y)] pt-32 lg:px-10 lg:pt-44">
       <Reveal>
         <span className="eyebrow">Privacy</span>
-        <h1 className="mt-5 text-h1">
-          How we handle your information
-        </h1>
-        <p className="mt-5 text-body text-muted">
+        <h1 className="text-h1">How we handle your information</h1>
+        <p className="measure mt-7 text-lead text-muted">
           A short, plain summary of what this website does with what you send it.
         </p>
       </Reveal>
 
-      <dl className="mt-14">
+      <dl className="mt-16 border-t border-ink/15">
         {sections.map((s, i) => (
-          <Reveal key={s.t} delay={i * 0.06}>
-            <div className="border-b border-line py-6">
-              <dt className="font-display text-h4 leading-tight">{s.t}</dt>
-              <dd className="mt-2.5 text-small text-muted">{s.d}</dd>
-            </div>
+          <Reveal
+            key={s.t}
+            delay={i * 0.06}
+            className="grid gap-3 border-b border-ink/15 py-8 sm:grid-cols-12 sm:gap-8"
+          >
+            <dt className="font-display text-h4 font-[380] sm:col-span-4">{s.t}</dt>
+            <dd className="max-w-[60ch] text-body text-muted sm:col-span-8">{s.d}</dd>
           </Reveal>
         ))}
       </dl>

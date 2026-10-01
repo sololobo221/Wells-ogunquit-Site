@@ -1,19 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Young_Serif, Geist } from "next/font/google";
+import { Geist } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/lib/site";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileBookBar from "@/components/MobileBookBar";
+import RevealObserver from "@/components/RevealObserver";
 
-// Display face. One weight by design, so hierarchy comes from size.
+// Display face. Newsreader, self-hosted and cut down by scripts/subset-fonts.py
+// to the weights (300-400) and optical sizes (24-72) the site actually sets:
+// about 107KB for both styles instead of 280KB from the Google subsets, with
+// identical rendering. The optical size axis lets the same family draw fine,
+// high-contrast letters at hero sizes and sturdier ones at card-title sizes;
+// the italic carries emphasis inside headlines.
 // adjustFontFallback matches the fallback metrics so the swap does not reflow.
-const youngSerif = Young_Serif({
-  variable: "--font-young-serif",
-  subsets: ["latin"],
-  weight: "400",
+const newsreader = localFont({
+  variable: "--font-newsreader",
+  src: [
+    { path: "../fonts/newsreader-roman.woff2", style: "normal", weight: "300 400" },
+    { path: "../fonts/newsreader-italic.woff2", style: "italic", weight: "300 400" },
+  ],
   display: "swap",
-  adjustFontFallback: true,
+  adjustFontFallback: "Times New Roman",
   fallback: ["Iowan Old Style", "Georgia", "serif"],
 });
 
@@ -48,7 +57,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#f7f6f3",
+  themeColor: "#f3f4f0",
 };
 
 const jsonLd = {
@@ -81,17 +90,15 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${youngSerif.variable} ${geist.variable} h-full antialiased`}>
-      {/* Bottom padding reserves room for the fixed MobileBookBar so the footer
-          is never hidden behind it. Removed at lg, where the bar is gone. */}
-      <body className="grain flex min-h-full flex-col bg-canvas text-ink pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+    <html lang="en" className={`${newsreader.variable} ${geist.variable} h-full antialiased`}>
+      <body className="grain flex min-h-full flex-col bg-canvas text-ink">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-[var(--radius-control)] focus:bg-accent focus:px-6 focus:py-3 focus:text-small focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-accent focus:px-6 focus:py-3 focus:text-small focus:text-white"
         >
           Skip to content
         </a>
@@ -101,6 +108,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <MobileBookBar />
+        <RevealObserver />
       </body>
     </html>
   );

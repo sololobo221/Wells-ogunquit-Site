@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Bird, Boat, FilmSlate, Lighthouse, MapPin, Waves } from "@phosphor-icons/react/dist/ssr";
 import { distances } from "@/lib/site";
 import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
+import FeatureTiles from "@/components/FeatureTiles";
+import DistanceScale from "@/components/DistanceScale";
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
@@ -37,12 +40,36 @@ const nearby = [
 ];
 
 const more = [
-  ["Wells Beach", "Two miles north, with the jetty, the harbour and a long open stretch."],
-  ["Ogunquit Playhouse", "One of the best known summer theatres in the country."],
-  ["Kennebunkport", "Eight miles up Route 1. Dock Square, the harbour and Walker's Point."],
-  ["Portland", "Forty minutes north for the Old Port and the working waterfront."],
-  ["Nubble Light, York", "The most photographed lighthouse in Maine, a short drive south."],
-  ["Rachel Carson refuge", "Salt marsh trails and birdlife, right on our doorstep."],
+  {
+    icon: Waves,
+    title: "Wells Beach",
+    text: "Two miles north, with the jetty, the harbour and a long open stretch.",
+  },
+  {
+    icon: FilmSlate,
+    title: "Ogunquit Playhouse",
+    text: "One of the best known summer theatres in the country.",
+  },
+  {
+    icon: Boat,
+    title: "Kennebunkport",
+    text: "Eight miles up Route 1. Dock Square, the harbour and Walker's Point.",
+  },
+  {
+    icon: MapPin,
+    title: "Portland",
+    text: "Forty minutes north for the Old Port and the working waterfront.",
+  },
+  {
+    icon: Lighthouse,
+    title: "Nubble Light, York",
+    text: "The most photographed lighthouse in Maine, a short drive south.",
+  },
+  {
+    icon: Bird,
+    title: "Rachel Carson refuge",
+    text: "Salt marsh trails and birdlife, right on our doorstep.",
+  },
 ];
 
 export default function AttractionsPage() {
@@ -51,52 +78,68 @@ export default function AttractionsPage() {
       <PageHero
         image="/images/band-aerial-beach.png"
         imageAlt="Aerial view of the beach and tidal river near Wells and Ogunquit"
-        title="Everything is within reach"
+        title={
+          <>
+            Everything is <em>within reach</em>
+          </>
+        }
         intro="Walk, bike, take the trolley or drive. The beaches, restaurants, shops and galleries are all close."
       />
 
-      {/* Three feature cards with real photography */}
+      {/* Where people go first, as an editorial index: name, detail, photo. */}
       <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
-          label="Close by"
-          title="Where people go first"
+          title={
+            <>
+              Where people <em>go first</em>
+            </>
+          }
           intro="These three come up more than anywhere else."
         />
 
-        <div className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-3">
+        <ol className="mt-16 border-t border-ink/15">
           {nearby.map((n, i) => (
-            <Reveal key={n.name} delay={i * 0.08} className={i === 1 ? "md:pt-14" : ""}>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-canvas">
-                <Image
-                  src={n.image}
-                  alt={n.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
-                />
+            <Reveal
+              as="li"
+              key={n.name}
+              delay={i * 0.06}
+              y={24}
+              className="group grid items-center gap-6 border-b border-ink/15 py-8 sm:grid-cols-12 sm:gap-8 lg:py-10"
+            >
+              <h3 className="text-h2 sm:col-span-12 lg:col-span-5">{n.name}</h3>
+              <p className="max-w-[40ch] text-body text-muted sm:col-span-7 lg:col-span-4">
+                {n.detail}
+              </p>
+              <div className="bezel sm:col-span-5 lg:col-span-3">
+                <div className="bezel-core aspect-[4/3] bg-mist">
+                  <Image
+                    src={n.image}
+                    alt={n.alt}
+                    fill
+                    sizes="(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 24vw"
+                    className="object-cover transition-transform duration-[1200ms] ease-[var(--ease-out)] group-hover:scale-[1.05]"
+                  />
+                </div>
               </div>
-              <h3 className="mt-5 font-display text-h4 leading-tight">{n.name}</h3>
-              <p className="mt-2 text-small text-muted">{n.detail}</p>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </section>
 
-      {/* More, in two grouped columns */}
-      <section className="bg-sand section">
+      {/* Further afield */}
+      <section className="bg-mist section">
         <div className="mx-auto grid max-w-[1400px] gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
           <div className="lg:col-span-4">
-            <SectionHeading title="Worth the drive" />
+            <SectionHeading
+              title={
+                <>
+                  Worth <em>the drive</em>
+                </>
+              }
+            />
           </div>
           <div className="lg:col-span-8">
-            <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2">
-              {more.map(([t, d], i) => (
-                <Reveal key={t} delay={(i % 2) * 0.06}>
-                  <h3 className="font-display text-lead leading-tight text-navy">{t}</h3>
-                  <p className="mt-2 text-small text-muted">{d}</p>
-                </Reveal>
-              ))}
-            </div>
+            <FeatureTiles items={more} />
           </div>
         </div>
       </section>
@@ -104,20 +147,15 @@ export default function AttractionsPage() {
       {/* Distances */}
       <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
         <SectionHeading
-          title="Driving times from the door"
+          title={
+            <>
+              Driving times <em>from the door</em>
+            </>
+          }
           intro="We're on Route 1 in Wells. Portland is 40 minutes north, Boston an hour and a half south."
         />
-        <div className="mt-12 grid gap-x-14 sm:grid-cols-2">
-          {distances.map((d, i) => (
-            <Reveal key={d.place} delay={(i % 2) * 0.05}>
-              <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                <span className="text-small text-muted">{d.place}</span>
-                <span className="shrink-0 font-display text-lead tabular-nums text-navy">
-                  {d.value}
-                </span>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-16 lg:mt-20">
+          <DistanceScale items={distances} columns={5} />
         </div>
       </section>
 

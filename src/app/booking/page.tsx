@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { CalendarCheck, Coffee, SwimmingPool, Tag } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/lib/site";
 import { rooms } from "@/lib/rooms";
 import { isCloudbedsActive } from "@/lib/cloudbeds/config";
 import BookingForm from "@/components/BookingForm";
+import BookNow from "@/components/BookNow";
 
 export const metadata: Metadata = {
   title: "Book your stay",
@@ -11,10 +13,22 @@ export const metadata: Metadata = {
 };
 
 const perks = [
-  ["Best available rate", "Booked direct, with no third party in the middle."],
-  ["Free changes", site.cancellation],
-  ["Free breakfast", "Served in the breakfast room, 7 to 9:30 every morning."],
-  ["The pool and the grills", "Heated saltwater pool and the outdoor kitchen, all included."],
+  {
+    icon: Tag,
+    term: "Best available rate",
+    detail: "Booked direct, with no third party in the middle.",
+  },
+  { icon: CalendarCheck, term: "Free changes", detail: site.cancellation },
+  {
+    icon: Coffee,
+    term: "Free breakfast",
+    detail: "Served in the breakfast room, 7 to 9:30 every morning.",
+  },
+  {
+    icon: SwimmingPool,
+    term: "The pool and the grills",
+    detail: "Heated saltwater pool and the outdoor kitchen, all included.",
+  },
 ];
 
 const toCount = (value: string | undefined, min: number): number | undefined => {
@@ -46,19 +60,24 @@ export default async function BookingPage({
   if (sp.children) fallbackUrl.searchParams.set("kids", sp.children);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 pb-28 pt-28 lg:px-10 lg:pb-24 lg:pt-40">
-      <div className="max-w-[46ch]">
-        <span className="eyebrow">Reserve your stay</span>
-        <h1 className="text-h2">Book direct with us</h1>
-        <p className="mt-6 text-lead text-muted">
+    <section className="mx-auto max-w-[1400px] px-6 pb-28 pt-32 lg:px-10 lg:pb-[var(--section-y)] lg:pt-44">
+      <div className="max-w-[52ch]">
+        <span className="eyebrow animate-rise">Reserve your stay</span>
+        <h1 className="animate-rise text-h1" style={{ animationDelay: "80ms" }}>
+          Book direct <em>with us</em>
+        </h1>
+        <p className="animate-rise mt-7 text-lead text-muted" style={{ animationDelay: "160ms" }}>
           The best available rate, free changes up to 48 hours before you arrive, and you are
           dealing with the family who run the place.
         </p>
       </div>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-x-12">
         {/* Form leads on mobile; sits to the right on desktop. */}
-        <div className="order-1 lg:order-2 lg:col-span-7">
+        <div
+          className="animate-rise order-1 lg:order-2 lg:col-span-7"
+          style={{ animationDelay: "220ms" }}
+        >
           {canBook ? (
             <BookingForm
               rooms={bookable}
@@ -70,27 +89,27 @@ export default async function BookingPage({
               }}
             />
           ) : (
-            <div className="rounded-[var(--radius-card)] bg-surface p-6 shadow-lift sm:p-8">
-              <h2 className="font-display text-h3 leading-tight">Reserve your room</h2>
-              <p className="mt-4 text-small text-muted">
-                Check live availability and current rates for every room type on our secure booking
-                page, or call and we will set it up with you over the phone.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a
-                  href={fallbackUrl.toString()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center rounded-[var(--radius-control)] bg-accent px-6 text-small font-medium text-white transition-[background-color,transform] duration-200 hover:bg-accent-deep active:translate-y-px"
-                >
-                  Reserve on our secure page
-                </a>
-                <a
-                  href={site.phones.tollFreeHref}
-                  className="inline-flex h-12 items-center justify-center rounded-[var(--radius-control)] border border-ink/20 px-6 text-small tabular-nums text-ink transition-colors duration-200 hover:border-ink/40"
-                >
-                  Call {site.phones.tollFree}
-                </a>
+            <div className="bezel bezel-solid">
+              <div className="bezel-core p-7 sm:p-10">
+                <h2 className="text-h3">Reserve your room</h2>
+                <p className="mt-4 max-w-[52ch] text-body text-muted">
+                  Check live availability and current rates for every room type on our secure
+                  booking page, or call and we will set it up with you over the phone.
+                </p>
+                <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6">
+                  <BookNow
+                    size="lg"
+                    label="Check availability"
+                    href={fallbackUrl.toString()}
+                    external
+                  />
+                  <a
+                    href={site.phones.tollFreeHref}
+                    className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
+                  >
+                    or call {site.phones.tollFree}
+                  </a>
+                </div>
               </div>
             </div>
           )}
@@ -98,15 +117,20 @@ export default async function BookingPage({
 
         {/* Reassurance: below the form on mobile, left column on desktop. */}
         <div className="order-2 lg:order-1 lg:col-span-5">
-          <dl className="border-t border-line">
-            {perks.map(([term, detail]) => (
-              <div key={term} className="border-b border-line py-4">
-                <dt className="font-display text-lead leading-tight text-navy">{term}</dt>
-                <dd className="mt-1 text-small text-muted">{detail}</dd>
+          <dl className="space-y-7">
+            {perks.map(({ icon: Glyph, term, detail }) => (
+              <div key={term} className="flex gap-5">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mist text-navy">
+                  <Glyph size={20} weight="light" aria-hidden />
+                </span>
+                <div>
+                  <dt className="font-display text-h4 font-[380]">{term}</dt>
+                  <dd className="mt-1.5 max-w-[40ch] text-small text-muted">{detail}</dd>
+                </div>
               </div>
             ))}
           </dl>
-          <p className="mt-7 text-small text-faint">
+          <p className="mt-10 border-t border-line pt-7 text-small text-faint">
             Prefer to talk it through? Call{" "}
             <a
               href={site.phones.tollFreeHref}

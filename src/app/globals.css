@@ -3,52 +3,70 @@
 /* ============================================================================
    Wells-Ogunquit Resort Motel design tokens
 
-   Display face is Young Serif, which ships a single weight. Hierarchy is
-   therefore carried by SIZE and space, never by font-weight. The steps below
-   are deliberately wide apart for that reason.
+   Coastal Maine, not beach-house beige. The neutrals lean toward sea fog and
+   sea glass, the dark tone is the Atlantic after sunset, and the only accent
+   is the lobster red from the sign out front.
+
+   Display face is Newsreader, a variable serif with optical sizing and a
+   true italic. It earns its place here: the property is a heritage roadside
+   motel with an old oval sign, and the italic carries emphasis inside a
+   headline without reaching for a second family.
    ========================================================================= */
 
 @theme {
-  /* ---- Surfaces. Warm, never pure white. ---- */
-  --color-canvas: #f7f6f3; /* page */
-  --color-sand: #efe9df; /* alternating sections, separated by tone not rules */
-  --color-surface: #ffffff; /* cards sitting on either of the above */
-  --color-line: #e3ded4; /* hairlines, used sparingly now tone does the work */
+  /* ---- Surfaces. Fog and sea glass, never pure white. ---- */
+  --color-canvas: #f3f4f0; /* page */
+  --color-mist: #e4eae6; /* alternating bands, separated by tone not rules */
+  --color-surface: #fbfbf9; /* cards sitting on either of the above */
+  --color-line: #d5dcd8; /* hairlines */
 
-  /* ---- Ink. All four pass WCAG AA on canvas and on sand. ---- */
-  --color-ink: #111111; /* 17.5 : 1 on canvas */
-  --color-muted: #585754; /* 6.69 on canvas, 5.98 on sand */
-  --color-faint: #666561; /* 5.40 on canvas, 4.83 on sand */
+  /* ---- The Atlantic. One deliberate dark passage at the end of every page:
+     reviews, the closing call to action and the footer. ---- */
+  --color-atlantic: #0f2730;
+  --color-atlantic-2: #173641; /* raised surfaces on the dark */
+  --color-foam: #e8eeeb; /* 13.2 : 1 on atlantic */
+  --color-foam-muted: #a9bbb9; /* 7.76 : 1 on atlantic */
+
+  /* ---- Ink. All pass WCAG AA on canvas, mist and surface. ---- */
+  --color-ink: #0f1e24; /* 15.4 : 1 on canvas */
+  --color-muted: #475459; /* 7.09 on canvas, 6.42 on mist */
+  --color-faint: #56636a; /* 5.61 on canvas, 5.08 on mist */
 
   /* ---- Accent. Lobster red, taken from the sign. ----
-     Booking CTAs and small marks only. Never body text, never links.
-     6.06 : 1 white-on-red, 5.61 on canvas, 5.02 on sand. */
+     Booking calls to action and small marks only. Never body text.
+     6.06 : 1 white-on-red, 5.48 on canvas. */
   --color-accent: #b13828;
   --color-accent-deep: #92291b; /* hover / active */
 
-  /* ---- Supporting. Links and eyebrow labels. Not a second accent. ---- */
-  --color-navy: #133562;
+  /* ---- Links. A deep sea ink, read as part of the ink family. ---- */
+  --color-navy: #1d4451; /* 9.51 on canvas */
 
   /* ---- Type ---- */
-  --font-display: var(--font-young-serif), "Iowan Old Style", Georgia, serif;
+  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
 
-  /* Fluid scale. Wide gaps between display steps so a single weight still reads
-     as a clear hierarchy. */
-  --text-h1: clamp(2.75rem, 1.6rem + 5.1vw, 5rem); /* 44 → 80 */
-  --text-h1--line-height: 1;
-  --text-h1--letter-spacing: -0.022em;
+  --text-display: clamp(3rem, 1.2rem + 6.4vw, 6.75rem); /* 48 → 108, home hero */
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.028em;
 
-  --text-h2: clamp(2rem, 1.4rem + 2.7vw, 3.25rem); /* 32 → 52 */
+  --text-h1: clamp(2.75rem, 1.5rem + 4.6vw, 5.25rem); /* 44 → 84 */
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.025em;
+
+  --text-h2: clamp(2.125rem, 1.35rem + 3vw, 3.875rem); /* 34 → 62 */
   --text-h2--line-height: 1.06;
-  --text-h2--letter-spacing: -0.02em;
+  --text-h2--letter-spacing: -0.022em;
 
-  --text-h3: clamp(1.5rem, 1.3rem + 0.9vw, 2rem); /* 24 → 32 */
+  --text-statement: clamp(1.75rem, 1.05rem + 2.6vw, 3.375rem); /* 28 → 54 */
+  --text-statement--line-height: 1.16;
+  --text-statement--letter-spacing: -0.018em;
+
+  --text-h3: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem); /* 24 → 36 */
   --text-h3--line-height: 1.12;
   --text-h3--letter-spacing: -0.015em;
 
-  --text-h4: 1.375rem; /* 22, card titles */
-  --text-h4--line-height: 1.2;
+  --text-h4: 1.5rem; /* 24, card titles */
+  --text-h4--line-height: 1.18;
   --text-h4--letter-spacing: -0.01em;
 
   --text-lead: 1.1875rem; /* 19, section intros */
@@ -63,38 +81,79 @@
   --text-micro: 0.8125rem; /* 13, meta and captions */
   --text-micro--line-height: 1.5;
 
-  --text-eyebrow: 0.6875rem; /* 11 */
+  --text-eyebrow: 0.75rem; /* 12 */
   --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.18em;
+  --text-eyebrow--letter-spacing: 0.16em;
 
-  /* ---- Space. Strict 8px scale. ---- */
-  --spacing: 8px;
-
-  /* ---- Radii ---- */
-  --radius-card: 14px;
-  --radius-media: 10px;
-  --radius-control: 8px;
+  /* ---- Shape. One documented system, followed everywhere:
+       frames (heroes, feature media)   28px
+       shells (outer bezel)             26px
+       cores  (inner bezel)             20px, concentric with a 6px shell
+       cards / standalone media         22px
+       inputs                           14px
+       buttons, chips, the nav          full pill ---- */
+  --radius-frame: 28px;
+  --radius-shell: 26px;
+  --radius-core: 20px;
+  --radius-card: 22px;
+  --radius-media: 16px;
+  --radius-control: 14px;
   --radius-pill: 999px;
 
-  /* ---- Elevation. Tinted warm, never neutral black. ---- */
-  --shadow-card: 0 1px 2px rgba(40, 32, 24, 0.04);
-  --shadow-lift: 0 12px 32px -12px rgba(40, 32, 24, 0.14);
-  --shadow-nav: 0 1px 0 rgba(40, 32, 24, 0.06), 0 8px 24px -16px rgba(40, 32, 24, 0.18);
+  /* ---- Elevation. Tinted with the Atlantic, never neutral black. ---- */
+  --shadow-card: 0 1px 2px rgba(15, 39, 48, 0.05);
+  --shadow-lift: 0 30px 60px -30px rgba(15, 39, 48, 0.32), 0 4px 12px -4px rgba(15, 39, 48, 0.08);
+  --shadow-nav: 0 10px 30px -18px rgba(15, 39, 48, 0.35);
 
+  /* ---- Motion. Heavy ease-out for entrances, a soft spring-like curve for
+     interaction. Nothing linear. ---- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-glide: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --animate-hero-settle: hero-settle 2.6s var(--ease-out) both;
+  --animate-rise: rise 1.1s var(--ease-out) both;
+
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
-/* Section rhythm. One value, used everywhere. */
+/* Section rhythm. One value, used everywhere. Bottom runs a touch heavier
+   than the top so sections settle optically. */
 @theme {
-  --section-y: clamp(80px, 10vw, 160px);
-  --measure: 65ch;
+  --section-y: clamp(96px, 11vw, 176px);
+  --measure: 62ch;
 }
+
+/* Z-index scale. Systemic layers only.
+     30  mobile booking bar
+     40  mobile menu overlay
+     50  header
+     60  grain
+     70  skip link
+     80  lightbox */
 
 @layer base {
   html {
     background: var(--color-canvas);
-    /* Keep in-page anchor targets clear of the fixed header. */
-    scroll-padding-top: 6rem;
+    /* Keep in-page anchor targets clear of the floating header. */
+    scroll-padding-top: 7rem;
   }
 
   body {
@@ -112,10 +171,19 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 400; /* Young Serif has one weight. Never synthesise. */
-    font-synthesis-weight: none;
+    font-weight: 380;
+    font-optical-sizing: auto;
     color: var(--color-ink);
     text-wrap: balance;
+    /* Room for italic descenders under tight display leading. */
+    padding-bottom: 0.04em;
+  }
+
+  /* Emphasis inside a headline is the same family in italic, a shade lighter.
+     Never a second typeface. */
+  :where(h1, h2, h3, h4, .statement) em {
+    font-style: italic;
+    font-weight: 340;
   }
 
   p {
@@ -131,7 +199,7 @@
 @layer components {
   /* Section vertical rhythm */
   .section {
-    padding-block: var(--section-y);
+    padding-block: var(--section-y) calc(var(--section-y) * 1.08);
   }
 
   /* Prose measure */
@@ -139,50 +207,186 @@
     max-width: var(--measure);
   }
 
-  /* Eyebrow: letterspaced, muted, with real clear space beneath */
+  /* Large editorial paragraph. */
+  .statement {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    line-height: var(--text-statement--line-height);
+    letter-spacing: var(--text-statement--letter-spacing);
+    font-weight: 360;
+    font-optical-sizing: auto;
+    text-wrap: pretty;
+  }
+
+  /* Eyebrow: used sparingly, a few per page at most. */
   .eyebrow {
     display: block;
     font-family: var(--font-sans);
     font-size: var(--text-eyebrow);
     line-height: 1;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 500;
-    color: var(--color-navy);
-    margin-bottom: calc(var(--spacing) * 3);
+    color: var(--color-faint);
+    margin-bottom: calc(var(--spacing) * 6);
   }
 
   .eyebrow-invert {
-    color: rgba(255, 255, 255, 0.82);
+    color: var(--color-foam-muted);
   }
 
-  /* Warm gradient over hero photography. Lighter than a flat scrim, and warm
-     rather than grey so it sits with the sand palette. */
+  /* ---- Double bezel. A machined outer tray holding an inner core, with
+     concentric radii. Used for feature media, cards and the booking bar. ---- */
+  .bezel {
+    border-radius: var(--radius-shell);
+    padding: 6px;
+    background: color-mix(in srgb, var(--color-ink) 4.5%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
+  }
+
+  .bezel-core {
+    position: relative;
+    border-radius: var(--radius-core);
+    /* clip, not hidden: hidden would make every frame a scroll container and
+       break the scroll-driven parallax inside it. */
+    overflow: hidden;
+    overflow: clip;
+    background: var(--color-surface);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      0 1px 2px rgba(15, 39, 48, 0.06);
+  }
+
+  /* Opaque shell for bezels that overlap photography or another surface. */
+  .bezel-solid {
+    background: #e2e6e2;
+    box-shadow:
+      inset 0 0 0 1px rgba(15, 30, 36, 0.06),
+      var(--shadow-lift);
+  }
+
+  .bezel-dark {
+    background: rgba(232, 238, 235, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(232, 238, 235, 0.1);
+  }
+
+  .bezel-dark > .bezel-core {
+    background: var(--color-atlantic-2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Warm-neutral wash over hero photography. Tinted with the Atlantic so it
+     sits with the palette rather than going grey. */
   .hero-wash {
     background:
       linear-gradient(
         to top,
-        rgba(28, 20, 14, 0.72) 0%,
-        rgba(28, 20, 14, 0.42) 34%,
-        rgba(28, 20, 14, 0.12) 62%,
-        rgba(28, 20, 14, 0) 100%
+        rgba(10, 26, 32, 0.78) 0%,
+        rgba(10, 26, 32, 0.5) 30%,
+        rgba(10, 26, 32, 0.16) 60%,
+        rgba(10, 26, 32, 0) 100%
       ),
-      linear-gradient(to right, rgba(28, 20, 14, 0.34) 0%, rgba(28, 20, 14, 0) 62%);
+      linear-gradient(
+        to right,
+        rgba(10, 26, 32, 0.5) 0%,
+        rgba(10, 26, 32, 0.18) 42%,
+        rgba(10, 26, 32, 0) 72%
+      ),
+      linear-gradient(to bottom, rgba(10, 26, 32, 0.32) 0%, rgba(10, 26, 32, 0) 22%);
   }
 
   .media-wash {
     background: linear-gradient(
       to top,
-      rgba(28, 20, 14, 0.84) 0%,
-      rgba(28, 20, 14, 0.44) 32%,
-      rgba(28, 20, 14, 0) 72%
+      rgba(10, 26, 32, 0.86) 0%,
+      rgba(10, 26, 32, 0.5) 38%,
+      rgba(10, 26, 32, 0.1) 72%,
+      rgba(10, 26, 32, 0) 100%
     );
+  }
+
+  /* Horizontal rails hide their scrollbar but stay scrollable by touch,
+     trackpad, keyboard and the explicit arrow buttons. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+}
+
+/* ---- Render only what is on screen. Sections from the third onward, and
+   the footer, skip style and layout until they come near the viewport, which
+   takes most of the first layout off the critical path to first paint.
+   `auto` in the intrinsic size makes the browser remember each section's real
+   height once seen, so the scrollbar does not jump.
+   The first two sections are left alone: the booking bar and the docked
+   panels overlap the hero and would be clipped by the paint containment. ---- */
+main > section:nth-of-type(n + 3),
+body > footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* ---- Scroll reveal. <Reveal> marks elements; RevealObserver adds
+   .reveal-ready to <html> and [data-shown] as each one scrolls in. Nothing is
+   hidden until that script has run, and never under reduced motion. ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    transition:
+      opacity 0.9s var(--ease-out),
+      transform 0.9s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal-ready [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 28px));
+  }
+}
+
+/* ---- Parallax. A native scroll-driven animation: no JavaScript, runs off
+   the main thread. Where unsupported, or under reduced motion, the photo
+   simply sits still. ---- */
+.parallax {
+  view-timeline-name: --parallax;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax > .parallax-media {
+      animation: parallax-drift linear both;
+      animation-timeline: --parallax;
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+@keyframes parallax-drift {
+  from {
+    transform: translateY(calc(var(--travel, 8%) * -1));
+  }
+  to {
+    transform: translateY(var(--travel, 8%));
+  }
+}
+
+@keyframes slide-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-settle,
+  .animate-rise {
+    animation: none;
   }
 }
 
@@ -193,7 +397,7 @@
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.018;
+  opacity: 0.028;
   background-image: url("/images/noise.png");
   background-repeat: repeat;
   background-size: 96px 96px;
@@ -205,8 +409,20 @@
   }
 }
 
-:where(a, button, input, select, textarea):focus-visible {
+/* Solid fallbacks for anyone who has asked the OS for less transparency. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--color-canvas) !important;
+    backdrop-filter: none !important;
+  }
+  .glass-dark {
+    background: var(--color-atlantic) !important;
+    backdrop-filter: none !important;
+  }
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 6px;
 }

@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import {
+  CalendarCheck,
+  Coffee,
+  Phone,
+  SwimmingPool,
+  Tag,
+  UsersThree,
+  WifiHigh,
+} from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/lib/site";
 import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import BookNow from "@/components/BookNow";
+import TextLink from "@/components/TextLink";
+import FeatureTiles from "@/components/FeatureTiles";
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
@@ -15,12 +24,20 @@ export const metadata: Metadata = {
 };
 
 const included = [
-  ["Best available rate", "No third party in the middle, and no markup on top."],
-  ["Free changes", site.cancellation],
-  ["Breakfast for everyone", "Fresh coffee and something made that morning, 7 to 9:30 daily."],
-  ["The pool and the grills", "Heated saltwater pool, gas grills and all the dining supplies."],
-  ["Wi-Fi throughout", "On the whole property, at no charge."],
-  ["We answer the phone", "Call and speak to the family who run the place."],
+  { icon: Tag, title: "Best available rate", text: "No third party in the middle, and no markup on top." },
+  { icon: CalendarCheck, title: "Free changes", text: site.cancellation },
+  {
+    icon: Coffee,
+    title: "Breakfast for everyone",
+    text: "Fresh coffee and something made that morning, 7 to 9:30 daily.",
+  },
+  {
+    icon: SwimmingPool,
+    title: "The pool and the grills",
+    text: "Heated saltwater pool, gas grills and all the dining supplies.",
+  },
+  { icon: WifiHigh, title: "Wi-Fi throughout", text: "On the whole property, at no charge." },
+  { icon: Phone, title: "We answer the phone", text: "Call and speak to the family who run the place." },
 ];
 
 export default function SpecialsPage() {
@@ -29,76 +46,80 @@ export default function SpecialsPage() {
       <PageHero
         image="/images/hero-pool.jpg"
         imageAlt="The heated saltwater pool on a clear afternoon"
-        title="Specials and booking direct"
+        title={
+          <>
+            Specials and <em>booking direct</em>
+          </>
+        }
         intro="When there's a discount running, it shows up here first. When there isn't, we say so."
       />
 
-      {/* Current status. No invented offers. */}
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <Reveal className="rounded-[var(--radius-card)] bg-surface shadow-card p-8 sm:p-12">
-          <h2 className="max-w-[24ch] font-display text-h2">
-            No discounts are running at the moment
-          </h2>
-          <p className="mt-5 max-w-[58ch] text-muted">
-            Worth a look before you book. In the meantime, live availability and current rates for
-            every room type are on our booking page.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <BookNow size="lg" label="See live availability" href={site.bookingUrl} external />
-            <a
-              href={site.phones.tollFreeHref}
-              className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
-            >
-              or call {site.phones.tollFree}
-            </a>
+      {/* Current status, docked over the hero edge. No invented offers. */}
+      <section className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10">
+        <Reveal y={24} className="bezel bezel-solid -mt-10 lg:-mt-14">
+          <div className="bezel-core p-8 sm:p-12 lg:p-14">
+            <h2 className="max-w-[22ch] text-h2">
+              No discounts are running <em>at the moment</em>
+            </h2>
+            <p className="mt-6 max-w-[58ch] text-lead text-muted">
+              Worth a look before you book. In the meantime, live availability and current rates
+              for every room type are on our booking page.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <BookNow size="lg" label="See live availability" href={site.bookingUrl} external />
+              <a
+                href={site.phones.tollFreeHref}
+                className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
+              >
+                or call {site.phones.tollFree}
+              </a>
+            </div>
           </div>
         </Reveal>
       </section>
 
       {/* Always included */}
-      <section className="bg-sand section">
+      <section className="section">
         <div className="mx-auto grid max-w-[1400px] gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <SectionHeading
-              label="Every stay"
-              title="What you get without a promo code"
+              title={
+                <>
+                  What you get <em>without a promo code</em>
+                </>
+              }
               intro="The things other places charge extra for are simply part of the room here."
             />
           </div>
-          <div className="lg:col-span-7">
-            <div className="grid gap-x-12 gap-y-7 sm:grid-cols-2">
-              {included.map(([t, d], i) => (
-                <Reveal key={t} delay={(i % 2) * 0.06}>
-                  <h3 className="font-display text-lead leading-tight text-navy">{t}</h3>
-                  <p className="mt-2 text-small text-muted">{d}</p>
-                </Reveal>
-              ))}
-            </div>
+          <div className="lg:col-span-8">
+            <FeatureTiles items={included} />
           </div>
         </div>
       </section>
 
       {/* Groups */}
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <Reveal className="flex flex-col justify-between gap-6 rounded-[var(--radius-card)] bg-surface shadow-card p-8 sm:flex-row sm:items-center lg:p-10">
-          <div>
-            <h2 className="font-display text-h3 leading-tight">Groups, buses and families</h2>
-            <p className="mt-2 max-w-[58ch] text-small text-muted">
-              Travelling as a group, or booking several rooms at once? Give us a call and we&apos;ll
-              work it out with you. It&apos;s easier than doing it online.
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="group inline-flex shrink-0 items-center gap-1.5 text-small text-navy transition-colors duration-200 hover:text-ink"
-          >
-            Get in touch
-            <ArrowUpRight
-              size={15}
-              className="transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
-            />
-          </Link>
-        </Reveal>
+      <section className="bg-mist section">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+          <Reveal y={24} className="bezel">
+            <div className="bezel-core flex flex-col justify-between gap-8 p-8 sm:flex-row sm:items-center lg:p-12">
+              <div className="flex gap-6">
+                <span className="hidden h-14 w-14 shrink-0 place-items-center rounded-full bg-mist text-navy sm:grid">
+                  <UsersThree size={26} weight="light" aria-hidden />
+                </span>
+                <div>
+                  <h2 className="text-h3">Groups, buses and families</h2>
+                  <p className="mt-3 max-w-[58ch] text-body text-muted">
+                    Travelling as a group, or booking several rooms at once? Give us a call and
+                    we&apos;ll work it out with you. It&apos;s easier than doing it online.
+                  </p>
+                </div>
+              </div>
+              <TextLink href="/contact" className="shrink-0">
+                Get in touch
+              </TextLink>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       <CTASection />

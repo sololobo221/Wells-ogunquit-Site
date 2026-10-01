@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
-import { rooms, getRoom, inRoomAmenities } from "@/lib/rooms";
+import { ArrowLeft, Bed, Footprints, MapPin, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import { rooms, getRoom } from "@/lib/rooms";
 import { site } from "@/lib/site";
 import BookNow from "@/components/BookNow";
 import Reveal from "@/components/Reveal";
 import RoomCard from "@/components/RoomCard";
+import AmenityGrid from "@/components/AmenityGrid";
+import RoomPhotos from "@/components/RoomPhotos";
+import TextLink from "@/components/TextLink";
 import CTASection from "@/components/CTASection";
 
 export function generateStaticParams() {
@@ -31,127 +33,119 @@ export default async function RoomPage({ params }: PageProps<"/rooms/[slug]">) {
   if (!room) notFound();
 
   const others = rooms.filter((r) => r.slug !== room.slug).slice(0, 3);
-  const facts: [string, string][] = [
-    ["Beds", room.beds],
-    ["Occupancy", room.sleeps],
-    ["Location", room.side],
-    ["Access", room.stairs],
+  const facts = [
+    { icon: Bed, k: "Beds", v: room.beds },
+    { icon: UsersThree, k: "Occupancy", v: room.sleeps },
+    { icon: MapPin, k: "Location", v: room.side },
+    { icon: Footprints, k: "Access", v: room.stairs },
   ];
+  const photos = room.images.slice(0, 3);
 
   return (
     <>
-      <article className="mx-auto max-w-[1400px] px-6 pt-28 lg:px-10 lg:pt-40">
-        <Reveal>
+      <article className="mx-auto max-w-[1400px] px-6 pt-32 lg:px-10 lg:pt-40">
+        <Reveal y={12}>
           <Link
             href="/rooms"
-            className="group inline-flex items-center gap-2 text-small text-muted transition-colors duration-300 hover:text-ink"
+            className="group inline-flex h-10 items-center gap-2 rounded-full pl-1.5 pr-4 text-small text-muted ring-1 ring-inset ring-ink/15 transition-[color,box-shadow] duration-300 hover:text-ink hover:ring-ink/35"
           >
-            <ArrowLeft
-              size={15}
-              className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
-            />
+            <span className="grid h-7 w-7 place-items-center rounded-full bg-ink/[0.05] transition-transform duration-500 ease-[var(--ease-glide)] group-hover:-translate-x-0.5">
+              <ArrowLeft size={14} aria-hidden />
+            </span>
             All rooms
           </Link>
         </Reveal>
 
-        <header className="mt-8 grid gap-10 lg:grid-cols-12 lg:items-end">
+        <header className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
           <Reveal className="lg:col-span-7">
-            <h1 className="text-h2">{room.name}</h1>
+            <h1 className="max-w-[14ch] text-h1">{room.name}</h1>
           </Reveal>
-          <Reveal delay={0.08} className="lg:col-span-5 lg:pb-2">
-            <p className="max-w-[46ch] text-muted">{room.blurb}</p>
-            <div className="mt-7">
+          <Reveal delay={0.08} className="lg:col-span-5 lg:pb-3">
+            <p className="max-w-[46ch] text-lead text-muted">{room.blurb}</p>
+            <div className="mt-8">
               <BookNow size="md" label="Check rates and dates" href={site.bookingUrl} external />
             </div>
           </Reveal>
         </header>
 
         {/*
-          Equal columns rather than one large lead image. The room photography
-          from the old site tops out around 700px wide, so a full-width lead
-          image was being upscaled and looked soft. Three smaller frames stay
-          within what the source can actually deliver.
+          The photographs, plus one tile with the room at a glance. The room
+          photography from the old site tops out around 700px wide, so frames
+          stay small enough that nothing is upscaled into softness, and the
+          glance tile means a two-photo room still fills its row.
         */}
-        <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {room.images.slice(0, 3).map((img, i) => (
+        <div className="mt-16">
+          <RoomPhotos images={photos}>
             <Reveal
-              key={img.src}
-              delay={i * 0.08}
-              className={`relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)] bg-canvas ${
-                room.images.length === 2 && i === 0 ? "sm:col-span-1" : ""
-              }`}
+              delay={photos.length * 0.08}
+              y={36}
+              className={`bezel bezel-dark ${photos.length % 2 === 0 ? "sm:col-span-2 lg:col-span-1" : ""}`}
             >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                priority={i === 0}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover"
-              />
+              <div className="bezel-core h-full !bg-atlantic p-7 lg:p-8">
+                <h2 className="text-h4 !text-foam">At a glance</h2>
+                <dl className="mt-7 space-y-5">
+                  {facts.map(({ icon: Glyph, k, v }) => (
+                    <div key={k} className="flex gap-3.5">
+                      <Glyph
+                        size={20}
+                        weight="light"
+                        className="mt-0.5 shrink-0 text-foam-muted"
+                        aria-hidden
+                      />
+                      <div>
+                        <dt className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-foam-muted">
+                          {k}
+                        </dt>
+                        <dd className="mt-1 text-small text-foam">{v}</dd>
+                      </div>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </Reveal>
-          ))}
+          </RoomPhotos>
         </div>
 
-        {/* Facts and amenities */}
-        <div className="mt-20 grid gap-14 lg:grid-cols-12 lg:gap-x-12">
-          <div className="lg:col-span-5">
-            <h2 className="font-display text-h3 leading-tight">The details</h2>
-            <dl className="mt-6">
-              {facts.map(([k, v], i) => (
-                <Reveal key={k} delay={i * 0.05}>
-                  <div className="grid grid-cols-[6.5rem_1fr] gap-5 border-b border-line py-4">
-                    <dt className="text-micro uppercase text-faint">{k}</dt>
-                    <dd className="text-small text-muted">{v}</dd>
-                  </div>
-                </Reveal>
-              ))}
-            </dl>
-            <p className="mt-6 text-small text-faint">
-              {site.cancellation} {site.policies.join(". ")}.
-            </p>
-          </div>
-
-          <div className="lg:col-span-7">
-            <h2 className="font-display text-h3 leading-tight">In this room</h2>
-            <ul className="mt-6 grid grid-cols-1 gap-x-12 sm:grid-cols-2">
-              {inRoomAmenities.map((a, i) => (
-                <Reveal as="li" key={a} delay={i * 0.03}>
-                  <span className="block border-b border-line py-4 text-small text-muted">
-                    {a}
-                  </span>
-                </Reveal>
-              ))}
-            </ul>
-            <p className="mt-6 text-small text-faint">
+        {/* In this room */}
+        <section className="pb-[var(--section-y)] pt-24 lg:pt-32">
+          <Reveal>
+            <h2 className="text-h2">
+              In this <em>room</em>
+            </h2>
+          </Reveal>
+          <AmenityGrid className="mt-12" />
+          <Reveal delay={0.1} className="measure mt-10 space-y-3 text-small text-faint">
+            <p>
               Plus the shared grounds: the heated saltwater pool, gas grills with all the dining
               supplies, gazebos, picnic tables, the playground and the sand play area.
             </p>
-          </div>
-        </div>
+            <p>
+              {site.cancellation} {site.policies.join(". ")}.
+            </p>
+          </Reveal>
+        </section>
       </article>
 
       {/* Other rooms */}
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <div className="flex items-end justify-between gap-6">
-          <h2 className="font-display text-h2 leading-tight">Other rooms</h2>
-          <Link
-            href="/rooms"
-            className="group inline-flex shrink-0 items-center gap-1.5 text-small text-navy transition-colors duration-300 hover:text-ink"
-          >
-            See all six
-            <ArrowUpRight
-              size={15}
-              className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
-            />
-          </Link>
-        </div>
-        <div className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {others.map((r, i) => (
-            <Reveal key={r.slug} delay={i * 0.08}>
-              <RoomCard room={r} />
+      <section className="bg-mist section">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <Reveal>
+              <h2 className="text-h2">
+                Other <em>rooms</em>
+              </h2>
             </Reveal>
-          ))}
+            <Reveal delay={0.05} className="sm:pb-2">
+              <TextLink href="/rooms">See all six</TextLink>
+            </Reveal>
+          </div>
+          <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            {others.map((r, i) => (
+              <Reveal key={r.slug} delay={i * 0.08} y={36}>
+                <RoomCard room={r} />
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

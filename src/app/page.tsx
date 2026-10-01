@@ -1,333 +1,414 @@
 import Image from "next/image";
+import { CheckCircle, Star, SunHorizon } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/lib/site";
 import { rooms } from "@/lib/rooms";
+import { faq } from "@/lib/faq";
 import HeroSlider from "@/components/HeroSlider";
 import BookingBar from "@/components/BookingBar";
 import TrustBar from "@/components/TrustBar";
 import SectionHeading from "@/components/SectionHeading";
-import RoomCard from "@/components/RoomCard";
 import Reveal from "@/components/Reveal";
 import BookNow from "@/components/BookNow";
 import CTASection from "@/components/CTASection";
 import Reviews from "@/components/Reviews";
 import TextLink from "@/components/TextLink";
+import RoomRail from "@/components/RoomRail";
+import ParallaxImage from "@/components/ParallaxImage";
+import BreakfastMenu from "@/components/BreakfastMenu";
+import DistanceScale from "@/components/DistanceScale";
 
 const container = "mx-auto max-w-[1400px] px-6 lg:px-10";
 
-/** Distances, rendered as a two column table rather than a stack of pairs. */
-const distances: [string, string][] = [
-  ["3/4 mile", "Moody and North Beach"],
-  ["2 miles", "Wells Beach"],
-  ["2.8 miles", "Perkins Cove"],
-  ["8 miles", "Kennebunkport"],
-  ["40 minutes", "Portland"],
-  ["1.5 hours", "Boston"],
+/** Nearest first, so the scale reads left to right as "further away". */
+const distances = [
+  { value: "3/4 mile", place: "Moody and North Beach" },
+  { value: "2 miles", place: "Wells Beach" },
+  { value: "2.8 miles", place: "Perkins Cove" },
+  { value: "8 miles", place: "Kennebunkport" },
+  { value: "40 min", place: "Portland" },
+  { value: "1.5 hours", place: "Boston" },
 ];
 
-export default function Home() {
-  const featured = rooms.filter((r) => r.featured);
+/** A small photograph set into a line of type. Decorative; the words carry it. */
+function InlinePhoto({ src }: { src: string }) {
+  return (
+    <span
+      aria-hidden
+      className="relative mx-[0.08em] inline-block h-[0.78em] w-[1.75em] translate-y-[0.06em] overflow-hidden rounded-full align-baseline shadow-[inset_0_0_0_1px_rgba(15,30,36,0.08)]"
+    >
+      <Image src={src} alt="" fill sizes="120px" className="object-cover" />
+    </span>
+  );
+}
 
+/** What booking direct gets you, said right under the booking bar. */
+const perks = [
+  "Best rate when you book direct",
+  "Free changes up to 48 hours before arrival",
+  "Breakfast included every morning",
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
+};
+
+const tile = "bezel group relative";
+const tileImage =
+  "object-cover transition-transform duration-[1400ms] ease-[var(--ease-out)] group-hover:scale-[1.04]";
+
+export default function Home() {
   return (
     <>
-      {/* 1. Hero, full bleed */}
-      <section className="relative flex min-h-[100dvh] items-end overflow-hidden bg-ink pt-20">
-        <HeroSlider />
-        <div className={`relative z-10 w-full ${container} pb-24 lg:pb-28`}>
-          <h1 className="max-w-[13ch] text-h1 !text-white">A quiet corner of the Maine coast</h1>
-          <p className="mt-8 max-w-[46ch] text-lead text-white/85">
-            Heated saltwater pool, free breakfast every morning, and a short walk to Moody and
-            North Beach.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <BookNow size="lg" />
-            <BookNow
-              size="lg"
-              variant="ghostOnDark"
-              href="/rooms"
-              external={false}
-              label="See the rooms"
-            />
+      {/* 1. Hero. Framed full bleed; the booking bar docks over its lower edge. */}
+      <section className="px-2 pt-2 sm:px-3 sm:pt-3">
+        <div className="relative flex min-h-[calc(100dvh-1rem)] items-end overflow-hidden rounded-[var(--radius-frame)] bg-atlantic sm:min-h-[calc(100dvh-1.5rem)] lg:min-h-[calc(100dvh-5.5rem)]">
+          <HeroSlider indicatorClassName="bottom-24 right-8 lg:right-10" />
+          <div className={`relative z-10 w-full ${container} pb-20 pt-36 lg:pb-32`}>
+            <p className="animate-rise inline-flex items-center gap-2.5 rounded-full bg-[rgba(10,26,32,0.34)] py-1.5 pl-1.5 pr-4 text-micro text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16)]">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-white/15">
+                <Star size={12} weight="fill" aria-hidden />
+              </span>
+              No. 1 in Wells on TripAdvisor since 2017
+            </p>
+            <h1
+              className="animate-rise mt-7 max-w-[10.5em] text-display !text-white"
+              style={{ animationDelay: "90ms" }}
+            >
+              A quiet corner of the <em>Maine coast</em>
+            </h1>
+            <p
+              className="animate-rise mt-7 max-w-[40ch] text-lead text-white/85"
+              style={{ animationDelay: "180ms" }}
+            >
+              Heated saltwater pool, free breakfast every morning, and a short walk to Moody and
+              North Beach.
+            </p>
+            <div
+              className="animate-rise mt-10 flex flex-wrap items-center gap-3"
+              style={{ animationDelay: "270ms" }}
+            >
+              {/* The floating mobile bar already offers Book a room below lg. */}
+              <div className="hidden lg:block">
+                <BookNow size="lg" />
+              </div>
+              <BookNow size="lg" variant="ghostOnDark" href="/rooms" label="See the rooms" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Booking band, lifted over the seam between hero and page */}
-      <section className="relative z-20 bg-canvas">
-        <div className={`${container} -mt-10 pb-16 lg:-mt-12 lg:pb-20`}>
+      <section className="relative z-20">
+        <div className={`${container} -mt-10 lg:-mt-12`}>
           <BookingBar />
+          <ul className="mt-6 flex flex-col gap-2.5 px-2 text-small text-muted sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
+            {perks.map((p) => (
+              <li key={p} className="flex items-center gap-2">
+                <CheckCircle size={18} weight="fill" className="shrink-0 text-navy" aria-hidden />
+                {p}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* 3. Stats */}
-      <TrustBar />
-
-      {/* 4. The place, asymmetric split */}
+      {/* 2. The place, as one editorial sentence, then the numbers. */}
       <section className={`${container} section`}>
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
-          <div className="lg:col-span-5">
-            <Reveal className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-sand">
-              <Image
-                src="/images/hero-room-alt.jpg"
-                alt="A guest room with two beds, updated furniture and lighting"
-                fill
-                sizes="(max-width: 1024px) 92vw, 40vw"
-                className="object-cover"
-              />
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-6 lg:col-start-7 lg:pt-16">
-            <SectionHeading
-              label="The place"
-              title="Updated rooms, same easy feel"
-              intro="We're on Route 1 in Wells, with Ogunquit just south of us and Kennebunkport a few miles north. Portland is 40 minutes away. Boston is an hour and a half."
-            />
-            <Reveal delay={0.05} className="measure mt-8 space-y-5 text-muted">
-              <p>
-                Every room has a Serta Presidential Suite bed, a fridge, microwave, toaster and a
-                coffee maker with the coffee already in it, a flat screen TV, and its own door to
-                the outside. All of them got new furniture and lighting.
-              </p>
-              <p>
-                Outside there are gas grills and a full outdoor kitchen. Borrow the lobster pots,
-                the plates and the utensils, and cook whatever you like.
-              </p>
-            </Reveal>
-            <Reveal delay={0.1} className="mt-10">
-              <TextLink href="/amenities">Everything on the property</TextLink>
-            </Reveal>
-          </div>
-        </div>
+        <Reveal as="p" className="statement max-w-[23em] text-ink">
+          {/* Each photo is bound to its word and punctuation so neither wraps alone. */}
+          A family-run motel on Route 1 in{" "}
+          <span className="whitespace-nowrap">
+            Wells
+            <InlinePhoto src="/images/sign-fall.jpg" />,
+          </span>{" "}
+          three quarters of a mile from Moody{" "}
+          <span className="whitespace-nowrap">
+            Beach
+            <InlinePhoto src="/images/beach.jpg" />.
+          </span>{" "}
+          <span className="text-muted">
+            Ogunquit is just south of us, Kennebunkport a few miles north, and Portland is forty
+            minutes up the road.
+          </span>
+        </Reveal>
+        <TrustBar className="mt-20 lg:mt-28" />
       </section>
 
-      {/* 5. Amenities bento */}
-      <section className="bg-sand section">
+      {/* 3. The grounds. An asymmetric bento, one cell per thing. */}
+      <section className="pb-[calc(var(--section-y)*1.08)]">
         <div className={container}>
           <SectionHeading
-            title="Most of the day happens outside"
+            title={
+              <>
+                Most of the day <em>happens outside</em>
+              </>
+            }
             intro="The pool, the grills and the lawn are the reasons guests book again before they leave."
           />
 
-          <div className="mt-16 grid gap-4 md:grid-cols-6">
+          <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             <Reveal
               as="article"
-              className="group relative col-span-1 min-h-[340px] overflow-hidden rounded-[var(--radius-card)] md:col-span-4 md:row-span-2 md:min-h-[480px]"
+              y={40}
+              className={`${tile} min-h-[420px] md:col-span-6 lg:col-span-8 lg:row-span-2 lg:min-h-[660px]`}
             >
-              <Image
-                src="/images/hero-pool.jpg"
-                alt="The heated saltwater pool on a clear afternoon"
-                fill
-                sizes="(max-width: 768px) 92vw, 62vw"
-                className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.03]"
-              />
-              <div className="media-wash absolute inset-0" />
-              <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
-                <h3 className="text-h3 !text-white">A heated saltwater pool</h3>
-                <p className="mt-3 max-w-[44ch] text-small text-white/80">
-                  Saltwater, so it&apos;s gentle on your skin. The ocean here stays cold all summer.
-                  The pool doesn&apos;t.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal
-              as="article"
-              delay={0.05}
-              className="col-span-1 flex flex-col justify-between rounded-[var(--radius-card)] bg-surface p-7 shadow-card md:col-span-2"
-            >
-              <div className="relative mb-7 aspect-[16/10] overflow-hidden rounded-[var(--radius-media)]">
+              <div className="bezel-core h-full">
                 <Image
-                  src="/images/breakfast-muffins-pan.jpg"
-                  alt="Muffins fresh from the oven in the pan"
+                  src="/images/hero-pool.jpg"
+                  alt="The heated saltwater pool on a clear afternoon"
                   fill
-                  sizes="(max-width: 768px) 92vw, 30vw"
-                  className="object-cover"
+                  sizes="(max-width: 1024px) 94vw, 62vw"
+                  className={tileImage}
                 />
-              </div>
-              <div>
-                <h3 className="text-h4">Breakfast, on us</h3>
-                <p className="mt-3 text-small text-muted">
-                  Coffee and something baked that morning, served 7 to 9:30 in the breakfast room.
-                </p>
+                <div className="media-wash absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 p-7 lg:p-10">
+                  <h3 className="text-h3 !text-white">A heated saltwater pool</h3>
+                  <p className="mt-3 max-w-[44ch] text-small text-white/80">
+                    Saltwater, so it&apos;s gentle on your skin. The ocean here stays cold all
+                    summer. The pool doesn&apos;t.
+                  </p>
+                </div>
               </div>
             </Reveal>
 
             <Reveal
               as="article"
+              y={40}
+              delay={0.08}
+              className={`${tile} min-h-[460px] md:col-span-3 lg:col-span-4 lg:row-span-2`}
+            >
+              <div className="bezel-core h-full">
+                <Image
+                  src="/images/grill-smokers.jpg"
+                  alt="The grills and smokers by the picnic tables in the garden"
+                  fill
+                  sizes="(max-width: 768px) 94vw, (max-width: 1024px) 46vw, 30vw"
+                  className={tileImage}
+                />
+                <div className="media-wash absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 p-7 lg:p-8">
+                  <h3 className="text-h4 !text-white">Cook your own dinner</h3>
+                  <p className="mt-2 max-w-[34ch] text-small text-white/80">
+                    Gas grills, smokers and an outdoor kitchen. We lend the lobster pots, plates
+                    and utensils. {site.grillHours}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal
+              as="article"
+              y={40}
+              delay={0.04}
+              className={`${tile} bezel-dark min-h-[300px] md:col-span-3 lg:col-span-4`}
+            >
+              <div className="bezel-core flex h-full flex-col justify-between gap-10 p-7 lg:p-8">
+                <SunHorizon size={30} weight="light" className="text-foam-muted" aria-hidden />
+                <div>
+                  <h3 className="text-h3 !text-foam">
+                    Heated from <em>mid-May</em>
+                  </h3>
+                  <p className="mt-3 max-w-[38ch] text-small text-foam-muted">
+                    The heat stays on until the third week of September, and the deck stays open
+                    for sunbathing until we close for the year.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal
+              as="article"
+              y={40}
               delay={0.1}
-              className="group relative col-span-1 min-h-[210px] overflow-hidden rounded-[var(--radius-card)] md:col-span-2"
+              className={`${tile} min-h-[300px] md:col-span-3 lg:col-span-3`}
             >
-              <Image
-                src="/images/grills.jpg"
-                alt="Gas grills and the outdoor kitchen patio"
-                fill
-                sizes="(max-width: 768px) 92vw, 30vw"
-                className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.03]"
-              />
-              <div className="media-wash absolute inset-0" />
-              <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="text-h4 !text-white">Cook your own dinner</h3>
-                <p className="mt-2 text-micro text-white/80">
-                  We lend the pots, plates and utensils.
-                </p>
+              <div className="bezel-core h-full">
+                <Image
+                  src="/images/playground.jpg"
+                  alt="Swings on the playground behind the buildings"
+                  fill
+                  sizes="(max-width: 768px) 94vw, (max-width: 1024px) 46vw, 24vw"
+                  className={tileImage}
+                />
+                <div className="media-wash absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 p-7">
+                  <h3 className="text-h4 !text-white">Room to run</h3>
+                  <p className="mt-2 max-w-[30ch] text-micro text-white/80">
+                    Playground, lawn games and a fenced sand area for the under fours.
+                  </p>
+                </div>
               </div>
             </Reveal>
 
             <Reveal
               as="article"
-              delay={0.15}
-              className="group relative col-span-1 min-h-[210px] overflow-hidden rounded-[var(--radius-card)] md:col-span-3"
+              y={40}
+              delay={0.16}
+              className={`${tile} min-h-[300px] md:col-span-3 lg:col-span-5`}
             >
-              <Image
-                src="/images/playground.jpg"
-                alt="Swings on the playground behind the buildings"
-                fill
-                sizes="(max-width: 768px) 92vw, 46vw"
-                className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.03]"
-              />
-              <div className="media-wash absolute inset-0" />
-              <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="text-h4 !text-white">Room to run</h3>
-                <p className="mt-2 max-w-[34ch] text-micro text-white/80">
-                  Playground, lawn games and a fenced sand area for the under fours.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal
-              as="article"
-              delay={0.2}
-              className="group relative col-span-1 min-h-[210px] overflow-hidden rounded-[var(--radius-card)] md:col-span-3"
-            >
-              <Image
-                src="/images/gazebo.jpg"
-                alt="A gazebo beside the picnic tables in the garden"
-                fill
-                sizes="(max-width: 768px) 92vw, 46vw"
-                className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.03]"
-              />
-              <div className="media-wash absolute inset-0" />
-              <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="text-h4 !text-white">Shade and a seat</h3>
-                <p className="mt-2 max-w-[34ch] text-micro text-white/80">
-                  Gazebos and picnic tables through the garden.
-                </p>
+              <div className="bezel-core h-full">
+                <Image
+                  src="/images/garden-view.jpg"
+                  alt="The garden and lawn between the buildings"
+                  fill
+                  sizes="(max-width: 768px) 94vw, (max-width: 1024px) 46vw, 40vw"
+                  className={tileImage}
+                />
+                <div className="media-wash absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 p-7">
+                  <h3 className="text-h4 !text-white">Shade and a seat</h3>
+                  <p className="mt-2 max-w-[34ch] text-micro text-white/80">
+                    Gazebos and picnic tables through the garden.
+                  </p>
+                </div>
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
 
-      {/* 6. Rooms */}
-      <section className={`${container} section`}>
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <SectionHeading
-            label="Rooms and suites"
-            title="Six layouts, two to six guests"
-            intro="Studios for couples, two bedroom suites for families, and a few rooms right beside the pool."
-          />
-          <Reveal delay={0.05} className="shrink-0 lg:pb-2">
-            <TextLink href="/rooms">All six rooms</TextLink>
+          <Reveal className="mt-12">
+            <TextLink href="/amenities">Everything on the property</TextLink>
           </Reveal>
         </div>
+      </section>
 
-        <div className="mt-16 grid items-start gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((room, i) => (
-            <Reveal
-              key={room.slug}
-              delay={i * 0.05}
-              className={i === 1 ? "lg:pt-16" : i === 2 ? "lg:pt-8" : ""}
-            >
-              <RoomCard room={room} />
-            </Reveal>
-          ))}
+      {/* 4. Rooms. One shelf with all six, bleeding off the right edge. */}
+      <section className="section overflow-hidden bg-mist">
+        <RoomRail
+          rooms={rooms}
+          header={
+            <SectionHeading
+              title={
+                <>
+                  Six layouts, <em>two to six guests</em>
+                </>
+              }
+              intro="Every room has a Serta Presidential Suite bed, a fridge, microwave and coffee maker, and its own door to the outside."
+            />
+          }
+        />
+        <div className={`${container} mt-12`}>
+          <Reveal>
+            <TextLink href="/rooms">Compare all six rooms</TextLink>
+          </Reveal>
         </div>
       </section>
 
-      {/* 7. Breakfast */}
-      <section className="bg-sand section">
-        <div className={`grid items-center gap-12 lg:grid-cols-12 lg:gap-x-12 ${container}`}>
-          <div className="lg:col-span-5">
+      {/* 5. Breakfast. The photograph with a menu card propped against it. */}
+      <section className={`${container} section`}>
+        <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-4">
             <SectionHeading
-              title="Coffee is on by seven"
-              intro="Come down to the breakfast room, say good morning, and help yourself to coffee, tea or hot chocolate and something fresh out of the oven. It's free, every morning of your stay."
+              title={
+                <>
+                  Coffee is on <em>by seven</em>
+                </>
+              }
+              titleClassName="max-w-[9ch]"
+              intro="Come down to the sunny breakfast room, say good morning, and help yourself. It's free, every morning of your stay."
             />
-            <Reveal delay={0.05} className="measure mt-8 text-muted">
-              <p>
-                Muffins baked that morning, bagels, fresh fruit and yogurt, set out in the sunny
-                breakfast room overlooking the garden. {site.breakfastHours}
-              </p>
-            </Reveal>
             <Reveal delay={0.1} className="mt-10">
               <TextLink href="/breakfast">More about breakfast</TextLink>
             </Reveal>
           </div>
-          <div className="lg:col-span-7">
-            <Reveal className="relative aspect-[16/11] overflow-hidden rounded-[var(--radius-card)] bg-canvas">
-              <Image
-                src="/images/breakfast-room.jpg"
-                alt="The sunny breakfast room set out for the morning, with garden views"
-                fill
-                sizes="(max-width: 1024px) 92vw, 54vw"
-                className="object-cover"
-              />
+
+          <div className="relative lg:col-span-7 lg:col-start-6">
+            <Reveal y={40} className="bezel">
+              <div className="bezel-core aspect-[4/3] lg:aspect-[5/4]">
+                <ParallaxImage
+                  src="/images/breakfast-room.jpg"
+                  alt="The sunny breakfast room set out for the morning, with garden views"
+                  sizes="(max-width: 1024px) 94vw, 56vw"
+                  travel={6}
+                />
+              </div>
             </Reveal>
+            {/* Propped against the photo at an angle only where the text
+                column is wide enough to leave it room. */}
+            <BreakfastMenu className="relative z-10 mx-4 -mt-24 sm:mx-auto sm:max-w-sm xl:absolute xl:-left-24 xl:bottom-14 xl:m-0 xl:w-[320px] xl:-rotate-[2.5deg]" />
           </div>
         </div>
       </section>
 
-      {/* 8. The area. Heading in the container, image breaks full bleed. */}
-      <section className="section">
+      {/* 6. The area. A wide aerial, then distances as stops along one line. */}
+      <section className="section bg-mist">
         <div className={container}>
           <SectionHeading
-            label="The area"
-            title="Walk, bike, or take the trolley"
+            title={
+              <>
+                Walk, bike, or <em>take the trolley</em>
+              </>
+            }
             intro="Moody and North Beach are a three-quarter-mile walk. The trolley runs to the Ogunquit Playhouse, Perkins Cove, the shops and the galleries."
           />
-        </div>
 
-        <Reveal className="relative mt-16 aspect-[32/9] w-full overflow-hidden bg-sand">
-          <Image
-            src="/images/band-aerial-beach.png"
-            alt="Aerial view of the beach and tidal river near Wells and Ogunquit"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </Reveal>
+          <Reveal y={40} className="bezel mt-16">
+            <div className="bezel-core aspect-[16/10] sm:aspect-[21/9] lg:aspect-[32/10]">
+              <ParallaxImage
+                src="/images/band-aerial-beach.png"
+                alt="Aerial view of the beach and tidal river near Wells and Ogunquit"
+                sizes="(max-width: 1400px) 96vw, 1340px"
+                travel={5}
+              />
+            </div>
+          </Reveal>
 
-        <div className={`${container} mt-16`}>
-          <dl className="grid gap-x-16 sm:grid-cols-2">
-            {distances.map(([value, place], i) => (
-              <Reveal key={place} delay={i * 0.04}>
-                <div className="flex items-baseline justify-between gap-6 border-b border-line py-4">
-                  <dt className="text-body text-muted">{place}</dt>
-                  <dd className="shrink-0 font-display text-h4 tabular-nums text-ink">{value}</dd>
-                </div>
-              </Reveal>
-            ))}
-          </dl>
+          <div className="mt-16 lg:mt-20">
+            <DistanceScale items={distances} on="mist" />
+          </div>
 
-          <Reveal delay={0.1} className="mt-12">
+          <Reveal className="mt-14">
             <TextLink href="/attractions">Plan the trip</TextLink>
           </Reveal>
         </div>
       </section>
 
-      {/* 9. Reviews */}
-      <Reviews />
-
-      {/* 10. Closing line */}
-      <section className="section">
-        <div className={container}>
-          <Reveal>
-            <p className="mx-auto max-w-[26ch] text-center font-display text-h3 text-ink">
-              Family run, and a lot of our guests have been coming back for years.
-            </p>
-          </Reveal>
+      {/* 7. Good to know. The questions people phone about, answered in the
+          open rather than folded away in an accordion. */}
+      <section className={`${container} section`}>
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-4">
+            <SectionHeading
+              title={
+                <>
+                  Good <em>to know</em>
+                </>
+              }
+              titleClassName="max-w-[8ch]"
+              intro="The questions people usually call about, answered before you book."
+            />
+            <Reveal delay={0.1} className="mt-10 flex flex-col items-start gap-4">
+              <TextLink href="/policies">All our policies</TextLink>
+              <a
+                href={site.phones.tollFreeHref}
+                className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
+              >
+                Something else? Call {site.phones.tollFree}
+              </a>
+            </Reveal>
+          </div>
+          <dl className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:col-span-8">
+            {faq.map((f, i) => (
+              <Reveal key={f.q} delay={(i % 2) * 0.06} y={20} className="border-t border-ink/15 pt-6">
+                <dt className="font-display text-h4 font-[380]">{f.q}</dt>
+                <dd className="mt-3 text-small text-muted">{f.a}</dd>
+              </Reveal>
+            ))}
+          </dl>
         </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       </section>
 
+      {/* 8 + 9. The Atlantic passage: reviews, then the closing call to action,
+          running into the footer. */}
+      <Reviews />
       <CTASection />
     </>
   );

@@ -9,11 +9,12 @@ import { site } from "@/lib/site";
 export default function Logo({
   width = 132,
   className = "",
-  priority = false,
+  eager = false,
 }: {
   width?: number;
   className?: string;
-  priority?: boolean;
+  /** Above the fold: load straight away rather than lazily. Never the LCP. */
+  eager?: boolean;
 }) {
   return (
     <Image
@@ -21,7 +22,7 @@ export default function Logo({
       alt={site.name}
       width={width}
       height={width / 2}
-      priority={priority}
+      loading={eager ? "eager" : undefined}
       sizes={`${width}px`}
       className={className}
     />

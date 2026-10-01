@@ -44,11 +44,11 @@ const policies = [
 export default function PoliciesPage() {
   return (
     <>
-      <section className="mx-auto max-w-3xl px-6 pb-20 pt-28 lg:px-10 lg:pt-40">
+      <section className="mx-auto max-w-[1100px] px-6 pb-[var(--section-y)] pt-32 lg:px-10 lg:pt-44">
         <Reveal>
           <span className="eyebrow">Good to know</span>
-          <h1 className="mt-5 text-h1">Policies</h1>
-          <p className="mt-5 text-body text-muted">
+          <h1 className="text-h1">Policies</h1>
+          <p className="measure mt-7 text-lead text-muted">
             The practical details, in plain terms. If anything here affects your plans, call us on{" "}
             <a
               href={site.phones.tollFreeHref}
@@ -60,13 +60,15 @@ export default function PoliciesPage() {
           </p>
         </Reveal>
 
-        <dl className="mt-14">
+        <dl className="mt-16 border-t border-ink/15">
           {policies.map((p, i) => (
-            <Reveal key={p.t} delay={i * 0.05}>
-              <div className="border-b border-line py-6">
-                <dt className="font-display text-h4 leading-tight">{p.t}</dt>
-                <dd className="mt-2.5 text-small text-muted">{p.d}</dd>
-              </div>
+            <Reveal
+              key={p.t}
+              delay={i * 0.05}
+              className="grid gap-3 border-b border-ink/15 py-8 sm:grid-cols-12 sm:gap-8"
+            >
+              <dt className="font-display text-h4 font-[380] sm:col-span-4">{p.t}</dt>
+              <dd className="max-w-[60ch] text-body text-muted sm:col-span-8">{p.d}</dd>
             </Reveal>
           ))}
         </dl>

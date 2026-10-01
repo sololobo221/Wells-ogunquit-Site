@@ -1,56 +1,74 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { List, X } from "@phosphor-icons/react";
 import { nav, site } from "@/lib/site";
 import BookNow from "./BookNow";
 import Logo from "./Logo";
 
+/**
+ * A floating glass island that stays put. The best hotel sites keep the book
+ * button in reach the whole way down the page, so the header no longer hides
+ * on scroll.
+ *
+ * Whether the page has scrolled is read from a 24px sentinel at the top of
+ * the document with an IntersectionObserver, so there is no scroll listener
+ * and no animation library: the menu is plain CSS transitions.
+ */
 export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
-  const { scrollY } = useScroll();
-  const last = useRef(0);
+  const sentinel = useRef<HTMLDivElement>(null);
 
-  useMotionValueEvent(scrollY, "change", (v) => {
-    setScrolled(v > 24);
-    const prev = last.current;
-    last.current = v;
-    // Near the top, or with the menu open, keep the bar in place.
-    if (v < 80 || open) {
-      setHidden(false);
-      return;
-    }
-    // Slide it away while scrolling down, bring it back the instant the user
-    // scrolls up. The small threshold avoids flicker from momentum jitter.
-    if (v > prev + 4) setHidden(true);
-    else if (v < prev - 4) setHidden(false);
-  });
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
-  // Transparent over the hero on the home page only; interior pages have
-  // shorter heroes and read better with the bar present from the start.
+  // Lock the page behind the menu while it is open, and let Escape close it.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Dark glass over the home hero only. Interior heroes are shorter, and the
+  // light island reads better against them from the start.
   const overHero = pathname === "/" && !scrolled && !open;
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow] duration-300 ease-[var(--ease-out)] ${
-          hidden && !open ? "-translate-y-full" : "translate-y-0"
-        } ${
-          overHero ? "bg-transparent" : "bg-canvas/95 shadow-nav backdrop-blur-[2px]"
-        }`}
-      >
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-8 px-6 lg:h-20 lg:px-10">
-          <Link href="/" aria-label={site.name} className="shrink-0">
-            <Logo width={124} priority />
+      <div ref={sentinel} aria-hidden className="pointer-events-none absolute left-0 top-0 h-6 w-px" />
+
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+        <div
+          className={`mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-6 rounded-full pl-3 pr-2 transition-[background-color,box-shadow] duration-500 ease-[var(--ease-glide)] sm:pl-4 ${
+            overHero
+              ? "glass-dark bg-[rgba(10,26,32,0.22)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16),inset_0_1px_0_rgba(255,255,255,0.14)] backdrop-blur-md"
+              : "glass bg-canvas/80 shadow-[inset_0_0_0_1px_rgba(15,30,36,0.07),inset_0_1px_0_rgba(255,255,255,0.7),var(--shadow-nav)] backdrop-blur-xl backdrop-saturate-150"
+          }`}
+        >
+          <Link
+            href="/"
+            aria-label={`${site.name}, home`}
+            onClick={() => setOpen(false)}
+            className="shrink-0 rounded-full"
+          >
+            <Logo width={96} eager />
           </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex">
+          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
             {nav.map((item) => {
               const active = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
@@ -58,12 +76,12 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`text-small transition-colors duration-200 ${
+                  className={`rounded-full px-4 py-2 text-small transition-colors duration-300 ${
                     overHero
-                      ? "text-white/85 hover:text-white"
+                      ? "text-white/85 hover:bg-white/10 hover:text-white"
                       : active
-                        ? "text-navy"
-                        : "text-muted hover:text-ink"
+                        ? "bg-ink/[0.06] text-ink"
+                        : "text-muted hover:bg-ink/[0.04] hover:text-ink"
                   }`}
                 >
                   {item.label}
@@ -72,10 +90,10 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-4">
+          <div className="flex shrink-0 items-center gap-2">
             <a
               href={site.phones.tollFreeHref}
-              className={`hidden text-small tabular-nums transition-colors duration-200 xl:block ${
+              className={`hidden rounded-full px-3 py-2 text-small tabular-nums transition-colors duration-300 xl:block ${
                 overHero ? "text-white/85 hover:text-white" : "text-muted hover:text-ink"
               }`}
             >
@@ -88,49 +106,74 @@ export default function Header() {
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="mobile-menu"
               onClick={() => setOpen((v) => !v)}
-              className={`grid h-11 w-11 place-items-center rounded-[var(--radius-control)] transition-colors duration-200 lg:hidden ${
-                overHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-ink/5"
+              className={`relative grid h-12 w-12 place-items-center rounded-full transition-colors duration-300 lg:hidden ${
+                overHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-ink/[0.05]"
               }`}
             >
-              {open ? <X size={22} weight="bold" /> : <List size={22} weight="bold" />}
+              {/* Two lines that rotate into an X */}
+              <span aria-hidden className="relative block h-3 w-5">
+                <span
+                  className={`absolute left-0 h-[1.5px] w-5 rounded-full bg-current transition-transform duration-500 ease-[var(--ease-glide)] ${
+                    open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 h-[1.5px] w-5 rounded-full bg-current transition-transform duration-500 ease-[var(--ease-glide)] ${
+                    open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Full-screen mobile menu. Large tap targets, booking CTA always visible. */}
-      <motion.div
-        initial={false}
-        animate={open ? { opacity: 1, pointerEvents: "auto" } : { opacity: 0, pointerEvents: "none" }}
-        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed inset-0 z-[45] flex flex-col bg-canvas lg:hidden"
+      {/* Full-screen menu. Always in the DOM so it can fade, but inert and
+          invisible while closed. Links rise in one after another. */}
+      <div
+        id="mobile-menu"
+        inert={!open}
+        className={`glass fixed inset-0 z-40 flex flex-col bg-canvas/90 backdrop-blur-2xl transition-[opacity,visibility] duration-500 ease-[var(--ease-glide)] lg:hidden ${
+          open ? "visible opacity-100" : "invisible opacity-0"
+        }`}
       >
-        <nav className="flex flex-1 flex-col justify-center px-6 pt-20">
-          {nav.map((item, i) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${60 + i * 35}ms` : "0ms" }}
-              className={`border-b border-line py-5 font-display text-h3 transition-[opacity,transform] duration-300 ease-[var(--ease-out)] ${
-                pathname === item.href ? "text-navy" : "text-ink"
-              } ${open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="Menu" className="flex flex-1 flex-col justify-center px-6 pt-24 sm:px-10">
+          {nav.map((item, i) => {
+            const active = pathname === item.href || pathname.startsWith(item.href + "/");
+            return (
+              <div key={item.href} className="overflow-hidden">
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  aria-current={active ? "page" : undefined}
+                  style={{ transitionDelay: open ? `${80 + i * 50}ms` : "0ms" }}
+                  className={`block py-2.5 font-display text-[clamp(2.25rem,9vw,3.5rem)] leading-[1.1] tracking-[-0.02em] transition-transform duration-700 ease-[var(--ease-glide)] motion-reduce:transition-none ${
+                    open ? "translate-y-0" : "translate-y-[110%]"
+                  } ${active ? "italic text-ink" : "text-ink/80 hover:text-ink"}`}
+                >
+                  {item.label}
+                </Link>
+              </div>
+            );
+          })}
         </nav>
-        <div className="flex flex-col gap-4 border-t border-line px-6 pb-10 pt-6">
+        <div
+          style={{ transitionDelay: open ? "350ms" : "0ms" }}
+          className={`flex flex-col gap-3 px-6 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-6 transition-[opacity,transform] duration-700 ease-[var(--ease-glide)] motion-reduce:transition-none sm:px-10 ${
+            open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
           <BookNow size="lg" className="w-full" />
           <a
             href={site.phones.tollFreeHref}
-            className="py-2 text-center text-small tabular-nums text-muted"
+            className="py-3 text-center text-small tabular-nums text-muted"
           >
-            {site.phones.tollFree}
+            Or call {site.phones.tollFree}
           </a>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 }
