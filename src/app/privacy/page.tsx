@@ -33,9 +33,9 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <section className="mx-auto max-w-[1100px] px-6 pb-[var(--section-y)] pt-32 lg:px-10 lg:pt-44">
+    <section className="container-site max-w-[1100px] pb-[var(--section-y)] pt-32 lg:pt-44">
       <Reveal>
-        <span className="eyebrow">Privacy</span>
+        <span className="kicker">Privacy</span>
         <h1 className="text-h1">How we handle your information</h1>
         <p className="measure mt-7 text-lead text-muted">
           A short, plain summary of what this website does with what you send it.
@@ -49,14 +49,14 @@ export default function PrivacyPage() {
             delay={i * 0.06}
             className="grid gap-3 border-b border-ink/15 py-8 sm:grid-cols-12 sm:gap-8"
           >
-            <dt className="font-display text-h4 font-[380] sm:col-span-4">{s.t}</dt>
+            <dt className="font-display text-h4 sm:col-span-4">{s.t}</dt>
             <dd className="max-w-[60ch] text-body text-muted sm:col-span-8">{s.d}</dd>
           </Reveal>
         ))}
       </dl>
 
       <Reveal delay={0.1} className="mt-10">
-        <p className="text-micro text-faint">
+        <p className="text-micro text-muted">
           {site.name}, {site.address.full}.
         </p>
       </Reveal>

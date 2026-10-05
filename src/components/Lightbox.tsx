@@ -6,7 +6,7 @@ import { X, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import type { GalleryImage } from "@/lib/gallery";
 
 const glassBtn =
-  "h-12 w-12 place-items-center rounded-full bg-white/[0.06] text-white/80 ring-1 ring-inset ring-white/15 transition-[background-color,color,transform] duration-300 hover:bg-white/15 hover:text-white active:scale-95";
+  "h-12 w-12 place-items-center border border-white/25 text-white/80 transition-[background-color,color] duration-300 hover:bg-white/10 hover:text-white";
 
 /**
  * Full-screen photo viewer shared by the grounds gallery and the room pages.
@@ -58,7 +58,7 @@ export default function Lightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-atlantic/95 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-harbor/95 p-4"
       onClick={onClose}
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
@@ -106,12 +106,12 @@ export default function Lightbox({
           width={1800}
           height={1350}
           sizes="(max-width: 1100px) 100vw, 1024px"
-          className="mx-auto max-h-[78dvh] w-auto rounded-[var(--radius-card)] object-contain shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)]"
+          className="mx-auto max-h-[78dvh] w-auto object-contain"
         />
-        <figcaption className="mt-5 text-center text-small text-foam-muted">
+        <figcaption className="mt-5 text-center text-small text-shell-muted">
           {img.alt}
           {n > 1 && (
-            <span className="ml-3 tabular-nums text-foam-muted/70">
+            <span className="ml-3 tabular-nums text-shell-muted/70">
               {index + 1} of {n}
             </span>
           )}

@@ -2,32 +2,42 @@ import type { ReactNode } from "react";
 import Reveal from "./Reveal";
 
 /**
- * Headline over a short intro, stacked. Pass an <em> inside the title for an
- * italic emphasis in the same family.
- *
- * The label renders as an eyebrow. Use it rarely: a page gets a few at most.
+ * Kicker, heading, short intro. Left aligned by default; `center` for the
+ * few places a section opens on its own, like the welcome on the home page.
  */
 export default function SectionHeading({
   label,
   title,
   intro,
   invert = false,
+  center = false,
   className = "",
-  titleClassName = "max-w-[18ch]",
+  titleClassName = "max-w-[20ch]",
+  as: Tag = "h2",
 }: {
   label?: string;
   title: ReactNode;
   intro?: ReactNode;
   invert?: boolean;
+  center?: boolean;
   className?: string;
   titleClassName?: string;
+  as?: "h1" | "h2";
 }) {
   return (
-    <Reveal className={className}>
-      {label && <span className={`eyebrow ${invert ? "eyebrow-invert" : ""}`}>{label}</span>}
-      <h2 className={`text-h2 ${titleClassName} ${invert ? "!text-foam" : ""}`}>{title}</h2>
+    <Reveal className={`${center ? "mx-auto text-center" : ""} ${className}`}>
+      {label && <span className={`kicker ${invert ? "kicker-light" : ""}`}>{label}</span>}
+      <Tag
+        className={`text-h2 ${titleClassName} ${center ? "mx-auto" : ""} ${invert ? "!text-shell" : ""}`}
+      >
+        {title}
+      </Tag>
       {intro && (
-        <p className={`measure mt-7 text-lead ${invert ? "text-foam-muted" : "text-muted"}`}>
+        <p
+          className={`measure mt-6 text-lead ${center ? "mx-auto" : ""} ${
+            invert ? "text-shell-muted" : "text-muted"
+          }`}
+        >
           {intro}
         </p>
       )}

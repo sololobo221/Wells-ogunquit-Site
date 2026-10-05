@@ -28,9 +28,9 @@ export default function MapEmbed() {
   }
 
   return (
-    <div className="relative flex aspect-[4/3] w-full flex-col items-center justify-center gap-7 bg-[radial-gradient(circle_at_50%_45%,var(--color-surface),var(--color-mist)_70%)] px-6 text-center sm:aspect-[21/9]">
-      <span className="grid h-16 w-16 place-items-center rounded-full bg-accent text-white shadow-[0_14px_30px_-12px_rgba(177,56,40,0.7)]">
-        <MapPin size={28} weight="fill" aria-hidden />
+    <div className="relative flex aspect-[4/3] w-full flex-col items-center justify-center gap-7 bg-sand px-6 text-center sm:aspect-[21/9]">
+      <span className="text-accent">
+        <MapPin size={40} weight="light" aria-hidden />
       </span>
       <div>
         <p className="font-display text-h3">{site.address.street}</p>
@@ -43,7 +43,7 @@ export default function MapEmbed() {
           href={directions}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex h-12 items-center gap-2.5 rounded-full bg-ink px-6 text-small font-medium text-canvas transition-[background-color,transform] duration-300 hover:bg-navy active:scale-[0.98]"
+          className="caps inline-flex h-12 items-center gap-2.5 bg-ink px-7 text-canvas transition-colors duration-300 hover:bg-accent"
         >
           <NavigationArrow size={16} weight="fill" aria-hidden />
           Get directions
@@ -51,7 +51,7 @@ export default function MapEmbed() {
         <button
           type="button"
           onClick={() => setShow(true)}
-          className="inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-small font-medium text-ink ring-1 ring-inset ring-ink/20 transition-[box-shadow,background-color,transform] duration-300 hover:bg-ink/[0.04] hover:ring-ink/45 active:scale-[0.98]"
+          className="caps inline-flex h-12 items-center gap-2.5 border border-ink/70 px-7 text-ink transition-colors duration-300 hover:bg-ink hover:text-canvas"
         >
           <MapTrifold size={16} aria-hidden />
           Show the map here

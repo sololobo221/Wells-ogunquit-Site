@@ -3,157 +3,127 @@
 /* ============================================================================
    Wells-Ogunquit Resort Motel design tokens
 
-   Coastal Maine, not beach-house beige. The neutrals lean toward sea fog and
-   sea glass, the dark tone is the Atlantic after sunset, and the only accent
-   is the lobster red from the sign out front.
+   Modelled on how the good small coastal hotels present themselves (Sound
+   View Greenport, the Surfrider, Hidden Pond): photography does the work,
+   edges are square, type is quiet, and there is one colour for "book".
 
-   Display face is Newsreader, a variable serif with optical sizing and a
-   true italic. It earns its place here: the property is a heritage roadside
-   motel with an old oval sign, and the italic carries emphasis inside a
-   headline without reaching for a second family.
+   Palette comes from the sign out front: warm paper for the page, harbour
+   navy from the wave under the lobster, lobster red for booking only, and the
+   sign's gold for small labels on the navy.
+
+   Type: Newsreader (serif) for headings, set upright and at a normal weight.
+   Jost, a Futura revival, for everything else. Its geometric caps carry the
+   mid-century roadside-motel feel in the nav, labels and buttons.
    ========================================================================= */
 
 @theme {
-  /* ---- Surfaces. Fog and sea glass, never pure white. ---- */
-  --color-canvas: #f3f4f0; /* page */
-  --color-mist: #e4eae6; /* alternating bands, separated by tone not rules */
-  --color-surface: #fbfbf9; /* cards sitting on either of the above */
-  --color-line: #d5dcd8; /* hairlines */
+  /* ---- Surfaces ---- */
+  --color-canvas: #f7f4ee; /* page, warm paper */
+  --color-sand: #eee8dc; /* alternate bands */
+  --color-surface: #ffffff; /* booking strip, forms, cards on sand */
+  --color-line: #ddd5c6; /* hairlines on canvas and sand */
 
-  /* ---- The Atlantic. One deliberate dark passage at the end of every page:
-     reviews, the closing call to action and the footer. ---- */
-  --color-atlantic: #0f2730;
-  --color-atlantic-2: #173641; /* raised surfaces on the dark */
-  --color-foam: #e8eeeb; /* 13.2 : 1 on atlantic */
-  --color-foam-muted: #a9bbb9; /* 7.76 : 1 on atlantic */
+  /* ---- Harbour navy. The closing band and the footer. ---- */
+  --color-harbor: #17293a;
+  --color-harbor-2: #20364a; /* raised surfaces on the navy */
+  --color-shell: #f4efe6; /* text on navy, 13.0 : 1 */
+  --color-shell-muted: #b8c0c6; /* secondary text on navy, 8.0 : 1 */
+  --color-gold: #cdbd7a; /* the sign's gold, labels on navy only, 7.9 : 1 */
 
-  /* ---- Ink. All pass WCAG AA on canvas, mist and surface. ---- */
-  --color-ink: #0f1e24; /* 15.4 : 1 on canvas */
-  --color-muted: #475459; /* 7.09 on canvas, 6.42 on mist */
-  --color-faint: #56636a; /* 5.61 on canvas, 5.08 on mist */
+  /* ---- Ink. All pass WCAG AA on canvas and sand. ---- */
+  --color-ink: #1d2327; /* 14.5 : 1 on canvas */
+  --color-muted: #4f575c; /* 6.7 on canvas, 6.0 on sand */
+  --color-faint: #60676c; /* 5.2 on canvas, 4.7 on sand */
 
-  /* ---- Accent. Lobster red, taken from the sign. ----
-     Booking calls to action and small marks only. Never body text.
-     6.06 : 1 white-on-red, 5.48 on canvas. */
-  --color-accent: #b13828;
-  --color-accent-deep: #92291b; /* hover / active */
-
-  /* ---- Links. A deep sea ink, read as part of the ink family. ---- */
-  --color-navy: #1d4451; /* 9.51 on canvas */
+  /* ---- Accent. Lobster red. Booking buttons, kickers and small marks.
+     6.6 : 1 white-on-red, 6.0 on canvas, 5.4 on sand. */
+  --color-accent: #a6372a;
+  --color-accent-deep: #8a2b20;
 
   /* ---- Type ---- */
   --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
 
-  --text-display: clamp(3rem, 1.2rem + 6.4vw, 6.75rem); /* 48 → 108, home hero */
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.028em;
+  --text-display: clamp(2.75rem, 1.55rem + 4.3vw, 5.25rem); /* 44 → 84, home hero */
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.02em;
 
-  --text-h1: clamp(2.75rem, 1.5rem + 4.6vw, 5.25rem); /* 44 → 84 */
-  --text-h1--line-height: 1.02;
-  --text-h1--letter-spacing: -0.025em;
+  --text-h1: clamp(2.5rem, 1.7rem + 3vw, 4.25rem); /* 40 → 68 */
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.018em;
 
-  --text-h2: clamp(2.125rem, 1.35rem + 3vw, 3.875rem); /* 34 → 62 */
-  --text-h2--line-height: 1.06;
-  --text-h2--letter-spacing: -0.022em;
+  --text-h2: clamp(2rem, 1.55rem + 1.7vw, 3.125rem); /* 32 → 50 */
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.014em;
 
-  --text-statement: clamp(1.75rem, 1.05rem + 2.6vw, 3.375rem); /* 28 → 54 */
-  --text-statement--line-height: 1.16;
-  --text-statement--letter-spacing: -0.018em;
+  --text-h3: clamp(1.5rem, 1.32rem + 0.6vw, 1.9375rem); /* 24 → 31 */
+  --text-h3--line-height: 1.18;
+  --text-h3--letter-spacing: -0.01em;
 
-  --text-h3: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem); /* 24 → 36 */
-  --text-h3--line-height: 1.12;
-  --text-h3--letter-spacing: -0.015em;
+  --text-h4: 1.375rem; /* 22, card titles */
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.005em;
 
-  --text-h4: 1.5rem; /* 24, card titles */
-  --text-h4--line-height: 1.18;
-  --text-h4--letter-spacing: -0.01em;
-
-  --text-lead: 1.1875rem; /* 19, section intros */
+  --text-lead: 1.1875rem; /* 19 */
   --text-lead--line-height: 1.6;
 
   --text-body: 1.0625rem; /* 17 */
-  --text-body--line-height: 1.65;
+  --text-body--line-height: 1.7;
 
   --text-small: 0.9375rem; /* 15 */
-  --text-small--line-height: 1.55;
+  --text-small--line-height: 1.6;
 
-  --text-micro: 0.8125rem; /* 13, meta and captions */
+  --text-micro: 0.8125rem; /* 13 */
   --text-micro--line-height: 1.5;
 
-  --text-eyebrow: 0.75rem; /* 12 */
-  --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.16em;
+  /* Tracked capitals: nav, kickers, buttons, text links. */
+  --text-label: 0.75rem; /* 12 */
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.18em;
 
-  /* ---- Shape. One documented system, followed everywhere:
-       frames (heroes, feature media)   28px
-       shells (outer bezel)             26px
-       cores  (inner bezel)             20px, concentric with a 6px shell
-       cards / standalone media         22px
-       inputs                           14px
-       buttons, chips, the nav          full pill ---- */
-  --radius-frame: 28px;
-  --radius-shell: 26px;
-  --radius-core: 20px;
-  --radius-card: 22px;
-  --radius-media: 16px;
-  --radius-control: 14px;
-  --radius-pill: 999px;
-
-  /* ---- Elevation. Tinted with the Atlantic, never neutral black. ---- */
-  --shadow-card: 0 1px 2px rgba(15, 39, 48, 0.05);
-  --shadow-lift: 0 30px 60px -30px rgba(15, 39, 48, 0.32), 0 4px 12px -4px rgba(15, 39, 48, 0.08);
-  --shadow-nav: 0 10px 30px -18px rgba(15, 39, 48, 0.35);
-
-  /* ---- Motion. Heavy ease-out for entrances, a soft spring-like curve for
-     interaction. Nothing linear. ---- */
+  /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-glide: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --animate-hero-settle: hero-settle 2.6s var(--ease-out) both;
-  --animate-rise: rise 1.1s var(--ease-out) both;
-
-  @keyframes hero-settle {
-    from {
-      transform: scale(1.08);
-    }
-    to {
-      transform: scale(1);
-    }
-  }
+  --animate-rise: rise 1s var(--ease-out) both;
+  --animate-fade: fade 1.2s var(--ease-out) both;
 
   @keyframes rise {
     from {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(14px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
-/* Section rhythm. One value, used everywhere. Bottom runs a touch heavier
-   than the top so sections settle optically. */
 @theme {
-  --section-y: clamp(96px, 11vw, 176px);
-  --measure: 62ch;
+  --section-y: clamp(80px, 9vw, 140px);
+  --measure: 60ch;
 }
 
-/* Z-index scale. Systemic layers only.
+/* Z-index scale.
      30  mobile booking bar
-     40  mobile menu overlay
+     40  mobile menu
      50  header
-     60  grain
      70  skip link
      80  lightbox */
 
 @layer base {
   html {
     background: var(--color-canvas);
-    /* Keep in-page anchor targets clear of the floating header. */
-    scroll-padding-top: 7rem;
+    scroll-padding-top: 6rem;
   }
 
   body {
@@ -161,7 +131,7 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.65;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -171,19 +141,10 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 380;
+    font-weight: 400;
     font-optical-sizing: auto;
     color: var(--color-ink);
     text-wrap: balance;
-    /* Room for italic descenders under tight display leading. */
-    padding-bottom: 0.04em;
-  }
-
-  /* Emphasis inside a headline is the same family in italic, a shade lighter.
-     Never a second typeface. */
-  :where(h1, h2, h3, h4, .statement) em {
-    font-style: italic;
-    font-weight: 340;
   }
 
   p {
@@ -191,122 +152,77 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    background: color-mix(in srgb, var(--color-accent) 20%, transparent);
     color: var(--color-ink);
   }
 }
 
 @layer components {
-  /* Section vertical rhythm */
   .section {
-    padding-block: var(--section-y) calc(var(--section-y) * 1.08);
+    padding-block: var(--section-y) calc(var(--section-y) * 1.05);
   }
 
-  /* Prose measure */
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1320px;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-site {
+      padding-inline: 3rem;
+    }
+  }
+
   .measure {
     max-width: var(--measure);
   }
 
-  /* Large editorial paragraph. */
-  .statement {
-    font-family: var(--font-display);
-    font-size: var(--text-statement);
-    line-height: var(--text-statement--line-height);
-    letter-spacing: var(--text-statement--letter-spacing);
-    font-weight: 360;
-    font-optical-sizing: auto;
-    text-wrap: pretty;
-  }
-
-  /* Eyebrow: used sparingly, a few per page at most. */
-  .eyebrow {
+  /* Small tracked capitals above a heading. */
+  .kicker {
     display: block;
     font-family: var(--font-sans);
-    font-size: var(--text-eyebrow);
-    line-height: 1;
-    letter-spacing: 0.16em;
+    font-size: var(--text-label);
+    line-height: 1.2;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 500;
-    color: var(--color-faint);
-    margin-bottom: calc(var(--spacing) * 6);
+    color: var(--color-accent);
+    margin-bottom: 1.25rem;
   }
 
-  .eyebrow-invert {
-    color: var(--color-foam-muted);
+  .kicker-light {
+    color: var(--color-gold);
   }
 
-  /* ---- Double bezel. A machined outer tray holding an inner core, with
-     concentric radii. Used for feature media, cards and the booking bar. ---- */
-  .bezel {
-    border-radius: var(--radius-shell);
-    padding: 6px;
-    background: color-mix(in srgb, var(--color-ink) 4.5%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 6%, transparent);
+  /* Tracked capitals for nav, buttons and links. */
+  .caps {
+    font-family: var(--font-sans);
+    font-size: var(--text-label);
+    line-height: 1.2;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 
-  .bezel-core {
-    position: relative;
-    border-radius: var(--radius-core);
-    /* clip, not hidden: hidden would make every frame a scroll container and
-       break the scroll-driven parallax inside it. */
-    overflow: hidden;
-    overflow: clip;
-    background: var(--color-surface);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.75),
-      0 1px 2px rgba(15, 39, 48, 0.06);
-  }
-
-  /* Opaque shell for bezels that overlap photography or another surface. */
-  .bezel-solid {
-    background: #e2e6e2;
-    box-shadow:
-      inset 0 0 0 1px rgba(15, 30, 36, 0.06),
-      var(--shadow-lift);
-  }
-
-  .bezel-dark {
-    background: rgba(232, 238, 235, 0.05);
-    box-shadow: inset 0 0 0 1px rgba(232, 238, 235, 0.1);
-  }
-
-  .bezel-dark > .bezel-core {
-    background: var(--color-atlantic-2);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  }
-
-  /* Warm-neutral wash over hero photography. Tinted with the Atlantic so it
-     sits with the palette rather than going grey. */
-  .hero-wash {
+  /* Darkening over hero photography: heavier at the bottom where the type
+     sits, a little at the top so the header stays legible. */
+  .photo-shade {
     background:
-      linear-gradient(
-        to top,
-        rgba(10, 26, 32, 0.78) 0%,
-        rgba(10, 26, 32, 0.5) 30%,
-        rgba(10, 26, 32, 0.16) 60%,
-        rgba(10, 26, 32, 0) 100%
-      ),
-      linear-gradient(
-        to right,
-        rgba(10, 26, 32, 0.5) 0%,
-        rgba(10, 26, 32, 0.18) 42%,
-        rgba(10, 26, 32, 0) 72%
-      ),
-      linear-gradient(to bottom, rgba(10, 26, 32, 0.32) 0%, rgba(10, 26, 32, 0) 22%);
+      linear-gradient(to top, rgba(14, 22, 30, 0.78) 0%, rgba(14, 22, 30, 0.42) 40%, rgba(14, 22, 30, 0) 72%),
+      linear-gradient(to right, rgba(14, 22, 30, 0.42) 0%, rgba(14, 22, 30, 0.12) 50%, rgba(14, 22, 30, 0) 75%),
+      linear-gradient(to bottom, rgba(14, 22, 30, 0.45) 0%, rgba(14, 22, 30, 0) 24%);
   }
 
-  .media-wash {
-    background: linear-gradient(
-      to top,
-      rgba(10, 26, 32, 0.86) 0%,
-      rgba(10, 26, 32, 0.5) 38%,
-      rgba(10, 26, 32, 0.1) 72%,
-      rgba(10, 26, 32, 0) 100%
-    );
+  .photo-shade-even {
+    background: rgba(14, 22, 30, 0.45);
   }
 
-  /* Horizontal rails hide their scrollbar but stay scrollable by touch,
-     trackpad, keyboard and the explicit arrow buttons. */
   .no-scrollbar {
     scrollbar-width: none;
   }
@@ -322,37 +238,31 @@
 }
 
 /* ---- Render only what is on screen. Sections from the third onward, and
-   the footer, skip style and layout until they come near the viewport, which
-   takes most of the first layout off the critical path to first paint.
-   `auto` in the intrinsic size makes the browser remember each section's real
-   height once seen, so the scrollbar does not jump.
-   The first two sections are left alone: the booking bar and the docked
-   panels overlap the hero and would be clipped by the paint containment. ---- */
+   the footer, skip style and layout until they come near the viewport. ---- */
 main > section:nth-of-type(n + 3),
 body > footer {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
 
-/* ---- Scroll reveal. <Reveal> marks elements; RevealObserver adds
-   .reveal-ready to <html> and [data-shown] as each one scrolls in. Nothing is
-   hidden until that script has run, and never under reduced motion. ---- */
+/* ---- Scroll reveal. A short fade and rise, once. <Reveal> marks elements;
+   RevealObserver adds .reveal-ready to <html> and [data-shown] as each one
+   scrolls in. Nothing is hidden until that script has run. ---- */
 @media (prefers-reduced-motion: no-preference) {
   .reveal-ready [data-reveal] {
     transition:
-      opacity 0.9s var(--ease-out),
-      transform 0.9s var(--ease-out);
+      opacity 0.8s var(--ease-out),
+      transform 0.8s var(--ease-out);
     transition-delay: var(--reveal-delay, 0s);
   }
   .reveal-ready [data-reveal]:not([data-shown]) {
     opacity: 0;
-    transform: translateY(var(--reveal-y, 28px));
+    transform: translateY(var(--reveal-y, 16px));
   }
 }
 
-/* ---- Parallax. A native scroll-driven animation: no JavaScript, runs off
-   the main thread. Where unsupported, or under reduced motion, the photo
-   simply sits still. ---- */
+/* ---- Parallax for full-bleed photo bands. Native scroll-driven animation,
+   no JavaScript. Still photograph where unsupported or reduced motion. ---- */
 .parallax {
   view-timeline-name: --parallax;
 }
@@ -374,55 +284,14 @@ body > footer {
   }
 }
 
-@keyframes slide-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-hero-settle,
-  .animate-rise {
+  .animate-rise,
+  .animate-fade {
     animation: none;
-  }
-}
-
-/* Fixed, inert grain. Skipped on touch and under reduced motion. */
-.grain::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.028;
-  background-image: url("/images/noise.png");
-  background-repeat: repeat;
-  background-size: 96px 96px;
-}
-
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .grain::after {
-    display: none;
-  }
-}
-
-/* Solid fallbacks for anyone who has asked the OS for less transparency. */
-@media (prefers-reduced-transparency: reduce) {
-  .glass {
-    background: var(--color-canvas) !important;
-    backdrop-filter: none !important;
-  }
-  .glass-dark {
-    background: var(--color-atlantic) !important;
-    backdrop-filter: none !important;
   }
 }
 
 :where(a, button, input, select, textarea, summary):focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 6px;
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react";
 import { initiatePayByLink, type PayByLinkInput } from "@/app/actions/initiatePayByLink";
 
 type BookableRoom = { name: string; roomTypeID: string };
@@ -95,14 +94,14 @@ export default function BookingForm({
     });
   };
 
-  const label = "mb-2 block text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-faint";
+  const label = "caps mb-2 block text-[0.6875rem] text-faint";
   const field =
-    "h-12 w-full px-4 rounded-[var(--radius-control)] border border-line bg-canvas text-base text-ink outline-none transition-[border-color,box-shadow,background-color] duration-300 placeholder:text-faint hover:border-ink/25 focus:border-ink/40 focus:bg-surface focus:shadow-[0_0_0_4px_rgba(177,56,40,0.12)] sm:text-small";
+    "h-12 w-full rounded-[2px] border border-line bg-canvas px-4 text-base text-ink outline-none transition-[border-color,background-color] duration-300 placeholder:text-faint hover:border-ink/30 focus:border-ink focus:bg-surface sm:text-small";
   const err = "mt-1.5 text-micro text-accent";
 
   return (
-    <form onSubmit={submit} noValidate className="bezel bezel-solid">
-      <div className="bezel-core p-5 sm:p-8">
+    <form onSubmit={submit} noValidate className="border border-line bg-surface">
+      <div className="p-5 sm:p-9">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="arrive" className={label}>
@@ -259,7 +258,7 @@ export default function BookingForm({
         </div>
 
         <details className="mt-4 border-t border-line pt-4">
-          <summary className="cursor-pointer text-small font-medium text-navy transition-colors duration-200 hover:text-ink">
+          <summary className="cursor-pointer text-small font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors duration-200 hover:decoration-ink">
             Add a promo code or a note
           </summary>
           <div className="mt-4 space-y-4">
@@ -284,7 +283,7 @@ export default function BookingForm({
                 rows={3}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full resize-y px-4 py-3 rounded-[var(--radius-control)] border border-line bg-canvas text-base text-ink outline-none transition-[border-color,box-shadow,background-color] duration-300 placeholder:text-faint hover:border-ink/25 focus:border-ink/40 focus:bg-surface focus:shadow-[0_0_0_4px_rgba(177,56,40,0.12)] sm:text-small"
+                className="w-full resize-y rounded-[2px] border border-line bg-canvas px-4 py-3 text-base text-ink outline-none transition-[border-color,background-color] duration-300 placeholder:text-faint hover:border-ink/30 focus:border-ink focus:bg-surface sm:text-small"
                 placeholder="Arrival time, a request, a question"
               />
             </div>
@@ -294,7 +293,7 @@ export default function BookingForm({
         {formError && (
           <p
             role="alert"
-            className="mt-5 rounded-[var(--radius-control)] border border-accent/30 bg-accent/5 px-4 py-3 text-small text-accent"
+            className="mt-5 border border-accent/30 bg-accent/5 px-4 py-3 text-small text-accent"
           >
             {formError}
           </p>
@@ -303,19 +302,15 @@ export default function BookingForm({
         <button
           type="submit"
           disabled={pending}
-          className="group mt-7 inline-flex h-14 w-full items-center justify-between gap-3 rounded-full bg-accent pl-6 pr-2 text-body font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_24px_-12px_rgba(177,56,40,0.7)] transition-[background-color,transform,opacity] duration-500 ease-[var(--ease-glide)] hover:bg-accent-deep active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:pl-7"
+          className="caps mt-8 inline-flex h-14 w-full items-center justify-center gap-3 rounded-[2px] bg-accent px-9 text-white transition-[background-color,opacity] duration-300 hover:bg-accent-deep active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
         >
           {pending ? "Setting up payment…" : stay ? `Reserve ${stay} and pay` : "Reserve and pay"}
-          <span
-            aria-hidden
-            className="grid h-10 w-10 place-items-center rounded-full bg-white/15 transition-transform duration-500 ease-[var(--ease-glide)] group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105"
-          >
-            {pending ? (
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none" />
-            ) : (
-              <ArrowUpRight size={15} weight="bold" />
-            )}
-          </span>
+          {pending && (
+            <span
+              aria-hidden
+              className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none"
+            />
+          )}
         </button>
 
         <p className="mt-5 text-micro text-faint">
