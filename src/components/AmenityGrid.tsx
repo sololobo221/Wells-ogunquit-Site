@@ -29,27 +29,24 @@ const icons: Record<string, Icon> = {
 };
 
 /**
- * What comes with every room, one small tile per item with a light icon,
- * rather than ten rows of hairlines.
+ * What comes with every room: a plain list with a thin icon on each line,
+ * set in columns.
  */
 export default function AmenityGrid({ className = "" }: { className?: string }) {
   return (
-    <ul className={`grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 ${className}`}>
-      {inRoomAmenities.map((a, i) => {
+    <Reveal
+      as="div"
+      className={`grid grid-cols-1 gap-x-10 border-t border-ink/15 sm:grid-cols-2 lg:grid-cols-3 ${className}`}
+    >
+      {inRoomAmenities.map((a) => {
         const Glyph = icons[a] ?? Sparkle;
         return (
-          <Reveal
-            as="li"
-            key={a}
-            delay={(i % 5) * 0.05}
-            y={16}
-            className="flex min-h-[132px] flex-col justify-between gap-6 rounded-[var(--radius-card)] bg-surface p-5 shadow-[inset_0_0_0_1px_rgba(15,30,36,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]"
-          >
-            <Glyph size={26} weight="light" className="text-navy" aria-hidden />
-            <span className="text-small leading-snug text-ink">{a}</span>
-          </Reveal>
+          <div key={a} className="flex items-center gap-4 border-b border-ink/15 py-4 text-body text-ink">
+            <Glyph size={22} weight="light" className="shrink-0 text-muted" aria-hidden />
+            {a}
+          </div>
         );
       })}
-    </ul>
+    </Reveal>
   );
 }

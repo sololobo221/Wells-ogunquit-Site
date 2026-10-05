@@ -60,11 +60,11 @@ export default async function BookingPage({
   if (sp.children) fallbackUrl.searchParams.set("kids", sp.children);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 pb-28 pt-32 lg:px-10 lg:pb-[var(--section-y)] lg:pt-44">
+    <section className="container-site pb-28 pt-32 lg:pb-[var(--section-y)] lg:pt-44">
       <div className="max-w-[52ch]">
-        <span className="eyebrow animate-rise">Reserve your stay</span>
+        <span className="kicker animate-rise">Reserve your stay</span>
         <h1 className="animate-rise text-h1" style={{ animationDelay: "80ms" }}>
-          Book direct <em>with us</em>
+          Book direct with us
         </h1>
         <p className="animate-rise mt-7 text-lead text-muted" style={{ animationDelay: "160ms" }}>
           The best available rate, free changes up to 48 hours before you arrive, and you are
@@ -89,8 +89,8 @@ export default async function BookingPage({
               }}
             />
           ) : (
-            <div className="bezel bezel-solid">
-              <div className="bezel-core p-7 sm:p-10">
+            <div className="border border-line bg-surface">
+              <div className="p-7 sm:p-10">
                 <h2 className="text-h3">Reserve your room</h2>
                 <p className="mt-4 max-w-[52ch] text-body text-muted">
                   Check live availability and current rates for every room type on our secure
@@ -105,7 +105,7 @@ export default async function BookingPage({
                   />
                   <a
                     href={site.phones.tollFreeHref}
-                    className="text-small tabular-nums text-muted underline decoration-line underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-navy"
+                    className="text-small tabular-nums text-muted underline decoration-ink/25 underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-ink"
                   >
                     or call {site.phones.tollFree}
                   </a>
@@ -117,24 +117,22 @@ export default async function BookingPage({
 
         {/* Reassurance: below the form on mobile, left column on desktop. */}
         <div className="order-2 lg:order-1 lg:col-span-5">
-          <dl className="space-y-7">
+          <dl className="border-t border-ink/15">
             {perks.map(({ icon: Glyph, term, detail }) => (
-              <div key={term} className="flex gap-5">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mist text-navy">
-                  <Glyph size={20} weight="light" aria-hidden />
-                </span>
+              <div key={term} className="flex gap-5 border-b border-ink/15 py-6">
+                <Glyph size={26} weight="light" className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 <div>
-                  <dt className="font-display text-h4 font-[380]">{term}</dt>
+                  <dt className="font-display text-h4">{term}</dt>
                   <dd className="mt-1.5 max-w-[40ch] text-small text-muted">{detail}</dd>
                 </div>
               </div>
             ))}
           </dl>
-          <p className="mt-10 border-t border-line pt-7 text-small text-faint">
+          <p className="mt-8 text-small text-muted">
             Prefer to talk it through? Call{" "}
             <a
               href={site.phones.tollFreeHref}
-              className="tabular-nums text-navy underline decoration-navy/30 underline-offset-4 transition-colors duration-200 hover:text-ink"
+              className="tabular-nums text-ink underline decoration-ink/30 underline-offset-4 transition-colors duration-200 hover:decoration-ink"
             >
               {site.phones.tollFree}
             </a>

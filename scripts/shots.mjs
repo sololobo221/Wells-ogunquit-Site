@@ -39,6 +39,11 @@ for (const r of routes) {
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
   await page.goto(url, { waitUntil: "load", timeout: 120000 });
+  // content-visibility: auto skips painting off-screen sections, which leaves
+  // them blank in a full-page capture. Render everything for the screenshot.
+  await page.addStyleTag({
+    content: "main > section, body > footer { content-visibility: visible !important; }",
+  });
 
   await new Promise((res) => setTimeout(res, 2500));
 

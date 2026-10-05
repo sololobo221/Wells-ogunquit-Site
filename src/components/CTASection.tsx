@@ -4,43 +4,36 @@ import Reveal from "./Reveal";
 import ParallaxImage from "./ParallaxImage";
 
 /**
- * The closing call to action. It sits on the Atlantic, the dark passage that
- * ends every page and runs straight into the footer, and holds the sunrise
- * photograph in a framed tray.
+ * The closing band on most pages: a full-bleed photograph with one line, one
+ * button and the phone number. It runs straight into the navy footer.
  */
-export default function CTASection() {
+export default function CTASection({
+  image = "/images/hero-sunrise-wide.jpg",
+  alt = "Sunrise over the water near Wells and Ogunquit",
+}: {
+  image?: string;
+  alt?: string;
+}) {
   return (
-    <section className="bg-atlantic">
-      <div className="mx-auto max-w-[1400px] px-3 pt-[calc(var(--section-y)*0.6)] sm:px-6 lg:px-10">
-        <Reveal y={40} className="bezel bezel-dark">
-          <div className="bezel-core relative flex min-h-[520px] items-end lg:min-h-[600px]">
-            <ParallaxImage
-              src="/images/hero-sunrise-wide.jpg"
-              alt="Sunrise over the water near Wells and Ogunquit"
-              sizes="(max-width: 1400px) 100vw, 1400px"
-              travel={7}
-            />
-            <div className="hero-wash absolute inset-0" />
-            <div className="relative w-full p-7 sm:p-10 lg:p-16">
-              <h2 className="max-w-[14ch] text-h2 !text-white">
-                Find your dates on the <em>Maine coast</em>
-              </h2>
-              <p className="measure mt-6 text-lead text-white/85">
-                Our own booking page always has the best rate. {site.cancellation}
-              </p>
-              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <BookNow size="lg" />
-                <a
-                  href={site.phones.tollFreeHref}
-                  className="text-small tabular-nums text-white/80 underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors duration-300 hover:text-white hover:decoration-white"
-                >
-                  or call {site.phones.tollFree}
-                </a>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
+    <section className="relative isolate flex min-h-[520px] items-center overflow-hidden bg-harbor lg:min-h-[600px]">
+      <ParallaxImage src={image} alt={alt} sizes="100vw" travel={6} />
+      <div className="photo-shade-even absolute inset-0" />
+      <Reveal className="container-site relative py-24 text-center">
+        <span className="kicker !text-white/85">Book direct</span>
+        <h2 className="mx-auto max-w-[18ch] text-h1 !text-white">Find your dates on the Maine coast</h2>
+        <p className="measure mx-auto mt-6 text-lead text-white/85">
+          Our own booking page always has the best rate. {site.cancellation}
+        </p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <BookNow size="lg" label="Check availability" />
+          <a
+            href={site.phones.tollFreeHref}
+            className="caps flex h-14 items-center border border-white/80 px-9 tabular-nums text-white transition-colors duration-300 hover:bg-white hover:text-ink"
+          >
+            Call {site.phones.tollFree}
+          </a>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -44,15 +44,15 @@ const policies = [
 export default function PoliciesPage() {
   return (
     <>
-      <section className="mx-auto max-w-[1100px] px-6 pb-[var(--section-y)] pt-32 lg:px-10 lg:pt-44">
+      <section className="container-site max-w-[1100px] pb-[var(--section-y)] pt-32 lg:pt-44">
         <Reveal>
-          <span className="eyebrow">Good to know</span>
+          <span className="kicker">Good to know</span>
           <h1 className="text-h1">Policies</h1>
           <p className="measure mt-7 text-lead text-muted">
             The practical details, in plain terms. If anything here affects your plans, call us on{" "}
             <a
               href={site.phones.tollFreeHref}
-              className="tabular-nums text-navy underline decoration-navy/40 underline-offset-4 transition-colors hover:decoration-navy"
+              className="tabular-nums text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-ink"
             >
               {site.phones.tollFree}
             </a>{" "}
@@ -67,14 +67,14 @@ export default function PoliciesPage() {
               delay={i * 0.05}
               className="grid gap-3 border-b border-ink/15 py-8 sm:grid-cols-12 sm:gap-8"
             >
-              <dt className="font-display text-h4 font-[380] sm:col-span-4">{p.t}</dt>
+              <dt className="font-display text-h4 sm:col-span-4">{p.t}</dt>
               <dd className="max-w-[60ch] text-body text-muted sm:col-span-8">{p.d}</dd>
             </Reveal>
           ))}
         </dl>
 
         <Reveal delay={0.1} className="mt-12">
-          <BookNow size="lg" />
+          <BookNow size="lg" label="Book a room" />
         </Reveal>
       </section>
     </>

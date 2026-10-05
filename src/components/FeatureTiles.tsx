@@ -4,9 +4,8 @@ import Reveal from "./Reveal";
 export type FeatureTile = { icon: Icon; title: string; text: string };
 
 /**
- * Short, parallel facts as a grid of quiet tiles: a light icon, a title in the
- * display face, one line of detail. For lists too long to read as a single
- * column and too small to deserve photographs.
+ * Short, parallel facts in columns: a thin icon, a title, one line of detail,
+ * each under a hairline. No boxes.
  */
 export default function FeatureTiles({
   items,
@@ -20,22 +19,12 @@ export default function FeatureTiles({
   const grid = columns === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
 
   return (
-    <ul className={`grid grid-cols-1 gap-3 ${grid} ${className}`}>
+    <ul className={`grid grid-cols-1 gap-x-12 gap-y-10 ${grid} ${className}`}>
       {items.map(({ icon: Glyph, title, text }, i) => (
-        <Reveal
-          as="li"
-          key={title}
-          delay={(i % columns) * 0.06}
-          y={20}
-          className="flex flex-col gap-8 rounded-[var(--radius-card)] bg-surface p-7 shadow-[inset_0_0_0_1px_rgba(15,30,36,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]"
-        >
-          <span className="grid h-11 w-11 place-items-center rounded-full bg-mist text-navy">
-            <Glyph size={22} weight="light" aria-hidden />
-          </span>
-          <div>
-            <h3 className="text-h4">{title}</h3>
-            <p className="mt-2 text-small text-muted">{text}</p>
-          </div>
+        <Reveal as="li" key={title} delay={(i % columns) * 0.05} className="border-t border-ink/15 pt-7">
+          <Glyph size={28} weight="light" className="text-accent" aria-hidden />
+          <h3 className="mt-5 text-h4">{title}</h3>
+          <p className="mt-2 text-small text-muted">{text}</p>
         </Reveal>
       ))}
     </ul>

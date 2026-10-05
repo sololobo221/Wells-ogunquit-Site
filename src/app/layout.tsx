@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/lib/site";
@@ -10,24 +10,22 @@ import RevealObserver from "@/components/RevealObserver";
 
 // Display face. Newsreader, self-hosted and cut down by scripts/subset-fonts.py
 // to the weights (300-400) and optical sizes (24-72) the site actually sets:
-// about 107KB for both styles instead of 280KB from the Google subsets, with
-// identical rendering. The optical size axis lets the same family draw fine,
-// high-contrast letters at hero sizes and sturdier ones at card-title sizes;
-// the italic carries emphasis inside headlines.
+// a fraction of the Google subsets, with identical rendering. Headings are set
+// upright, so only the roman ships. The optical size axis lets the same family
+// draw fine letters at hero sizes and sturdier ones at card-title sizes.
 // adjustFontFallback matches the fallback metrics so the swap does not reflow.
 const newsreader = localFont({
   variable: "--font-newsreader",
-  src: [
-    { path: "../fonts/newsreader-roman.woff2", style: "normal", weight: "300 400" },
-    { path: "../fonts/newsreader-italic.woff2", style: "italic", weight: "300 400" },
-  ],
+  src: [{ path: "../fonts/newsreader-roman.woff2", style: "normal", weight: "300 400" }],
   display: "swap",
   adjustFontFallback: "Times New Roman",
   fallback: ["Iowan Old Style", "Georgia", "serif"],
 });
 
-const geist = Geist({
-  variable: "--font-geist",
+// Text face. A Futura revival: geometric capitals for the nav, labels and
+// buttons, and an easy read at body sizes.
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
   display: "swap",
   adjustFontFallback: true,
@@ -57,7 +55,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#f3f4f0",
+  themeColor: "#f7f4ee",
 };
 
 const jsonLd = {
@@ -90,15 +88,15 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${geist.variable} h-full antialiased`}>
-      <body className="grain flex min-h-full flex-col bg-canvas text-ink">
+    <html lang="en" className={`${newsreader.variable} ${jost.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col bg-canvas text-ink">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-accent focus:px-6 focus:py-3 focus:text-small focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-accent focus:px-6 focus:py-3 focus:text-small focus:text-white"
         >
           Skip to content
         </a>

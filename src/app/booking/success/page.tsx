@@ -17,9 +17,9 @@ export default async function BookingSuccessPage({
   const confirmed = status === "confirmed";
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 pb-[var(--section-y)] pt-32 lg:px-10 lg:pt-44">
+    <section className="container-site pb-[var(--section-y)] pt-32 lg:pt-44">
       <div className="measure">
-        <span className="eyebrow">
+        <span className="kicker">
           {confirmed ? "Reservation confirmed" : "Reservation received"}
         </span>
         <h1 className="animate-rise text-h1">
@@ -32,9 +32,9 @@ export default async function BookingSuccessPage({
         </p>
 
         {resId ? (
-          <dl className="bezel mt-12 w-fit min-w-[18rem]">
-            <div className="bezel-core px-7 py-6">
-              <dt className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-faint">
+          <dl className="mt-12 w-fit min-w-[18rem] border border-line bg-surface">
+            <div className="px-7 py-6">
+              <dt className="caps text-[0.6875rem] text-faint">
                 Reservation reference
               </dt>
               <dd className="mt-2 font-display text-h3 tabular-nums text-ink">{resId}</dd>

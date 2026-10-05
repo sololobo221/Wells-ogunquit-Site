@@ -19,7 +19,7 @@ type Props = {
  * hidden, so nothing above the fold waits on JavaScript, and the page reads
  * normally with scripts off or under reduced motion.
  */
-export default function Reveal({ children, delay = 0, className, as = "div", y = 28 }: Props) {
+export default function Reveal({ children, delay = 0, className, as = "div", y = 16 }: Props) {
   const Tag = as as ElementType;
   const style = { "--reveal-delay": `${delay}s`, "--reveal-y": `${y}px` } as CSSProperties;
 

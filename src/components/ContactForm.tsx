@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react";
 import { site } from "@/lib/site";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
@@ -53,21 +52,21 @@ export default function ContactForm() {
   };
 
   const field =
-    "w-full rounded-[var(--radius-control)] border border-line bg-canvas px-4 py-3.5 text-base text-ink outline-none transition-[border-color,box-shadow,background-color] duration-300 placeholder:text-faint hover:border-ink/25 focus:border-ink/40 focus:bg-surface focus:shadow-[0_0_0_4px_rgba(177,56,40,0.12)] aria-[invalid=true]:border-accent sm:text-small";
-  const lbl = "mb-2 block text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-faint";
+    "w-full rounded-[2px] border border-line bg-canvas px-4 py-3.5 text-base text-ink outline-none transition-[border-color,background-color] duration-300 placeholder:text-faint hover:border-ink/30 focus:border-ink focus:bg-surface aria-[invalid=true]:border-accent sm:text-small";
+  const lbl = "caps mb-2 block text-[0.6875rem] text-faint";
   const err = "mt-2 text-micro text-accent";
 
   if (sent) {
     return (
-      <div className="bezel">
-        <div className="bezel-core p-8 sm:p-10">
+      <div className="border border-line bg-surface">
+        <div className="p-8 sm:p-10">
           <h3 className="font-display text-h3">Your email is ready to send</h3>
           <p className="mt-3 text-small text-muted">
             We&apos;ve opened a pre-filled message in your email app. If nothing happened, write to
             us directly at{" "}
             <a
               href={`mailto:${site.email}`}
-              className="text-navy underline decoration-navy/40 underline-offset-4"
+              className="text-ink underline decoration-ink/40 underline-offset-4"
             >
               {site.email}
             </a>{" "}
@@ -76,7 +75,7 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={() => setSent(false)}
-            className="mt-6 text-small font-medium text-navy underline decoration-navy/30 underline-offset-[6px] transition-colors duration-200 hover:text-ink hover:decoration-ink"
+            className="caps mt-6 border-b border-ink/30 pb-1.5 text-ink transition-colors duration-200 hover:border-ink"
           >
             Write another message
           </button>
@@ -86,8 +85,8 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="bezel">
-      <div className="bezel-core p-6 sm:p-10">
+    <form onSubmit={submit} noValidate className="border border-line bg-surface">
+      <div className="p-6 sm:p-10">
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="name" className={lbl}>
@@ -167,15 +166,9 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="group mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-accent pl-6 pr-1.5 text-small font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_24px_-12px_rgba(177,56,40,0.7)] transition-[background-color,transform] duration-500 ease-[var(--ease-glide)] hover:bg-accent-deep active:scale-[0.98]"
+          className="caps mt-8 inline-flex h-12 items-center rounded-[2px] bg-ink px-8 text-canvas transition-colors duration-300 hover:bg-accent active:translate-y-px"
         >
           Send message
-          <span
-            aria-hidden
-            className="grid h-9 w-9 place-items-center rounded-full bg-white/15 transition-transform duration-500 ease-[var(--ease-glide)] group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105"
-          >
-            <ArrowUpRight size={14} weight="bold" />
-          </span>
         </button>
 
         <p className="mt-5 text-micro text-faint">

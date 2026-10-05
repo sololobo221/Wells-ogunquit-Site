@@ -2,39 +2,48 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 /**
- * Interior page hero. The photograph sits in a rounded frame inset from the
- * viewport edge, the same frame the home hero uses, so every page opens the
- * same way. Title and intro rise in on load.
+ * Interior page opening: one photograph, edge to edge, with the page title
+ * set low on it. The header sits clear over the top until the page moves.
  */
 export default function PageHero({
   image,
   imageAlt,
+  label,
   title,
   intro,
+  position = "center",
 }: {
   image: string;
   imageAlt: string;
+  label?: string;
   title: ReactNode;
   intro?: string;
+  /** object-position for the photograph, when the subject is off centre. */
+  position?: string;
 }) {
   return (
-    <section className="px-2 pt-2 sm:px-3 sm:pt-3">
-      <div className="relative flex min-h-[64dvh] items-end overflow-hidden rounded-[var(--radius-frame)] bg-atlantic lg:min-h-[72dvh]">
-        <div className="animate-hero-settle absolute inset-0">
-          <Image src={image} alt={imageAlt} fill preload sizes="100vw" className="object-cover" />
-        </div>
-        <div className="hero-wash absolute inset-0" />
-        <div className="relative mx-auto w-full max-w-[1400px] px-6 pb-20 pt-32 sm:px-8 lg:px-10 lg:pb-28">
-          <h1 className="animate-rise max-w-[15ch] text-h1 !text-white">{title}</h1>
-          {intro && (
-            <p
-              className="animate-rise measure mt-7 text-lead text-white/85"
-              style={{ animationDelay: "120ms" }}
-            >
-              {intro}
-            </p>
-          )}
-        </div>
+    <section className="relative flex min-h-[68svh] items-end overflow-hidden bg-harbor lg:min-h-[76svh]">
+      <Image
+        src={image}
+        alt={imageAlt}
+        fill
+        preload
+        sizes="100vw"
+        className="animate-fade object-cover"
+        style={{ objectPosition: position }}
+      />
+      <div className="photo-shade absolute inset-0" />
+      <div className="container-site relative pb-14 pt-36 lg:pb-20">
+        {label && <span className="kicker animate-rise !text-white/85">{label}</span>}
+        <h1 className="animate-rise max-w-[16ch] text-h1 !text-white">{title}</h1>
+        {intro && (
+          <p
+            className="animate-rise measure mt-6 text-lead text-white/85"
+            style={{ animationDelay: "100ms" }}
+          >
+            {intro}
+          </p>
+        )}
       </div>
     </section>
   );

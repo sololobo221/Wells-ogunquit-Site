@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { EnvelopeSimple, MapPin, Phone } from "@phosphor-icons/react/dist/ssr";
 import { site, distances } from "@/lib/site";
 import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
@@ -14,118 +13,84 @@ export const metadata: Metadata = {
     "Call 1-800-556-4402 or 207-646-8115, or write to info@wells-ogunquit.com. We're at 203 Post Road, US Route 1, Wells, Maine 04090.",
 };
 
-const label = "text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-faint";
-const big =
-  "font-display text-h3 font-[360] tabular-nums text-ink transition-colors duration-300 hover:text-navy";
+const label = "caps block text-[0.6875rem] text-faint";
+const big = "font-display text-h3 tabular-nums text-ink transition-colors duration-300 hover:text-accent";
+const underline =
+  "text-ink underline decoration-ink/25 underline-offset-[6px] transition-colors duration-300 hover:decoration-ink";
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
         image="/images/hero-room-porch.jpg"
-        imageAlt="A private porch outside a guest room"
-        title={
-          <>
-            We&apos;d love <em>to have you</em>
-          </>
-        }
+        imageAlt="The porch running along the guest rooms, with autumn trees beyond"
+        label="Contact"
+        title="We'd love to have you"
         intro="Call, write, or send a note below. We answer the phone ourselves."
       />
 
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-12">
+      <section className="container-site section">
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-16">
           <div className="lg:col-span-5">
-            <SectionHeading
-              title={
-                <>
-                  However you&apos;d rather <em>reach us</em>
-                </>
-              }
-            />
+            <SectionHeading label="Get in touch" title="However you'd rather reach us" />
 
-            <Reveal delay={0.08} className="mt-12">
-              <dl className="space-y-9">
-                <div className="flex gap-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mist text-navy">
-                    <Phone size={20} weight="light" aria-hidden />
-                  </span>
-                  <div>
-                    <dt className={label}>Phone</dt>
-                    <dd className="mt-2 flex flex-col gap-1">
-                      <a href={site.phones.tollFreeHref} className={big}>
-                        {site.phones.tollFree}
-                      </a>
-                      <a href={site.phones.localHref} className={big}>
-                        {site.phones.local}
-                      </a>
-                    </dd>
-                  </div>
+            <Reveal className="mt-12">
+              <dl className="border-t border-ink/15">
+                <div className="border-b border-ink/15 py-7">
+                  <dt className={label}>Phone</dt>
+                  <dd className="mt-3 flex flex-col gap-1">
+                    <a href={site.phones.tollFreeHref} className={big}>
+                      {site.phones.tollFree}
+                    </a>
+                    <a href={site.phones.localHref} className={big}>
+                      {site.phones.local}
+                    </a>
+                  </dd>
                 </div>
-                <div className="flex gap-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mist text-navy">
-                    <EnvelopeSimple size={20} weight="light" aria-hidden />
-                  </span>
-                  <div>
-                    <dt className={label}>Email</dt>
-                    <dd className="mt-2">
-                      <a
-                        href={`mailto:${site.email}`}
-                        className="text-lead text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors duration-300 hover:text-navy hover:decoration-navy"
-                      >
-                        {site.email}
-                      </a>
-                    </dd>
-                  </div>
+                <div className="border-b border-ink/15 py-7">
+                  <dt className={label}>Email</dt>
+                  <dd className="mt-3 text-lead">
+                    <a href={`mailto:${site.email}`} className={underline}>
+                      {site.email}
+                    </a>
+                  </dd>
                 </div>
-                <div className="flex gap-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-mist text-navy">
-                    <MapPin size={20} weight="light" aria-hidden />
-                  </span>
-                  <div>
-                    <dt className={label}>Address</dt>
-                    <dd className="mt-2">
-                      <a
-                        href={`https://maps.google.com/?q=${encodeURIComponent(site.address.full)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-lead text-ink transition-colors duration-300 hover:text-navy"
-                      >
-                        {site.address.street}
-                        <br />
-                        {site.address.city}, {site.address.state} {site.address.zip}
-                      </a>
-                    </dd>
-                  </div>
+                <div className="border-b border-ink/15 py-7">
+                  <dt className={label}>Address</dt>
+                  <dd className="mt-3 text-lead">
+                    <a
+                      href={`https://maps.google.com/?q=${encodeURIComponent(site.address.full)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ink transition-colors duration-300 hover:text-accent"
+                    >
+                      {site.address.street}
+                      <br />
+                      {site.address.city}, {site.address.state} {site.address.zip}
+                    </a>
+                  </dd>
+                </div>
+                <div className="border-b border-ink/15 py-7">
+                  <dt className={label}>Follow along</dt>
+                  <dd className="mt-3 flex gap-6 text-body">
+                    <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className={underline}>
+                      Instagram
+                    </a>
+                    <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className={underline}>
+                      Facebook
+                    </a>
+                  </dd>
                 </div>
               </dl>
 
-              <div className="mt-10 flex gap-6 pl-16 text-small">
-                <a
-                  href={site.social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors duration-300 hover:text-navy hover:decoration-navy"
-                >
-                  Facebook
-                </a>
-                <a
-                  href={site.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-ink underline decoration-ink/20 underline-offset-[6px] transition-colors duration-300 hover:text-navy hover:decoration-navy"
-                >
-                  Instagram
-                </a>
-              </div>
-
-              <p className="measure mt-10 text-small text-faint">
+              <p className="measure mt-8 text-small text-muted">
                 {site.season} {site.breakfastHours}
               </p>
             </Reveal>
           </div>
 
           <div className="lg:col-span-7">
-            <Reveal y={36}>
+            <Reveal delay={0.06}>
               <ContactForm />
             </Reveal>
           </div>
@@ -133,26 +98,19 @@ export default function ContactPage() {
       </section>
 
       {/* Map and distances */}
-      <section className="bg-mist section">
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+      <section className="bg-sand section">
+        <div className="container-site">
           <SectionHeading
-            title={
-              <>
-                On Route 1 <em>in Wells</em>
-              </>
-            }
+            label="Directions"
+            title="On Route 1 in Wells"
             intro="Handy for the beaches, the coast road, and the drive north to Portland."
           />
 
-          <Reveal y={36} className="bezel mt-14">
-            <div className="bezel-core">
-              <MapEmbed />
-            </div>
+          <Reveal className="mt-14 border border-line">
+            <MapEmbed />
           </Reveal>
 
-          <div className="mt-16 lg:mt-20">
-            <DistanceScale items={distances} columns={5} on="mist" />
-          </div>
+          <DistanceScale items={distances} className="mt-14" />
         </div>
       </section>
     </>

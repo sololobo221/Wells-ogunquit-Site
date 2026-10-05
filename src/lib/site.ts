@@ -42,14 +42,6 @@ export const nav = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-// The No. 1 TripAdvisor ranking leads the home hero, so it isn't repeated here.
-export const trustPoints = [
-  { stat: "3/4 mi", label: "to Moody and North Beach, an easy walk" },
-  { stat: "Free", label: "breakfast, 7 to 9:30 every morning" },
-  { stat: "Heated", label: "saltwater pool, no harsh chemicals" },
-  { stat: "48 hrs", label: "notice to cancel or move your dates, free" },
-] as const;
-
 export const distances = [
   { place: "Moody and North Beach", value: "3/4 mile" },
   { place: "Wells Beach", value: "2 miles" },

@@ -5,21 +5,23 @@ using the resort's own photography and verified business details.
 
 ## Design
 
-Light and warm, with the palette sampled straight from the sign artwork: black `#010101`,
-gold `#c6b871`, lobster red `#b13828`, navy `#133562`. Navy is the single accent. Gold and red
-stay inside the logo itself.
+Modelled on how good small coastal hotels present themselves online (Sound View Greenport,
+the Surfrider, Hidden Pond): full-bleed photography, square corners, quiet type, a flat
+availability strip under the hero, and alternating photo and text rows.
 
-- **Type**: Playfair Display for headings, Geist for body
-- **Colour**: `--color-canvas` `#f7f6f3` page, `--color-surface` white panels, `--color-ink`
-  `#111111` text, `--color-navy` accent. Tokens live in `src/app/globals.css` under `@theme`
-- **Radius**: `--radius-card` 12px, `--radius-media` 10px, `--radius-control` 6px. No pill buttons
-- **Shadows**: near invisible. Structure comes from `--color-line` hairlines, not elevation
+- **Type**: Newsreader (serif, self-hosted) for headings, Jost for body text and the tracked
+  capitals used in the nav, labels, buttons and text links
+- **Colour**: warm paper `--color-canvas` `#f7f4ee`, `--color-sand` `#eee8dc` for alternate
+  bands, harbour navy `--color-harbor` `#17293a` for the footer, and lobster red
+  `--color-accent` `#a6372a` for booking. The sign's gold `--color-gold` labels the navy.
+  Tokens live in `src/app/globals.css` under `@theme`
+- **Shape**: square photos, 2px buttons and inputs, hairlines instead of shadows
 
 ## Stack
 
 - **Next.js 16** (App Router) + **TypeScript**
 - **Tailwind CSS v4**
-- **motion** (`motion/react`) for scroll reveals, **@phosphor-icons/react** for icons
+- **@phosphor-icons/react** for icons; scroll reveals are a small IntersectionObserver plus CSS
 - **sharp** (dev only) for the image right-sizing script
 
 ## Running it

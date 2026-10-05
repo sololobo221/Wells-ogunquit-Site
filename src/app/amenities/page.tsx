@@ -6,7 +6,8 @@ import PageHero from "@/components/PageHero";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import Gallery from "@/components/Gallery";
-import ParallaxImage from "@/components/ParallaxImage";
+import FeatureRow from "@/components/FeatureRow";
+import AmenityGrid from "@/components/AmenityGrid";
 import TextLink from "@/components/TextLink";
 import CTASection from "@/components/CTASection";
 
@@ -16,48 +17,25 @@ export const metadata: Metadata = {
     "A heated saltwater pool, gas grills and an outdoor kitchen, gazebos, picnic tables, a playground and a fenced sand play area, plus free Wi-Fi and breakfast.",
 };
 
-// Grouped into clusters, each with its own photograph, rather than one long
-// hairline list. Photos here are the small originals, so the frames stay small.
-const groups = [
+// The originals for these are small, so they stay at card size.
+const forFamilies = [
   {
-    heading: "Water and sun",
-    image: "/images/pool-fall.jpg",
-    alt: "The pool framed by autumn foliage",
-    items: [
-      ["Heated saltwater pool", "Gentle on skin, and no harsh chemicals. Open from mid-May."],
-      ["Pool deck and loungers", "Open for sunbathing right up to the day we close for the year."],
-    ],
-  },
-  {
-    heading: "The garden kitchen",
-    image: "/images/grills.jpg",
-    alt: "Gas grills and the outdoor kitchen patio",
-    items: [
-      ["Gas grills, smokers and an outside stove", `A full outdoor kitchen beside the picnic tables. ${site.grillHours}`],
-      ["Dining supplies lent", "Lobster pots, plates, utensils, even the tablecloth."],
-      ["Gazebos and picnic tables", "Shaded seats scattered through the garden."],
-    ],
-  },
-  {
-    heading: "For children",
+    title: "Fenced sand play area",
+    text: "For the under fours, beside the picnic tables. We supply the toys.",
     image: "/images/sandbox.jpg",
     alt: "The fenced sand play area beside the picnic tables",
-    items: [
-      ["Fenced sand play area", "For under fours. We supply the toys."],
-      ["Playground", "Swings and climbing on a soft wood chip surface."],
-      ["Lawn games", "Out on the grass whenever you want them."],
-    ],
   },
   {
-    heading: "In the room",
-    image: "/images/room-king.jpg",
-    alt: "The king bed studio with new furniture",
-    items: [
-      ["Complimentary Wi-Fi", "Across the whole property."],
-      ["Television, DVD and movie library", "Borrow something from the office."],
-      ["Kitchen basics", "Refrigerator, microwave, toaster and a coffee maker with coffee."],
-      ["Comfort", "Heat and air conditioning, hair dryer, iron and board, patio furniture."],
-    ],
+    title: "Playground",
+    text: "Swings and climbing on a soft wood chip surface, behind the buildings.",
+    image: "/images/playground.jpg",
+    alt: "Swings on the playground behind the buildings",
+  },
+  {
+    title: "Gazebos and the lawn",
+    text: "Shaded seats through the garden, and lawn games whenever you want them.",
+    image: "/images/tables-fall.jpg",
+    alt: "Picnic tables under autumn colour",
   },
 ];
 
@@ -67,115 +45,108 @@ export default function AmenitiesPage() {
       <PageHero
         image="/images/hero-pool-umbrella.jpg"
         imageAlt="Loungers and umbrellas around the heated saltwater pool"
-        title={
-          <>
-            The pool, the grills, <em>the lawn</em>
-          </>
-        }
-        intro="All of it is there to be used, and nearly all of it comes with the room."
+        label="Amenities"
+        title="The pool, the grills and the lawn"
+        intro="All of it is there to be used, and all of it comes with the room."
       />
 
-      {/* Clustered amenity groups */}
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
+      <section className="container-site section">
         <SectionHeading
-          title={
-            <>
-              Everything on this page <em>is included</em>
-            </>
-          }
-          intro="The pool, the grills, the supplies and breakfast all come with the room. None of it costs extra."
+          center
+          label="Included with every stay"
+          title="Nothing on this page costs extra"
+          titleClassName="max-w-[18ch]"
+          intro="The pool, the grills and the dining supplies, breakfast and the Wi-Fi are all part of the room."
         />
+      </section>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-2">
-          {groups.map((g, gi) => (
-            <Reveal
-              as="article"
-              key={g.heading}
-              delay={(gi % 2) * 0.08}
-              y={36}
-              className={`bezel ${gi % 2 === 1 ? "md:mt-16" : ""}`}
-            >
-              <div className="bezel-core grid h-full sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-                <div className="relative aspect-[16/10] sm:aspect-auto sm:min-h-full">
+      <section className="container-site space-y-24 pb-[var(--section-y)] lg:space-y-36">
+        <FeatureRow
+          image="/images/hero-pool.jpg"
+          alt="The heated saltwater pool on a clear afternoon"
+          second={{ src: "/images/pool-fall.jpg", alt: "The pool framed by autumn foliage" }}
+          label="Water and sun"
+          title="A heated saltwater pool"
+        >
+          <p>Gentle on skin, and no harsh chemicals. Loungers all the way round the deck.</p>
+          <p>{site.poolSeason}</p>
+        </FeatureRow>
+
+        <FeatureRow
+          flip
+          image="/images/grill-smokers.jpg"
+          alt="The grills and smokers by the picnic tables in the garden"
+          aspect="aspect-[4/5] sm:aspect-[4/3] lg:aspect-[5/6]"
+          second={{ src: "/images/grills.jpg", alt: "Gas grills and the outdoor kitchen patio" }}
+          label="The garden kitchen"
+          title="A kitchen outside, and everything to cook with"
+        >
+          <p>
+            Gas grills, smokers and an outside stove beside the picnic tables. Bring whatever you
+            want to cook: the lobster pots, plates, utensils and even the tablecloths are here to
+            use. Washing up afterwards is down to you.
+          </p>
+          <p>{site.grillHours}</p>
+        </FeatureRow>
+      </section>
+
+      {/* For families: three smaller photographs, since the originals are small. */}
+      <section className="bg-sand section">
+        <div className="container-site">
+          <SectionHeading label="For families" title="Room for the children to run" />
+          <ul className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {forFamilies.map((f, i) => (
+              <Reveal as="li" key={f.title} delay={i * 0.06}>
+                <div className="relative aspect-[4/3] overflow-hidden bg-canvas">
                   <Image
-                    src={g.image}
-                    alt={g.alt}
+                    src={f.image}
+                    alt={f.alt}
                     fill
-                    sizes="(max-width: 640px) 94vw, (max-width: 768px) 40vw, 20vw"
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
                     className="object-cover"
                   />
                 </div>
-                <div className="p-7 lg:p-8">
-                  <h3 className="text-h4">{g.heading}</h3>
-                  <dl className="mt-6 space-y-4">
-                    {g.items.map(([t, d]) => (
-                      <div key={t}>
-                        <dt className="text-small font-medium text-ink">{t}</dt>
-                        <dd className="mt-1 text-small text-muted">{d}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+                <h3 className="mt-6 text-h4">{f.title}</h3>
+                <p className="mt-2 text-small text-muted">{f.text}</p>
+              </Reveal>
+            ))}
+          </ul>
         </div>
-
-        <Reveal delay={0.1} className="measure mt-14 text-small text-faint">
-          <p>
-            {site.policies.join(". ")}. {site.poolSeason}
-          </p>
-        </Reveal>
       </section>
 
-      {/* Barbecue feature */}
-      <section className="bg-mist section">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-6 lg:grid-cols-12 lg:gap-x-12 lg:px-10">
-          <div className="lg:col-span-6">
-            <Reveal y={40} className="bezel">
-              <div className="bezel-core aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5]">
-                <ParallaxImage
-                  src="/images/grill-smokers.jpg"
-                  alt="The grills and smokers by the picnic tables in the garden"
-                  sizes="(max-width: 1024px) 94vw, 46vw"
-                  travel={6}
-                />
-              </div>
+      {/* In the room */}
+      <section className="container-site section">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-16">
+          <div className="lg:col-span-4">
+            <SectionHeading
+              label="In the room"
+              title="The basics, done properly"
+              intro="Borrow a film from the office for the DVD player. Iron, board and hair dryer in every room."
+            />
+            <Reveal className="mt-9">
+              <TextLink href="/rooms">See the rooms</TextLink>
             </Reveal>
           </div>
-          <div className="lg:col-span-5 lg:col-start-8">
-            <SectionHeading
-              title={
-                <>
-                  A kitchen outside, <em>and everything to cook with</em>
-                </>
-              }
-              intro="Bring whatever you want to cook. The grills and smokers, the lobster pots, the plates and the utensils are all here to use. Washing up afterwards is down to you."
-            />
-            <Reveal delay={0.1} className="mt-6 text-muted">
-              <p>{site.grillHours}</p>
+          <div className="lg:col-span-8">
+            <AmenityGrid className="lg:!grid-cols-2" />
+            <Reveal className="mt-8 text-small text-muted">
+              <p>{site.policies.join(". ")}.</p>
             </Reveal>
           </div>
         </div>
       </section>
 
       {/* Gallery */}
-      <section className="mx-auto max-w-[1400px] px-6 section lg:px-10">
-        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+      <section className="border-t border-line section">
+        <div className="container-site">
           <SectionHeading
-            title={
-              <>
-                Around the <em>grounds</em>
-              </>
-            }
-            intro="Photographs of the property. Select any one of them to see it larger."
+            label="Gallery"
+            title="Around the grounds"
+            intro="Select any photograph to see it larger."
           />
-          <Reveal delay={0.05} className="shrink-0 sm:pb-2">
-            <TextLink href="/rooms">See the rooms</TextLink>
-          </Reveal>
-        </div>
-        <div className="mt-14">
-          <Gallery images={groundsGallery} />
+          <div className="mt-14">
+            <Gallery images={groundsGallery} />
+          </div>
         </div>
       </section>
 

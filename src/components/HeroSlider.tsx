@@ -4,18 +4,18 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const slides = [
-  { src: "/images/hero-pool-umbrella.jpg", alt: "Loungers and umbrellas around the heated saltwater pool" },
-  { src: "/images/hero-room-porch.jpg", alt: "A private porch outside a guest room" },
-  { src: "/images/garden-view.jpg", alt: "The garden and lawn between the buildings" },
+  { src: "/images/hero-pool.jpg", alt: "The heated saltwater pool with autumn trees behind it" },
   { src: "/images/hero-sunrise-wide.jpg", alt: "Sunrise over the water near Wells and Ogunquit" },
+  { src: "/images/garden-view.jpg", alt: "The garden and lawn between the buildings" },
+  { src: "/images/hero-room-porch.jpg", alt: "The porch running along the guest rooms" },
 ];
 
 const INTERVAL = 7000;
 
 /**
- * Crossfading hero photography. The active frame drifts slowly back from a
- * slight push-in, so the hero feels alive without anything on it moving fast.
- * Under reduced motion there is one still photograph.
+ * Crossfading hero photography, full bleed. The active frame drifts slowly
+ * back from a slight push-in. Under reduced motion there is one still
+ * photograph.
  */
 export default function HeroSlider({ indicatorClassName = "" }: { indicatorClassName?: string }) {
   const [i, setI] = useState(0);
@@ -52,7 +52,7 @@ export default function HeroSlider({ indicatorClassName = "" }: { indicatorClass
 
   return (
     <>
-      <div className="absolute inset-0 z-0 overflow-hidden bg-atlantic">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-harbor">
         {visible.map((s, idx) => {
           const active = idx === i;
           return (
@@ -65,11 +65,9 @@ export default function HeroSlider({ indicatorClassName = "" }: { indicatorClass
               {/* Same markup for everyone; CSS removes the drift under
                   reduced motion so server and client never disagree. */}
               <div
-                className={`absolute inset-0 transition-transform ease-[var(--ease-out)] motion-reduce:!transform-none motion-reduce:transition-none ${
-                  idx === 0 && i === 0 && !loadRest ? "animate-hero-settle" : ""
-                }`}
+                className="absolute inset-0 transition-transform ease-[var(--ease-out)] motion-reduce:!transform-none motion-reduce:transition-none"
                 style={{
-                  transform: active ? "scale(1)" : "scale(1.07)",
+                  transform: active ? "scale(1)" : "scale(1.05)",
                   transitionDuration: active ? `${INTERVAL + 1400}ms` : "1400ms",
                 }}
               >
@@ -86,7 +84,7 @@ export default function HeroSlider({ indicatorClassName = "" }: { indicatorClass
             </div>
           );
         })}
-        <div className="hero-wash absolute inset-0" />
+        <div className="photo-shade absolute inset-0" />
       </div>
 
       {loadRest && (
@@ -100,7 +98,7 @@ export default function HeroSlider({ indicatorClassName = "" }: { indicatorClass
               aria-current={idx === i}
               className="group relative h-6 py-2.5"
             >
-              <span className="block h-[2px] w-10 overflow-hidden rounded-full bg-white/30 transition-colors duration-300 group-hover:bg-white/50">
+              <span className="block h-px w-10 overflow-hidden bg-white/35 transition-colors duration-300 group-hover:bg-white/60">
                 {/* A timer, so it runs at constant speed on purpose. */}
                 {idx === i && (
                   <span
